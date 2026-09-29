@@ -1,0 +1,134 @@
+{
+  "schema_version": "1",
+  "environment": "production",
+  "purpose": "production",
+  "override_type": "NONE",
+  "override_reason": null,
+  "override_operations": [],
+  "resources": [
+    {
+      "resource_alias": "tanzil-uthmani-v1.1",
+      "source_id": "tanzil",
+      "rights": {
+        "FETCH_REMOTE": "ALLOWED",
+        "DISPLAY": "ALLOWED",
+        "STORE": "ALLOWED",
+        "CACHE": "ALLOWED",
+        "INDEX_LEXICAL": "UNKNOWN",
+        "INDEX_VECTOR": "UNKNOWN",
+        "LOCAL_EMBEDDING": "UNKNOWN",
+        "EXTERNAL_EMBEDDING": "UNKNOWN",
+        "EXTERNAL_LLM_INFERENCE": "UNKNOWN",
+        "LOCAL_LLM_INFERENCE": "UNKNOWN",
+        "EXTERNAL_RERANKING": "UNKNOWN",
+        "REDISTRIBUTE": "ALLOWED",
+        "COMMERCIAL_USE": "UNKNOWN"
+      },
+      "external_constraints": {}
+    },
+    {
+      "resource_alias": "quranenc-rowwad-en-v1.0.19",
+      "source_id": "quranenc",
+      "rights": {
+        "FETCH_REMOTE": "ALLOWED",
+        "DISPLAY": "ALLOWED",
+        "STORE": "ALLOWED",
+        "CACHE": "ALLOWED",
+        "INDEX_LEXICAL": "UNKNOWN",
+        "INDEX_VECTOR": "UNKNOWN",
+        "LOCAL_EMBEDDING": "UNKNOWN",
+        "EXTERNAL_EMBEDDING": "UNKNOWN",
+        "EXTERNAL_LLM_INFERENCE": "UNKNOWN",
+        "LOCAL_LLM_INFERENCE": "UNKNOWN",
+        "EXTERNAL_RERANKING": "UNKNOWN",
+        "REDISTRIBUTE": "ALLOWED",
+        "COMMERCIAL_USE": "UNKNOWN"
+      },
+      "external_constraints": {}
+    },
+    {
+      "resource_alias": "qul-tafsir-almukhtasar-ar-v1",
+      "source_id": "qul",
+      "rights": {
+        "FETCH_REMOTE": "ALLOWED",
+        "DISPLAY": "ALLOWED",
+        "STORE": "ALLOWED",
+        "CACHE": "ALLOWED",
+        "INDEX_LEXICAL": "UNKNOWN",
+        "INDEX_VECTOR": "UNKNOWN",
+        "LOCAL_EMBEDDING": "UNKNOWN",
+        "EXTERNAL_EMBEDDING": "UNKNOWN",
+        "EXTERNAL_LLM_INFERENCE": "UNKNOWN",
+        "LOCAL_LLM_INFERENCE": "UNKNOWN",
+        "EXTERNAL_RERANKING": "UNKNOWN",
+        "REDISTRIBUTE": "DENIED",
+        "COMMERCIAL_USE": "UNKNOWN"
+      },
+      "external_constraints": {},
+      "rights_note": "WP-0: recorded truthfully as UNKNOWN. Production has override_type=NONE, so these operations stay blocked (Gate 3) until the source owner resolves the licence question in writing -- no development override applies here."
+    },
+    {
+      "resource_alias": "qul-tafsir-ibnkathir-ar-v1",
+      "source_id": "qul",
+      "rights": {
+        "FETCH_REMOTE": "ALLOWED",
+        "DISPLAY": "ALLOWED",
+        "STORE": "ALLOWED",
+        "CACHE": "ALLOWED",
+        "INDEX_LEXICAL": "UNKNOWN",
+        "INDEX_VECTOR": "UNKNOWN",
+        "LOCAL_EMBEDDING": "UNKNOWN",
+        "EXTERNAL_EMBEDDING": "UNKNOWN",
+        "EXTERNAL_LLM_INFERENCE": "UNKNOWN",
+        "LOCAL_LLM_INFERENCE": "UNKNOWN",
+        "EXTERNAL_RERANKING": "UNKNOWN",
+        "REDISTRIBUTE": "DENIED",
+        "COMMERCIAL_USE": "UNKNOWN"
+      },
+      "external_constraints": {},
+      "rights_note": "WP-0: recorded truthfully as UNKNOWN. Production has override_type=NONE, so these operations stay blocked (Gate 3) until the source owner resolves the licence question in writing -- no development override applies here."
+    },
+    {
+      "resource_alias": "qul-tafsir-alqurtubi-ar-v1",
+      "source_id": "qul",
+      "rights": {
+        "FETCH_REMOTE": "ALLOWED",
+        "DISPLAY": "ALLOWED",
+        "STORE": "ALLOWED",
+        "CACHE": "ALLOWED",
+        "INDEX_LEXICAL": "UNKNOWN",
+        "INDEX_VECTOR": "UNKNOWN",
+        "LOCAL_EMBEDDING": "UNKNOWN",
+        "EXTERNAL_EMBEDDING": "UNKNOWN",
+        "EXTERNAL_LLM_INFERENCE": "UNKNOWN",
+        "LOCAL_LLM_INFERENCE": "UNKNOWN",
+        "EXTERNAL_RERANKING": "UNKNOWN",
+        "REDISTRIBUTE": "DENIED",
+        "COMMERCIAL_USE": "UNKNOWN"
+      },
+      "external_constraints": {},
+      "rights_note": "WP-0: recorded truthfully as UNKNOWN. Production has override_type=NONE, so these operations stay blocked (Gate 3) until the source owner resolves the licence question in writing -- no development override applies here."
+    },
+    {
+      "resource_alias": "qul-tafsir-albaghawi-ar-v1",
+      "source_id": "qul",
+      "rights": {
+        "FETCH_REMOTE": "ALLOWED",
+        "DISPLAY": "ALLOWED",
+        "STORE": "ALLOWED",
+        "CACHE": "ALLOWED",
+        "INDEX_LEXICAL": "UNKNOWN",
+        "INDEX_VECTOR": "UNKNOWN",
+        "LOCAL_EMBEDDING": "UNKNOWN",
+        "EXTERNAL_EMBEDDING": "UNKNOWN",
+        "EXTERNAL_LLM_INFERENCE": "UNKNOWN",
+        "LOCAL_LLM_INFERENCE": "UNKNOWN",
+        "EXTERNAL_RERANKING": "UNKNOWN",
+        "REDISTRIBUTE": "DENIED",
+        "COMMERCIAL_USE": "UNKNOWN"
+      },
+      "external_constraints": {},
+      "rights_note": "WP-0: recorded truthfully as UNKNOWN. Production has override_type=NONE, so these operations stay blocked (Gate 3) until the source owner resolves the licence question in writing -- no development override applies here."
+    }
+  ]
+}

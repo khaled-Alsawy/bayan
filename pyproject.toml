@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools>=75", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "islamic-research-ai"
+version = "0.1.0"
+description = "Evidence-grounded Islamic research POC"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+  "fastapi>=0.116,<1",
+  "httpx>=0.28,<1",
+  "pgvector>=0.4,<1",
+  "psycopg[binary,pool]>=3.2,<4",
+  "pydantic>=2.11,<3",
+  "pydantic-settings>=2.10,<3",
+  "uvicorn[standard]>=0.35,<1",
+]
+
+[project.optional-dependencies]
+dev = [
+  "PyYAML>=6.0,<7",
+  "pytest>=8.4,<9",
+  "pytest-asyncio>=1.1,<2",
+  "ruff>=0.12,<1",
+]
+demo = [
+  "imageio-ffmpeg>=0.6,<1",
+]
+
+[project.scripts]
+islamic-research-api = "islamic_research_ai.api:run"
+islamic-research-ingest = "islamic_research_ai.ingestion.cli:main"
+islamic-research-ingest-qul-tafsir = "islamic_research_ai.ingestion.cli:main_qul_tafsir"
+islamic-research-e2e = "islamic_research_ai.e2e:main"
+islamic-research-retrieval-sanity = "islamic_research_ai.retrieval_sanity:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]

@@ -1,0 +1,1110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Grounded Retrieval Spine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --paper:#f6f7f5;
+  --surface:#ffffff;
+  --surface-2:#eceef0;
+  --line:#d3d8dc;
+  --line-soft:#e3e7ea;
+  --ink:#151a1f;
+  --ink-2:#414b54;
+  --ink-3:#6b757e;
+  --accent:#0d6b73;
+  --accent-soft:#dceceb;
+  --amber:#9c6512;
+  --amber-soft:#f6ecda;
+  --red:#a03434;
+  --red-soft:#f7e5e4;
+  --green:#3d7040;
+  --green-soft:#e2eee1;
+  --violet:#5a4a8f;
+  --violet-soft:#e9e6f3;
+  --shadow:0 1px 2px rgba(20,28,34,.06);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0d1114;
+    --surface:#141a1f;
+    --surface-2:#1c242a;
+    --line:#2b353c;
+    --line-soft:#212a30;
+    --ink:#e2e8ea;
+    --ink-2:#aeb9c0;
+    --ink-3:#818d95;
+    --accent:#4dbcc2;
+    --accent-soft:#12312f;
+    --amber:#d99b3f;
+    --amber-soft:#332612;
+    --red:#e0756f;
+    --red-soft:#331c1c;
+    --green:#7fb883;
+    --green-soft:#172a18;
+    --violet:#a99ada;
+    --violet-soft:#221e33;
+    --shadow:0 1px 2px rgba(0,0,0,.4);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0d1114; --surface:#141a1f; --surface-2:#1c242a; --line:#2b353c; --line-soft:#212a30;
+  --ink:#e2e8ea; --ink-2:#aeb9c0; --ink-3:#818d95;
+  --accent:#4dbcc2; --accent-soft:#12312f; --amber:#d99b3f; --amber-soft:#332612;
+  --red:#e0756f; --red-soft:#331c1c; --green:#7fb883; --green-soft:#172a18;
+  --violet:#a99ada; --violet-soft:#221e33;
+  --shadow:0 1px 2px rgba(0,0,0,.4); color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:"IBM Plex Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:15px; line-height:1.55; -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%} [hidden]{display:none!important}
+.wrap{max-width:1180px; margin:0 auto; padding-inline:20px; padding-block:0 72px}
+
+h1,h2,h3,h4{font-family:"IBM Plex Sans Condensed","IBM Plex Sans",sans-serif; text-wrap:balance; margin:0}
+h1{font-size:clamp(28px,5vw,44px); font-weight:700; letter-spacing:-.015em; line-height:1.08}
+h2{font-size:clamp(20px,3vw,27px); font-weight:600; letter-spacing:-.01em}
+h3{font-size:17px; font-weight:600}
+code,.mono,kbd{font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace}
+code{font-size:.86em; background:var(--surface-2); padding:1px 5px; border-radius:3px; color:var(--ink-2);
+  overflow-wrap:anywhere}
+p{margin:0 0 10px; max-width:74ch; color:var(--ink-2)}
+a{color:var(--accent)}
+
+/* ---------- masthead ---------- */
+header.mast{border-bottom:1px solid var(--line); background:var(--surface)}
+.mast-in{max-width:1180px; margin:0 auto; padding:34px 20px 26px;
+  display:flex; flex-wrap:wrap; gap:26px; align-items:flex-end; justify-content:space-between}
+.eyebrow{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--accent); margin-bottom:10px}
+.mast p{margin:10px 0 0; font-size:15px; max-width:56ch}
+.facts{display:grid; grid-template-columns:repeat(2,minmax(110px,auto)); gap:4px 26px;
+  font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--ink-3)}
+.facts b{color:var(--ink); font-weight:500; font-variant-numeric:tabular-nums}
+
+/* ---------- sections ---------- */
+section{padding-top:52px; scroll-margin-top:20px}
+.sec-head{display:flex; gap:14px; align-items:baseline; border-bottom:1px solid var(--line);
+  padding-bottom:10px; margin-bottom:22px}
+.sec-num{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--accent); font-weight:500;
+  padding-top:4px}
+.sec-note{margin-left:auto; font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--ink-3);
+  text-align:right}
+
+/* ---------- scroller for wide figures ---------- */
+.scroller{overflow-x:auto; border:1px solid var(--line); border-radius:6px; background:var(--surface);
+  box-shadow:var(--shadow)}
+.scroller svg{display:block; min-width:940px; width:100%; height:auto}
+.fig-cap{font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--ink-3); margin-top:8px}
+
+/* ---------- stage cards ---------- */
+.stages{display:grid; gap:14px; grid-template-columns:repeat(auto-fill,minmax(330px,1fr))}
+.stage{border:1px solid var(--line); border-radius:6px; background:var(--surface); padding:14px 16px 16px;
+  display:flex; flex-direction:column; gap:10px}
+.stage-top{display:flex; gap:10px; align-items:baseline}
+.stage-n{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--accent); font-weight:600}
+.stage h3{flex:1}
+.io{display:grid; grid-template-columns:auto 1fr; gap:3px 10px; font-size:12.5px;
+  font-family:"IBM Plex Mono",monospace; color:var(--ink-2)}
+.io dt{color:var(--ink-3)}
+.io dd{margin:0; overflow-wrap:anywhere}
+.stage .where{font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--ink-3);
+  border-top:1px dashed var(--line); padding-top:8px; overflow-wrap:anywhere}
+
+/* ---------- badges ---------- */
+.b{display:inline-flex; align-items:center; gap:5px; font-family:"IBM Plex Mono",monospace;
+  font-size:10.5px; font-weight:500; letter-spacing:.02em; padding:2px 7px; border-radius:3px;
+  border:1px solid transparent; white-space:nowrap}
+.b-on{background:var(--green-soft); color:var(--green); border-color:var(--green)}
+.b-off{background:var(--surface-2); color:var(--ink-3); border-color:var(--line)}
+.b-warn{background:var(--amber-soft); color:var(--amber); border-color:var(--amber)}
+.b-bad{background:var(--red-soft); color:var(--red); border-color:var(--red)}
+.b-acc{background:var(--accent-soft); color:var(--accent); border-color:var(--accent)}
+.b-vio{background:var(--violet-soft); color:var(--violet); border-color:var(--violet)}
+.badgerow{display:flex; flex-wrap:wrap; gap:5px}
+
+/* ---------- tables ---------- */
+.tbl{overflow-x:auto; border:1px solid var(--line); border-radius:6px; background:var(--surface);
+  box-shadow:var(--shadow)}
+table{border-collapse:collapse; width:100%; min-width:640px; font-size:13.5px}
+th,td{text-align:left; padding:9px 13px; border-bottom:1px solid var(--line-soft); vertical-align:top}
+thead th{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.09em;
+  text-transform:uppercase; color:var(--ink-3); font-weight:500; background:var(--surface-2);
+  border-bottom:1px solid var(--line); white-space:nowrap}
+tbody tr:last-child td{border-bottom:none}
+td.m,th.m{font-family:"IBM Plex Mono",monospace; font-size:12px; overflow-wrap:anywhere}
+td.num{font-variant-numeric:tabular-nums; text-align:right; white-space:nowrap}
+tbody tr:hover{background:var(--surface-2)}
+caption{caption-side:top; text-align:left; font-family:"IBM Plex Mono",monospace; font-size:11px;
+  color:var(--ink-3); padding:9px 13px 0}
+
+/* ---------- invariants ---------- */
+.inv{display:grid; gap:10px; grid-template-columns:repeat(auto-fill,minmax(285px,1fr))}
+.inv li{list-style:none; border-left:2px solid var(--accent); background:var(--surface);
+  border-top:1px solid var(--line-soft); border-right:1px solid var(--line-soft);
+  border-bottom:1px solid var(--line-soft); border-radius:0 5px 5px 0; padding:10px 13px}
+.inv ul{margin:0; padding:0}
+.inv .t{font-weight:600; font-size:13.5px; display:block; margin-bottom:3px}
+.inv .w{font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--ink-3); display:block;
+  margin-top:5px; overflow-wrap:anywhere}
+.inv p{font-size:13px; margin:0; color:var(--ink-2)}
+
+/* ---------- callouts ---------- */
+.note{border:1px solid var(--line); border-left:3px solid var(--amber); background:var(--surface);
+  border-radius:0 5px 5px 0; padding:12px 15px; margin:16px 0}
+.note.acc{border-left-color:var(--accent)}
+.note.bad{border-left-color:var(--red)}
+.note .lbl{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.09em;
+  text-transform:uppercase; color:var(--amber); display:block; margin-bottom:5px}
+.note.acc .lbl{color:var(--accent)} .note.bad .lbl{color:var(--red)}
+.note p{font-size:13.5px; margin:0 0 6px} .note p:last-child{margin:0}
+
+.cols2{display:grid; gap:18px; grid-template-columns:repeat(auto-fit,minmax(310px,1fr))}
+.legend{display:flex; flex-wrap:wrap; gap:14px; margin-top:10px;
+  font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--ink-3)}
+.legend span{display:inline-flex; align-items:center; gap:6px}
+.sw{width:11px; height:11px; border-radius:2px; border:1px solid var(--line); display:inline-block}
+
+footer{border-top:1px solid var(--line); margin-top:56px; padding-top:18px;
+  font-family:"IBM Plex Mono",monospace; font-size:11.5px; color:var(--ink-3)}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <div class="mast-in">
+    <div>
+      <div class="eyebrow">Islamic Research AI &middot; architecture &amp; request path</div>
+      <h1>Grounded Retrieval Spine</h1>
+      <p>How a question becomes an answer: ten stages, three retrieval arms, five models, and one
+      rule — canonical source text may only come out of the database.</p>
+    </div>
+    <div class="facts">
+      <span>Verses indexed</span><b>6,236</b>
+      <span>Tafsir passages</span><b>13,532</b>
+      <span>Vector dim</span><b>1,024</b>
+      <span>Anchors per turn</span><b>3</b>
+      <span>Migrations</span><b>001&ndash;009</b>
+      <span>Read from</span><b>source + live DB</b>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+<!-- =========================== 1. FLOW =========================== -->
+<section id="flow">
+  <div class="sec-head">
+    <span class="sec-num">01</span>
+    <h2>Question to answer</h2>
+    <span class="sec-note">src/islamic_research_ai/service.py &middot; ResearchService.research()</span>
+  </div>
+
+  <div class="scroller">
+  <svg viewBox="0 0 1360 660" role="img" aria-label="End-to-end request flow through ten pipeline stages with alternative exits">
+    <defs>
+      <marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+        <path d="M0,0 L7,3 L0,6 z" fill="var(--ink-3)"/>
+      </marker>
+      <marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+        <path d="M0,0 L7,3 L0,6 z" fill="var(--red)"/>
+      </marker>
+      <marker id="ara" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+        <path d="M0,0 L7,3 L0,6 z" fill="var(--amber)"/>
+      </marker>
+      <style>
+        .bx{fill:var(--surface); stroke:var(--accent); stroke-width:1.4}
+        .bx-t{fill:var(--ink); font:600 14px "IBM Plex Sans Condensed",sans-serif}
+        .bx-s{fill:var(--ink-3); font:400 10.5px "IBM Plex Mono",monospace}
+        .ex{fill:var(--red-soft); stroke:var(--red); stroke-width:1}
+        .ex-t{fill:var(--red); font:500 10.5px "IBM Plex Mono",monospace}
+        .dg{fill:var(--amber-soft); stroke:var(--amber); stroke-width:1}
+        .dg-t{fill:var(--amber); font:500 10.5px "IBM Plex Mono",monospace}
+        .ln{stroke:var(--ink-3); stroke-width:1.4; fill:none}
+        .lnr{stroke:var(--red); stroke-width:1; fill:none; stroke-dasharray:3 3}
+        .lna{stroke:var(--amber); stroke-width:1; fill:none; stroke-dasharray:3 3}
+        .lane{fill:var(--ink-3); font:500 10.5px "IBM Plex Mono",monospace; letter-spacing:.09em}
+        .num{fill:var(--accent); font:600 11px "IBM Plex Mono",monospace}
+      </style>
+    </defs>
+
+    <!-- lane labels -->
+    <text class="lane" x="30" y="30">DETERMINISTIC + PLANNING</text>
+    <text class="lane" x="30" y="352">EVIDENCE + GENERATION</text>
+    <line x1="30" y1="38" x2="1330" y2="38" stroke="var(--line)" stroke-width="1"/>
+    <line x1="30" y1="360" x2="1330" y2="360" stroke="var(--line)" stroke-width="1"/>
+
+    <!-- entry -->
+    <text class="bx-s" x="30" y="70" fill="var(--accent)">user message + locale + conversation_id</text>
+
+    <!-- ROW A -->
+    <g>
+      <rect class="bx" x="30"   y="80" width="232" height="66" rx="4"/>
+      <text class="num" x="42" y="99">01</text><text class="bx-t" x="66" y="100">Scope precheck</text>
+      <text class="bx-s" x="42" y="118">ScopePolicy.precheck + </text>
+      <text class="bx-s" x="42" y="133">resolve_deterministically()</text>
+
+      <rect class="bx" x="296"  y="80" width="232" height="66" rx="4"/>
+      <text class="num" x="308" y="99">02</text><text class="bx-t" x="332" y="100">Planning</text>
+      <text class="bx-s" x="308" y="118">deterministic plan, else</text>
+      <text class="bx-s" x="308" y="133">GroqPlanner &rarr; PlanValidator</text>
+
+      <rect class="bx" x="562"  y="80" width="232" height="66" rx="4"/>
+      <text class="num" x="574" y="99">03</text><text class="bx-t" x="598" y="100">Compile</text>
+      <text class="bx-s" x="574" y="118">WorkflowCompiler &rarr; DAG</text>
+      <text class="bx-s" x="574" y="133">anchors K=3, deadline 30s</text>
+
+      <rect class="bx" x="828"  y="80" width="232" height="66" rx="4"/>
+      <text class="num" x="840" y="99">04</text><text class="bx-t" x="864" y="100">Retrieval</text>
+      <text class="bx-s" x="840" y="118">bge-m3 embed + 3 arms</text>
+      <text class="bx-s" x="840" y="133">lexical &amp; dense, RRF k=60</text>
+
+      <rect class="bx" x="1094" y="80" width="232" height="66" rx="4"/>
+      <text class="num" x="1106" y="99">05</text><text class="bx-t" x="1130" y="100">Fusion</text>
+      <text class="bx-s" x="1106" y="118">_fuse_candidate_arms()</text>
+      <text class="bx-s" x="1106" y="133">&Sigma; 1/(60+rank) per verse</text>
+    </g>
+    <path class="ln" d="M262,113 H290" marker-end="url(#ar)"/>
+    <path class="ln" d="M528,113 H556" marker-end="url(#ar)"/>
+    <path class="ln" d="M794,113 H822" marker-end="url(#ar)"/>
+    <path class="ln" d="M1060,113 H1088" marker-end="url(#ar)"/>
+
+    <!-- ROW A exits -->
+    <g>
+      <rect class="ex" x="30"  y="196" width="232" height="34" rx="3"/>
+      <text class="ex-t" x="42" y="217">exit &rarr; UNSUPPORTED_SCOPE</text>
+      <rect class="ex" x="296" y="196" width="232" height="52" rx="3"/>
+      <text class="ex-t" x="308" y="215">exit &rarr; CLARIFICATION_REQUIRED</text>
+      <text class="ex-t" x="308" y="234">FAILED_SAFE / TEMP_UNAVAILABLE</text>
+      <rect class="dg" x="828" y="196" width="232" height="52" rx="3"/>
+      <text class="dg-t" x="840" y="215">degrade &rarr; LEXICAL_ONLY</text>
+      <text class="dg-t" x="840" y="234">(embedding provider down)</text>
+    </g>
+    <path class="lnr" d="M146,146 V192" marker-end="url(#arr)"/>
+    <path class="lnr" d="M412,146 V192" marker-end="url(#arr)"/>
+    <path class="lna" d="M944,146 V192" marker-end="url(#ara)"/>
+
+    <!-- ambiguity probe loop -->
+    <path class="ln" d="M470,80 V62 H612 V76" marker-end="url(#ar)" stroke-dasharray="4 3"/>
+    <text class="bx-s" x="478" y="58" fill="var(--violet)">ambiguity hypothesis &rarr; one bounded probe pass</text>
+
+    <!-- wrap A -> B -->
+    <path class="ln" d="M1326,113 H1344 V300 H16 V412 H24" marker-end="url(#ar)"/>
+
+    <!-- ROW B -->
+    <g>
+      <rect class="bx" x="30"   y="380" width="232" height="66" rx="4"/>
+      <text class="num" x="42" y="399">06</text><text class="bx-t" x="66" y="400">Hydration</text>
+      <text class="bx-s" x="42" y="418">late-bind top 3 anchors,</text>
+      <text class="bx-s" x="42" y="433">&plusmn;2 structural window</text>
+
+      <rect class="bx" x="296"  y="380" width="232" height="66" rx="4"/>
+      <text class="num" x="308" y="399">07</text><text class="bx-t" x="332" y="400">Evidence</text>
+      <text class="bx-s" x="308" y="418">EvidenceAssembler + rights</text>
+      <text class="bx-s" x="308" y="433">E1..En, requirements check</text>
+
+      <rect class="bx" x="562"  y="380" width="232" height="66" rx="4"/>
+      <text class="num" x="574" y="399">08</text><text class="bx-t" x="598" y="400">Relevance</text>
+      <text class="bx-s" x="574" y="418">assess_topic_evidence()</text>
+      <text class="bx-s" x="574" y="433">then non-emptying boundary</text>
+
+      <rect class="bx" x="828"  y="380" width="232" height="66" rx="4"/>
+      <text class="num" x="840" y="399">09</text><text class="bx-t" x="864" y="400">Synthesis</text>
+      <text class="bx-s" x="840" y="418">gpt-oss-20b, 1 repair</text>
+      <text class="bx-s" x="840" y="433">GroundingValidator gate</text>
+
+      <rect class="bx" x="1094" y="380" width="232" height="66" rx="4"/>
+      <text class="num" x="1106" y="399">10</text><text class="bx-t" x="1130" y="400">Render + compose</text>
+      <text class="bx-s" x="1106" y="418">ExactRenderer (canonical)</text>
+      <text class="bx-s" x="1106" y="433">gpt-oss-120b + gate</text>
+    </g>
+    <path class="ln" d="M262,413 H290" marker-end="url(#ar)"/>
+    <path class="ln" d="M528,413 H556" marker-end="url(#ar)"/>
+    <path class="ln" d="M794,413 H822" marker-end="url(#ar)"/>
+    <path class="ln" d="M1060,413 H1088" marker-end="url(#ar)"/>
+    <path class="ln" d="M1326,413 H1348" marker-end="url(#ar)"/>
+    <text class="bx-s" x="1240" y="468" fill="var(--accent)">ResearchResponseV1 + trace</text>
+
+    <!-- ROW B exits -->
+    <g>
+      <rect class="ex" x="296" y="500" width="232" height="34" rx="3"/>
+      <text class="ex-t" x="308" y="521">exit &rarr; FAILED_SAFE (rights)</text>
+
+      <rect class="dg" x="562" y="500" width="232" height="52" rx="3"/>
+      <text class="dg-t" x="574" y="519">boundary retains anchors</text>
+      <text class="dg-t" x="574" y="538">or exit INSUFFICIENT_EVIDENCE</text>
+
+      <rect class="dg" x="828" y="500" width="232" height="52" rx="3"/>
+      <text class="dg-t" x="840" y="519">fallback &rarr; source-only view</text>
+      <text class="dg-t" x="840" y="538">or exit INSUFFICIENT_EVIDENCE</text>
+
+      <rect class="dg" x="1094" y="500" width="232" height="34" rx="3"/>
+      <text class="dg-t" x="1106" y="521">gate fails twice &rarr; no narrative</text>
+    </g>
+    <path class="lnr" d="M412,446 V496" marker-end="url(#arr)"/>
+    <path class="lna" d="M678,446 V496" marker-end="url(#ara)"/>
+    <path class="lna" d="M944,446 V496" marker-end="url(#ara)"/>
+    <path class="lna" d="M1210,446 V496" marker-end="url(#ara)"/>
+
+    <!-- failover rail -->
+    <rect x="296" y="586" width="1030" height="40" rx="4" fill="var(--violet-soft)" stroke="var(--violet)" stroke-width="1"/>
+    <text x="310" y="603" fill="var(--violet)" font-family="IBM Plex Mono,monospace" font-size="10.5" font-weight="500">
+      QUOTA FAILOVER RAIL &mdash; stages 02, 09, 10</text>
+    <text x="310" y="618" fill="var(--violet)" font-family="IBM Plex Mono,monospace" font-size="10.5">
+      Groq 429 / quota-exhausted &rarr; local Gemma on 127.0.0.1:18080, sticky for the rest of the turn</text>
+    <path class="ln" d="M412,586 V450" stroke="var(--violet)" stroke-dasharray="3 3"/>
+    <path class="ln" d="M944,586 V450" stroke="var(--violet)" stroke-dasharray="3 3"/>
+    <path class="ln" d="M1290,586 V568 H1340 V450" stroke="var(--violet)" stroke-dasharray="3 3"/>
+  </svg>
+  </div>
+  <div class="legend">
+    <span><i class="sw" style="background:var(--surface);border-color:var(--accent)"></i>pipeline stage</span>
+    <span><i class="sw" style="background:var(--red-soft);border-color:var(--red)"></i>terminal exit</span>
+    <span><i class="sw" style="background:var(--amber-soft);border-color:var(--amber)"></i>degrade / fallback, turn continues</span>
+    <span><i class="sw" style="background:var(--violet-soft);border-color:var(--violet)"></i>provider failover</span>
+  </div>
+  <p class="fig-cap">Stages 01&ndash;10 run in one async call. Every exit persists a response and a trace before returning.</p>
+</section>
+
+<!-- =========================== 2. STAGES =========================== -->
+<section id="stages">
+  <div class="sec-head">
+    <span class="sec-num">02</span>
+    <h2>Per stage: in, out, decision</h2>
+    <span class="sec-note">defaults as wired in composition.py</span>
+  </div>
+
+  <div class="stages">
+
+    <article class="stage">
+      <div class="stage-top"><span class="stage-n">01</span><h3>Scope + resolution</h3></div>
+      <dl class="io">
+        <dt>in</dt><dd>raw message, locale, last 5 user turns</dd>
+        <dt>out</dt><dd>ScopeDecisionV1 + DeterministicResolutionContextV1</dd>
+        <dt>decide</dt><dd>regex over fiqh / personal-ruling / prompt-injection / out-of-domain / realtime shapes</dd>
+        <dt>alt</dt><dd class="b b-bad">UNSUPPORTED_SCOPE</dd>
+      </dl>
+      <div class="where">scope.py &middot; planner.resolve_deterministically() &middot; anaphora inherits a reference only from the
+      immediately preceding turn</div>
+    </article>
+
+    <article class="stage">
+      <div class="stage-top"><span class="stage-n">02</span><h3>Planning</h3></div>
+      <dl class="io">
+        <dt>in</dt><dd>normalized query, working context, resolution</dd>
+        <dt>out</dt><dd>ResearchPlanV1 (intent, operations, semantic targets)</dd>
+        <dt>decide</dt><dd>exact-reference display &rarr; deterministic plan, no model call; everything else &rarr;
+          <code>openai/gpt-oss-20b</code></dd>
+        <dt>alt</dt><dd class="b b-bad">CLARIFICATION</dd> <dt></dt><dd class="b b-bad">FAILED_SAFE after 1 repair</dd>
+      </dl>
+      <div class="where">planner.py &middot; Arabic topic turns get a <code>FETCH_TAFSIR_PASSAGES</code> op appended with
+      <code>topic_tafsir_alias</code>; English topic turns deliberately get none</div>
+    </article>
+
+    <article class="stage">
+      <div class="stage-top"><span class="stage-n">03</span><h3>Compile</h3></div>
+      <dl class="io">
+        <dt>in</dt><dd>plan + scope + resolution</dd>
+        <dt>out</dt><dd>ExecutionPlanV1: search nodes, one late-bound fetch node, optional tafsir node</dd>
+        <dt>decide</dt><dd>planner <code>part:</code> labels become extra search queries; all arms still share one
+          K=3 anchor selection</dd>
+        <dt>limits</dt><dd>deadline 30,000&nbsp;ms &middot; REQUIRE_ALL</dd>
+      </dl>
+      <div class="where">workflow.py &middot; WorkflowCompiler(topic_anchor_limit=3)</div>
+    </article>
+
+    <article class="stage">
+      <div class="stage-top"><span class="stage-n">04</span><h3>Retrieval</h3></div>
+      <dl class="io">
+        <dt>in</dt><dd>search query string (raw, per arm)</dd>
+        <dt>out</dt><dd>QuranSearchCandidateV1[] &mdash; opaque verse locations, never citable</dd>
+        <dt>arms</dt><dd>quran hybrid &middot; Al-Mukhtasar tafsir-first &middot; QUL topics <span class="b b-off">off</span></dd>
+        <dt>alt</dt><dd class="b b-warn">LEXICAL_ONLY on embedding failure</dd>
+      </dl>
+      <div class="where">tools.py PostgresQuranSource.search() &middot; lexical query is morphologically expanded,
+      the dense query is the raw text</div>
+    </article>
+
+    <article class="stage">
+      <div class="stage-top"><span class="stage-n">05</span><h3>Fusion</h3></div>
+      <dl class="io">
+        <dt>in</dt><dd>per-arm ranked candidate lists</dd>
+        <dt>out</dt><dd>one list keyed by (chapter, verse) with <code>fused_arm_score</code></dd>
+        <dt>decide</dt><dd>&Sigma; of 1/(60+rank) across arms; duplicate location keeps the Quran index identity
+          and both arm scores</dd>
+        <dt>then</dt><dd>topic rerank <span class="b b-off">off</span> &middot; cross-encoder <span class="b b-off">off</span></dd>
+      </dl>
+      <div class="where">tools.py _fuse_candidate_arms() &middot; inner SQL RRF also uses k=60 over lexical&times;dense ranks</div>
+    </article>
+
+    <article class="stage">
+      <div class="stage-top"><span class="stage-n">06</span><h3>Late binding + hydration</h3></div>
+      <dl class="io">
+        <dt>in</dt><dd>all search node results</dd>
+        <dt>out</dt><dd>EvidenceItem[] of exact canonical rows</dd>
+        <dt>decide</dt><dd>dedupe by verse, sort by the newest available score
+          (<code>cross_encoder</code> &rarr; <code>qul_topic_blend</code> &rarr; <code>fused_arm_score</code>), take 3</dd>
+        <dt>window</dt><dd>&plusmn;2 verses, structural, never topic-dependent</dd>
+      </dl>
+      <div class="where">tools.py WorkflowExecutor._late_bound_candidates() &middot; hydrate_candidates_with_context()
+      &middot; dropped candidates are traced with reason LATE_BINDING_MAXIMUM_ITEMS</div>
+    </article>
+
+    <article class="stage">
+      <div class="stage-top"><span class="stage-n">07</span><h3>Evidence assembly</h3></div>
+      <dl class="io">
+        <dt>in</dt><dd>node results</dd>
+        <dt>out</dt><dd>EvidenceSet: E1..En, requirements verdict, permitted synthesis deployments</dd>
+        <dt>decide</dt><dd>only <code>get_quran_passage.v1</code> and <code>get_tafsir_passages.v1</code> may carry
+          evidence; anything else raises</dd>
+        <dt>alt</dt><dd class="b b-bad">FAILED_SAFE on a rights refusal</dd>
+      </dl>
+      <div class="where">evidence.py &middot; rights.py SourcePolicy.authorize() &middot; every authorization is written to
+      <code>source_activation_records</code></div>
+    </article>
+
+    <article class="stage">
+      <div class="stage-top"><span class="stage-n">08</span><h3>Relevance</h3></div>
+      <dl class="io">
+        <dt>in</dt><dd>hydrated evidence + semantic subtargets</dd>
+        <dt>out</dt><dd>narrowed EvidenceSet + covered/missing target ids</dd>
+        <dt>decide</dt><dd>deterministic lexical/root matching per subtarget; the model reviewer is
+          <span class="b b-bad">quarantined</span> and not wired</dd>
+        <dt>alt</dt><dd class="b b-warn">K1: empty match retains all hydrated anchor windows</dd>
+      </dl>
+      <div class="where">retrieval/relevance.py &middot; enforce_ranked_relevance_boundary() runs after every producer,
+      so no implementation can empty a non-empty retrieval</div>
+    </article>
+
+    <article class="stage">
+      <div class="stage-top"><span class="stage-n">09</span><h3>Synthesis + grounding</h3></div>
+      <dl class="io">
+        <dt>in</dt><dd>question, EvidenceSet, response_language</dd>
+        <dt>out</dt><dd>AnswerDraftV1 &mdash; atomic claims + source block requests</dd>
+        <dt>budget</dt><dd>1,400 tok Quran / 2,000 tok tafsir, one repair at &times;1.5</dd>
+        <dt>gate</dt><dd>sanitize &rarr; GroundingValidator &rarr; min-length recheck</dd>
+        <dt>alt</dt><dd class="b b-warn">deterministic source-only view</dd>
+      </dl>
+      <div class="where">synthesis.py &middot; claims must paraphrase; reproducing canonical wording raises
+      CanonicalTextGroundingError and drops to the deterministic view</div>
+    </article>
+
+    <article class="stage">
+      <div class="stage-top"><span class="stage-n">10</span><h3>Render + compose</h3></div>
+      <dl class="io">
+        <dt>in</dt><dd>draft + EvidenceSet</dd>
+        <dt>out</dt><dd>ResearchResponseV1 blocks: NARRATIVE, CLAIM, SOURCE, NOTICE</dd>
+        <dt>decide</dt><dd>ExactRenderer copies canonical text out of evidence; AnswerComposer only ever sees
+          claim text and reference labels</dd>
+        <dt>alt</dt><dd class="b b-warn">gate fails twice &rarr; claims and sources, no narrative</dd>
+      </dl>
+      <div class="where">synthesis.ExactRenderer &middot; composition_layer.py &middot; anti_fabrication.py &middot;
+      <code>output_kind</code> is re-derived from the rendered blocks, not from the branch that produced them</div>
+    </article>
+
+  </div>
+
+  <div class="note acc">
+    <span class="lbl">Where the branches actually land today</span>
+    <p>Both grounding fallbacks call <code>validated_topic_fallback()</code>, which picks
+    <code>deterministic_contextual_topic_draft()</code> only when <code>supported_facet_summaries</code> is
+    non-empty. That tuple is constructed in exactly one place — <code>planner.py</code>, inside the disabled
+    model-review path — so in the shipped configuration it is always empty and every fallback renders
+    <code>deterministic_topic_source_view_draft()</code>: the attributed source-only reading view.</p>
+  </div>
+</section>
+
+<!-- =========================== 3. DATA =========================== -->
+<section id="data">
+  <div class="sec-head">
+    <span class="sec-num">03</span>
+    <h2>Data sources and the shape in Postgres</h2>
+    <span class="sec-note">counts read from the running local database</span>
+  </div>
+
+  <div class="tbl">
+  <table>
+    <caption>Corpora. Every row is local; nothing is fetched per request.</caption>
+    <thead><tr>
+      <th>Resource alias</th><th>Work</th><th>Tier</th><th class="num">Rows</th><th>Indexed as</th>
+    </tr></thead>
+    <tbody>
+      <tr><td class="m">tanzil-uthmani-v1.1</td><td>Tanzil Uthmani Arabic, rev 1.1</td>
+        <td><span class="b b-acc">canonical</span></td><td class="num">6,236</td>
+        <td class="m">quran_search_documents.normalized_arabic + embedding</td></tr>
+      <tr><td class="m">quranenc-rowwad-en-v1.0.19</td><td>QuranEnc Rowwad English</td>
+        <td><span class="b b-acc">canonical</span></td><td class="num">6,236</td>
+        <td class="m">quran_search_documents.normalized_translation</td></tr>
+      <tr><td class="m">qul-tafsir-almukhtasar-ar-v1</td><td>Al-Mukhtasar fi Tafsir al-Quran al-Karim</td>
+        <td><span class="b b-on">search + evidence</span></td><td class="num">6,211</td>
+        <td class="m">tafsir_search_documents, all 6,211 embedded</td></tr>
+      <tr><td class="m">qul-tafsir-ibnkathir-ar-v1</td><td>Tafsir Ibn Kathir</td>
+        <td><span class="b b-off">evidence only</span></td><td class="num">1,911</td>
+        <td class="m">tafsir_passages, not embedded</td></tr>
+      <tr><td class="m">qul-tafsir-alqurtubi-ar-v1</td><td>Al-Jami&#39; li-Ahkam al-Quran</td>
+        <td><span class="b b-off">evidence only</span></td><td class="num">3,258</td>
+        <td class="m">tafsir_passages, not embedded</td></tr>
+      <tr><td class="m">qul-tafsir-albaghawi-ar-v1</td><td>Ma&#39;alim al-Tanzil</td>
+        <td><span class="b b-off">evidence only</span></td><td class="num">2,152</td>
+        <td class="m">tafsir_passages, not embedded</td></tr>
+      <tr><td class="m">qul-ayah-topics-v1</td><td>QUL curated topic hierarchy</td>
+        <td><span class="b b-off">arm disabled</span></td><td class="num">2,512</td>
+        <td class="m">qul_topic_documents + 30,687 ayah mappings</td></tr>
+      <tr><td class="m">qf-tafsir-jalalayn-ar<br>qf-tafsir-ibn-kathir-en</td>
+        <td>Quran Foundation, prelive API</td>
+        <td><span class="b b-bad">removed</span></td><td class="num">0</td>
+        <td class="m">resource rows remain, no active revision; runtime emits no QF block</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="cols2" style="margin-top:20px">
+    <div class="tbl">
+    <table style="min-width:0">
+      <caption>Indexes that retrieval actually uses</caption>
+      <thead><tr><th>Index</th><th>Kind</th></tr></thead>
+      <tbody>
+        <tr><td class="m">quran_search_documents_fts_idx</td><td class="m">GIN tsvector (simple)</td></tr>
+        <tr><td class="m">…_ar_trgm_idx / …_en_trgm_idx</td><td class="m">GIN pg_trgm</td></tr>
+        <tr><td class="m">…_embedding_hnsw_idx</td><td class="m">HNSW vector_cosine_ops, 1024d</td></tr>
+        <tr><td class="m">…_enriched_embedding_hnsw_idx</td><td class="m">HNSW, populated but unused</td></tr>
+        <tr><td class="m">tafsir_search_documents_fts_idx</td><td class="m">GIN tsvector</td></tr>
+        <tr><td class="m">tafsir_search_documents_trgm_idx</td><td class="m">GIN pg_trgm</td></tr>
+        <tr><td class="m">tafsir_search_documents_embedding_hnsw_idx</td><td class="m">HNSW, 1024d</td></tr>
+        <tr><td class="m">qul_topic_documents_embedding_hnsw_idx</td><td class="m">HNSW, 1024d (arm off)</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="tbl">
+    <table style="min-width:0">
+      <caption>Migrations, applied in order at container build</caption>
+      <thead><tr><th>File</th><th>Builds</th></tr></thead>
+      <tbody>
+        <tr><td class="m">001_initial</td><td>vector/pg_trgm/pgcrypto, resources, revisions, activation records, canonical text, search documents, plan+response records</td></tr>
+        <tr><td class="m">002_archive_pre_v21…</td><td>quarantines pre-v2.1 contract rows</td></tr>
+        <tr><td class="m">003_redact_qf_tafsir…</td><td>redacts QF text and adds CHECK constraints against its reappearance</td></tr>
+        <tr><td class="m">004_conversation_history</td><td>conversations, conversation_turns</td></tr>
+        <tr><td class="m">005_qul_tafsir</td><td>tafsir_passages + tafsir_search_documents, both tiers</td></tr>
+        <tr><td class="m">006_turn_trace_events</td><td>trace_events jsonb on turns</td></tr>
+        <tr><td class="m">007_gate_diagnostics</td><td>gate_rejections_by_rule (rule names and counts only)</td></tr>
+        <tr><td class="m">008_enriched_quran_embeddings</td><td>second, context+tafsir vector column</td></tr>
+        <tr><td class="m">009_qul_ayah_topics</td><td>topic documents and ayah mappings</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="note">
+    <span class="lbl">One document, two vectors</span>
+    <p><code>embedding</code> (verse + translation) and <code>enriched_embedding</code> (verse + context +
+    tafsir excerpt, ≤480 chars) are both fully populated — 6,236 each. <code>quran_embedding_variant</code>
+    defaults to <code>base</code>, so the enriched column is written, indexed and never read. It exists so the
+    A/B is reversible without re-ingesting the corpus.</p>
+  </div>
+</section>
+
+<!-- =========================== 4. EXTERNAL =========================== -->
+<section id="external">
+  <div class="sec-head">
+    <span class="sec-num">04</span>
+    <h2>External calls, and what happens when they fail</h2>
+    <span class="sec-note">providers/ &middot; routing.py</span>
+  </div>
+
+  <div class="tbl">
+  <table>
+    <thead><tr>
+      <th>Provider</th><th>Called from</th><th>For</th><th>On failure</th>
+    </tr></thead>
+    <tbody>
+      <tr>
+        <td class="m">Groq<br><span style="color:var(--ink-3)">api.groq.com/openai/v1</span></td>
+        <td class="m">providers/groq.py &larr; GroqPlanner, GroqSynthesizer, AnswerComposer</td>
+        <td>structured JSON: plans, claims, narrative</td>
+        <td>429 &rarr; RATE_LIMITED, or QUOTA_EXHAUSTED when quota tokens parse &rarr;
+          <span class="b b-vio">local Gemma, sticky for the turn</span><br>
+          408 &rarr; TIMEOUT &middot; 5xx &rarr; UNAVAILABLE &mdash; <b>no failover</b>, the turn ends
+          TEMPORARILY_UNAVAILABLE</td>
+      </tr>
+      <tr>
+        <td class="m">Cloudflare Workers AI<br><span style="color:var(--ink-3)">/ai/run &middot; @cf/baai/bge-m3</span></td>
+        <td class="m">providers/cloudflare.py &larr; PostgresQuranSource.search(), ingestion</td>
+        <td>1,024-dim query and document embeddings</td>
+        <td>degrades to <span class="b b-warn">lexical-only search</span> on the same local corpus, traced as
+          <code>embedding_degraded_to_lexical</code>; never an outage. No retry.</td>
+      </tr>
+      <tr>
+        <td class="m">Cloudflare reranker<br><span style="color:var(--ink-3)">@cf/baai/bge-reranker-base</span></td>
+        <td class="m">providers/cloudflare.py</td>
+        <td>cross-encoder rescoring of the top 20</td>
+        <td><span class="b b-off">disabled by default</span>; when on, any failure keeps the fused order</td>
+      </tr>
+      <tr>
+        <td class="m">Local MLX server<br><span style="color:var(--ink-3)">127.0.0.1:18080/v1</span></td>
+        <td class="m">providers/local_mlx.py</td>
+        <td>failover planning, synthesis, composition</td>
+        <td>loopback only, concurrency 1, 90&nbsp;s timeout, 100k prompt chars; failure surfaces as
+          TEMPORARILY_UNAVAILABLE</td>
+      </tr>
+      <tr>
+        <td class="m">Postgres<br><span style="color:var(--ink-3)">127.0.0.1:55432</span></td>
+        <td class="m">repositories/postgres.py</td>
+        <td>all retrieval, all canonical text, all persistence</td>
+        <td>tool node errors stop dependent nodes immediately; FAILED_SAFE or TEMPORARILY_UNAVAILABLE</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note bad" style="margin-top:18px">
+    <span class="lbl">Forbidden routes — asserted in code, not configurable</span>
+    <p><code>ProviderRoutePolicy</code> rejects a completion unless the effective deployment matches exactly:
+    deployment id, gateway provider, effective provider, model id, route policy id, zero-data-retention
+    enforced, provider training off, no subprocessors, not a paid route, no provider-side fallback. Only the
+    model id comes from <code>config/chat_deployments.json</code>; everything else is hard-coded. A mismatch
+    raises <code>ProviderRouteError</code> and the turn fails rather than proceeding on an unverified route.</p>
+    <p>Quran Foundation is a removed route: no active revision, no runtime code path, an application-level
+    redaction for historical rows, and CHECK constraints on <code>research_response_records</code>,
+    <code>legacy_research_response_records</code> and <code>conversation_turns</code> so a regression fails at
+    the database boundary.</p>
+  </div>
+</section>
+
+<!-- =========================== 5. MODELS =========================== -->
+<section id="models">
+  <div class="sec-head">
+    <span class="sec-num">05</span>
+    <h2>The models, and why each one</h2>
+    <span class="sec-note">config/chat_deployments.json &middot; composition.py</span>
+  </div>
+
+  <div class="tbl">
+  <table>
+    <caption>In use</caption>
+    <thead><tr><th>Model</th><th>Stage</th><th>Budget</th><th>Why this one</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="m">openai/gpt-oss-20b<br><span class="b b-acc">Groq</span></td>
+        <td>02 planning &middot; relevance role &middot; 09 synthesis</td>
+        <td class="m">900 tok plan<br>1,400 / 2,000 tok synth</td>
+        <td>Every output here is short, strict JSON under a schema and a grounding gate. Schema compliance and
+          latency matter; prose quality does not, because none of this text reaches the reader unedited. The
+          relevance role shares the planner client: <code>GroqPlanner</code> has no per-call-type routing seam yet.</td>
+      </tr>
+      <tr>
+        <td class="m">openai/gpt-oss-120b<br><span class="b b-acc">Groq</span></td>
+        <td>10 composition</td>
+        <td class="m">2,000 tok</td>
+        <td>The only role that writes what the user actually reads, and the only one with no strict output
+          schema — so the only role worth spending capability on. Chosen over <code>qwen/qwen3.8-27b</code> and
+          <code>allam-2-7b</code> on an Arabic + English <em>sabr</em> prompt for the most consistent structure
+          and register across both languages.</td>
+      </tr>
+      <tr>
+        <td class="m">@cf/baai/bge-m3<br><span class="b b-acc">Cloudflare</span></td>
+        <td>04 retrieval, all three arms + ingestion</td>
+        <td class="m">1,024 dims</td>
+        <td>One multilingual vector space for Arabic scripture, English translation and Arabic tafsir, so a
+          question in either language reaches the same index. Embeddings are cached per query per turn.</td>
+      </tr>
+      <tr>
+        <td class="m">gemma-4-26b-a4b-it-4bit<br><span class="b b-vio">local MLX</span></td>
+        <td>failover for 02, 09, 10</td>
+        <td class="m">1 slot, 90&nbsp;s</td>
+        <td>Keeps the system answering through a Groq quota wall without a second paid vendor and without
+          sending data off the machine. Pinned to revision <code>0d77464e…</code> with a per-file SHA-256
+          manifest, loopback bind, network and telemetry disabled in the runtime.</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="tbl" style="margin-top:18px">
+  <table>
+    <caption>Tried and rejected — kept as flags so the measurement stays reproducible</caption>
+    <thead><tr><th>Change</th><th>Verdict</th><th>Reason recorded</th></tr></thead>
+    <tbody>
+      <tr><td class="m">@cf/baai/bge-reranker-base as cross-encoder</td>
+        <td><span class="b b-bad">8.0%</span></td>
+        <td>Worst result recorded on the 60-case semantic set against a 24.0% baseline. Arabic quality never
+          evaluated; Workers AI exposes only the base model, not the multilingual v2-m3 the plan assumed.</td></tr>
+      <tr><td class="m">Local structured relevance reviewer</td>
+        <td><span class="b b-bad">16 / 16 failed</span></td>
+        <td>Quarantined. Not wired in <code>composition.py</code> at all; deterministic lexical relevance is the
+          production path.</td></tr>
+      <tr><td class="m">QUL topic arm as a third retrieval arm</td>
+        <td><span class="b b-bad">20.0%</span></td>
+        <td>Better candidates, worse outcome — the selector discarded them.</td></tr>
+      <tr><td class="m">QUL topic labels as an order-only reranker</td>
+        <td><span class="b b-bad">20.0%</span></td>
+        <td>Offline it looked like +10pt; live it measured −4pt, and its first run changed zero of 60 outcomes
+          because it did not write the score the next stage sorts by.</td></tr>
+      <tr><td class="m">Enriched verse documents (52 &rarr; 793 chars)</td>
+        <td><span class="b b-bad">14.0%</span></td>
+        <td>Column kept and fully backfilled; variant left on <code>base</code>.</td></tr>
+      <tr><td class="m">Embedding the formal MSA planner query</td>
+        <td><span class="b b-bad">20.0%</span></td>
+        <td>Removed from the tree. The dense arm embeds the raw query; only the lexical arm is expanded.</td></tr>
+      <tr><td class="m">Ranked top-K relevance retention</td>
+        <td><span class="b b-bad">16.0%</span></td>
+        <td>High-indirection band fell to 4.0%. Flag retained for diagnosis only.</td></tr>
+      <tr><td class="m">qwen/qwen3.8-27b &middot; allam-2-7b</td>
+        <td><span class="b b-off">not promoted</span></td>
+        <td>Both available on this Groq account. <code>allam-2-7b</code> produced the strongest Arabic religious
+          register and is the named candidate for a future composer swap, held back pending an eval harness that
+          scores more than two prompts.</td></tr>
+      <tr><td class="m">qwen/qwen3-32b &middot; kimi-k2-instruct &middot; llama-3.3-70b-versatile</td>
+        <td><span class="b b-off">unavailable</span></td>
+        <td>Named in the plan; not hosted on this account.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note">
+    <span class="lbl">Reading the percentages</span>
+    <p>These are <code>anchor_hit</code> on a 60-case semantic set, taken from <code>HANDOFF.md</code>, not from
+    the code. Per that document the measurement is highly reproducible but not deterministic — a 2-point move is
+    one case and is not evidence; 4 points is. The established default sits at 24.0%.</p>
+  </div>
+</section>
+
+<!-- =========================== 6. FLAGS =========================== -->
+<section id="flags">
+  <div class="sec-head">
+    <span class="sec-num">06</span>
+    <h2>Every flag, and its default</h2>
+    <span class="sec-note">settings.py &middot; Settings reads process env only, never a dotenv file</span>
+  </div>
+
+  <div class="tbl">
+  <table>
+    <thead><tr><th>Setting</th><th>Default</th><th>Effect when on</th></tr></thead>
+    <tbody>
+      <tr><td class="m">relevance_empty_match_retains_anchors</td><td><span class="b b-on">True</span></td>
+        <td>K1 — when the lexical filter matches nothing, keep all hydrated anchor windows instead of only the
+          top-ranked one. The one experiment that ships enabled.</td></tr>
+      <tr><td class="m">developer_trace_enabled</td><td><span class="b b-on">True</span></td>
+        <td>Per-node trace events. Forced <code>False</code> whenever <code>app_environment == "production"</code>.</td></tr>
+      <tr><td class="m">local_chat_enabled</td><td><span class="b b-on">True</span></td>
+        <td>Local Gemma available as the quota failover.</td></tr>
+      <tr><td class="m">deterministic_topic_plans</td><td><span class="b b-on">True</span> (wired)</td>
+        <td>Passed literally in <code>composition.py</code>, not a Settings field.</td></tr>
+      <tr><td class="m">enable_topic_tafsir</td><td><span class="b b-on">True</span> (wired)</td>
+        <td>Arabic topic turns attach <code>topic_tafsir_alias</code>.</td></tr>
+      <tr><td class="m">answer_composer_enabled</td><td><span class="b b-on">True</span> (wired)</td>
+        <td>gpt-oss-120b narrative in front of the claims.</td></tr>
+      <tr><td class="m">qul_topic_arm_enabled</td><td><span class="b b-off">False</span></td>
+        <td>Third retrieval arm, limit 20 topics.</td></tr>
+      <tr><td class="m">qul_topic_rerank_enabled</td><td><span class="b b-off">False</span></td>
+        <td>Order-only rerank of the fused pool by topic-label similarity.</td></tr>
+      <tr><td class="m">cloudflare_reranker_enabled</td><td><span class="b b-off">False</span></td>
+        <td>Cross-encoder over the top 20 candidates.</td></tr>
+      <tr><td class="m">relevance_ranked_retention_enabled</td><td><span class="b b-off">False</span></td>
+        <td>Retain the top <code>relevance_retained_passage_limit</code> = 5 by rank instead of by lexical match.</td></tr>
+      <tr><td class="m">risk_concept_human_subject_terms_enabled</td><td><span class="b b-off">False</span></td>
+        <td>Adds <code>الانسان</code> and <code>man</code> to the humanity evidence-term list. Off because it
+          relaxes a grounding invariant — an owner decision, not a code one.</td></tr>
+      <tr><td class="m">model_relevance_review_enabled</td><td><span class="b b-off">False</span></td>
+        <td>Default on <code>ResearchService</code>; never passed in <code>composition.py</code>, so it cannot
+          be switched on by configuration.</td></tr>
+      <tr><td class="m">local_chat_force</td><td><span class="b b-off">False</span></td>
+        <td>Development acceptance mode: every chat call goes local.</td></tr>
+      <tr><td class="m">project_owner_risk_override_ack</td><td><span class="b b-off">False</span></td>
+        <td>Required to run at all — every source right is <code>UNKNOWN</code> pending Gate 3, and UNKNOWN is
+          blocked without the acknowledged development override.</td></tr>
+      <tr><td class="m">quran_embedding_variant</td><td><span class="b b-off">"base"</span></td>
+        <td><code>"enriched"</code> switches the dense arm to the context+tafsir vector column.</td></tr>
+      <tr><td class="m">topic_tafsir_alias</td><td class="m">qul-tafsir-almukhtasar-ar-v1</td>
+        <td>Validated at startup against four known aliases; an unknown value raises before the app opens.</td></tr>
+      <tr><td class="m">search_limit / hydrate_limit / topic_anchor_limit</td><td class="m">12 / 12 / 3</td>
+        <td><code>topic_anchor_limit</code> is constrained to 1&ndash;3 by the compiler.</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- =========================== 7. BOUNDARIES =========================== -->
+<section id="boundaries">
+  <div class="sec-head">
+    <span class="sec-num">07</span>
+    <h2>How the components talk</h2>
+    <span class="sec-note">ports.py protocols &middot; composition.build_container()</span>
+  </div>
+
+  <div class="scroller">
+  <svg viewBox="0 0 1040 610" role="img" aria-label="Layered component diagram showing ports, adapters and the single canonical text path">
+    <defs>
+      <marker id="ar2" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+        <path d="M0,0 L7,3 L0,6 z" fill="var(--ink-3)"/>
+      </marker>
+      <marker id="ar3" markerWidth="9" markerHeight="9" refX="8" refY="3.5" orient="auto">
+        <path d="M0,0 L8,3.5 L0,7 z" fill="var(--green)"/>
+      </marker>
+      <style>
+        .lay{fill:var(--surface-2); stroke:var(--line); stroke-width:1}
+        .lay-t{fill:var(--ink-3); font:500 10.5px "IBM Plex Mono",monospace; letter-spacing:.09em}
+        .cmp{fill:var(--surface); stroke:var(--accent); stroke-width:1.3}
+        .prt{fill:var(--surface); stroke:var(--violet); stroke-width:1.3; stroke-dasharray:4 2.5}
+        .ext{fill:var(--surface); stroke:var(--ink-3); stroke-width:1.2}
+        .c-t{fill:var(--ink); font:600 12.5px "IBM Plex Sans Condensed",sans-serif}
+        .c-s{fill:var(--ink-3); font:400 10px "IBM Plex Mono",monospace}
+        .p-t{fill:var(--violet); font:500 11px "IBM Plex Mono",monospace}
+        .e2{stroke:var(--ink-3); stroke-width:1.2; fill:none}
+        .gl{stroke:var(--green); stroke-width:2; fill:none}
+      </style>
+    </defs>
+
+    <!-- layer bands -->
+    <rect class="lay" x="16" y="34"  width="1008" height="58"  rx="4"/>
+    <rect class="lay" x="16" y="104" width="1008" height="84"  rx="4"/>
+    <rect class="lay" x="16" y="200" width="1008" height="60"  rx="4"/>
+    <rect class="lay" x="16" y="272" width="1008" height="84"  rx="4"/>
+    <rect class="lay" x="16" y="368" width="1008" height="84"  rx="4"/>
+    <text class="lay-t" x="26" y="26">EDGE</text>
+    <text class="lay-t" x="26" y="52">DELIVERY</text>
+    <text class="lay-t" x="26" y="122">CORE — no provider or SQL knowledge</text>
+    <text class="lay-t" x="26" y="218">PORTS (typing.Protocol)</text>
+    <text class="lay-t" x="26" y="290">ADAPTERS</text>
+    <text class="lay-t" x="26" y="386">INFRASTRUCTURE</text>
+
+    <!-- delivery -->
+    <rect class="cmp" x="140" y="46" width="190" height="34" rx="3"/>
+    <text class="c-t" x="152" y="60">web/ — Next.js</text><text class="c-s" x="152" y="73">/api proxy routes</text>
+    <rect class="cmp" x="350" y="46" width="230" height="34" rx="3"/>
+    <text class="c-t" x="362" y="60">api.py — FastAPI</text>
+    <text class="c-s" x="362" y="73">/v1/research, /stream, /conversations</text>
+    <rect class="cmp" x="600" y="46" width="200" height="34" rx="3"/>
+    <text class="c-t" x="612" y="60">ConversationService</text><text class="c-s" x="612" y="73">history + idempotency</text>
+
+    <!-- core -->
+    <rect class="cmp" x="140" y="116" width="200" height="60" rx="3"/>
+    <text class="c-t" x="152" y="134">ResearchService</text>
+    <text class="c-s" x="152" y="149">orchestrates 01–10</text>
+    <text class="c-s" x="152" y="163">owns every branch</text>
+
+    <rect class="cmp" x="356" y="116" width="150" height="60" rx="3"/>
+    <text class="c-t" x="366" y="134">WorkflowCompiler</text>
+    <text class="c-s" x="366" y="149">plan &rarr; DAG</text>
+    <text class="c-s" x="366" y="163">ScopePolicy</text>
+
+    <rect class="cmp" x="522" y="116" width="160" height="60" rx="3"/>
+    <text class="c-t" x="532" y="134">EvidenceAssembler</text>
+    <text class="c-s" x="532" y="149">SourcePolicy rights</text>
+    <text class="c-s" x="532" y="163">E-ids, requirements</text>
+
+    <rect class="cmp" x="698" y="116" width="150" height="60" rx="3"/>
+    <text class="c-t" x="708" y="134">GroundingValidator</text>
+    <text class="c-s" x="708" y="149">AntiFabricationGate</text>
+    <text class="c-s" x="708" y="163">ExactRenderer</text>
+
+    <rect class="cmp" x="864" y="116" width="150" height="60" rx="3"/>
+    <text class="c-t" x="874" y="134">relevance.py</text>
+    <text class="c-s" x="874" y="149">deterministic filter</text>
+    <text class="c-s" x="874" y="163">+ boundary rule</text>
+
+    <!-- ports -->
+    <rect class="prt" x="140" y="210" width="150" height="38" rx="3"/><text class="p-t" x="152" y="234">ChatModelPort</text>
+    <rect class="prt" x="304" y="210" width="168" height="38" rx="3"/><text class="p-t" x="316" y="234">EmbeddingModelPort</text>
+    <rect class="prt" x="486" y="210" width="130" height="38" rx="3"/><text class="p-t" x="498" y="234">RerankerPort</text>
+    <rect class="prt" x="630" y="210" width="160" height="38" rx="3"/><text class="p-t" x="642" y="234">QuranSourcePort</text>
+    <rect class="prt" x="804" y="210" width="168" height="38" rx="3"/><text class="p-t" x="816" y="234">TafsirSourcePort</text>
+
+    <!-- adapters -->
+    <rect class="cmp" x="140" y="284" width="150" height="60" rx="3"/>
+    <text class="c-t" x="150" y="302">GroqStructured-</text><text class="c-t" x="150" y="316">Client</text>
+    <text class="c-s" x="150" y="333">LocalMlxStructured</text>
+
+    <rect class="cmp" x="304" y="284" width="168" height="60" rx="3"/>
+    <text class="c-t" x="314" y="302">CloudflareEmbedding</text><text class="c-t" x="314" y="316">Client</text>
+    <text class="c-s" x="314" y="333">bge-m3, 1024d</text>
+
+    <rect class="cmp" x="486" y="284" width="130" height="60" rx="3"/>
+    <text class="c-t" x="496" y="302">Cloudflare-</text><text class="c-t" x="496" y="316">RerankerClient</text>
+    <text class="c-s" x="496" y="333">None when off</text>
+
+    <rect class="cmp" x="630" y="284" width="160" height="60" rx="3"/>
+    <text class="c-t" x="640" y="302">PostgresQuranSource</text>
+    <text class="c-s" x="640" y="318">3 arms + fusion</text>
+    <text class="c-s" x="640" y="333">hydration</text>
+
+    <rect class="cmp" x="804" y="284" width="168" height="60" rx="3"/>
+    <text class="c-t" x="814" y="302">PostgresQulTafsir-</text><text class="c-t" x="814" y="316">Source</text>
+    <text class="c-s" x="814" y="333">passage fetch</text>
+
+    <!-- infra -->
+    <rect class="ext" x="140" y="380" width="150" height="58" rx="3"/>
+    <text class="c-t" x="150" y="400">Groq API</text><text class="c-s" x="150" y="416">gpt-oss-20b</text>
+    <text class="c-s" x="150" y="430">gpt-oss-120b</text>
+
+    <rect class="ext" x="304" y="380" width="168" height="58" rx="3"/>
+    <text class="c-t" x="314" y="400">Cloudflare Workers AI</text><text class="c-s" x="314" y="416">account-scoped /ai/run</text>
+
+    <rect class="ext" x="486" y="380" width="130" height="58" rx="3"/>
+    <text class="c-t" x="496" y="400">MLX server</text><text class="c-s" x="496" y="416">127.0.0.1:18080</text>
+    <text class="c-s" x="496" y="430">loopback only</text>
+
+    <rect class="ext" x="630" y="380" width="342" height="58" rx="3"/>
+    <text class="c-t" x="640" y="400">PostgresRepository &rarr; Postgres 127.0.0.1:55432</text>
+    <text class="c-s" x="640" y="416">pgvector HNSW &middot; pg_trgm &middot; tsvector &middot; migrations 001–009</text>
+    <text class="c-s" x="640" y="430">the only origin of canonical source text</text>
+
+    <!-- vertical wiring -->
+    <path class="e2" d="M215,80 V112" marker-end="url(#ar2)"/>
+    <path class="e2" d="M420,80 V112" marker-end="url(#ar2)"/>
+    <path class="e2" d="M215,176 V206" marker-end="url(#ar2)"/>
+    <path class="e2" d="M388,176 V206" marker-end="url(#ar2)"/>
+    <path class="e2" d="M551,176 V206" marker-end="url(#ar2)"/>
+    <path class="e2" d="M710,176 V206" marker-end="url(#ar2)"/>
+    <path class="e2" d="M888,176 V206" marker-end="url(#ar2)"/>
+    <path class="e2" d="M215,248 V280" marker-end="url(#ar2)"/>
+    <path class="e2" d="M388,248 V280" marker-end="url(#ar2)"/>
+    <path class="e2" d="M551,248 V280" marker-end="url(#ar2)"/>
+    <path class="e2" d="M710,248 V280" marker-end="url(#ar2)"/>
+    <path class="e2" d="M888,248 V280" marker-end="url(#ar2)"/>
+    <path class="e2" d="M215,344 V376" marker-end="url(#ar2)"/>
+    <path class="e2" d="M388,344 V376" marker-end="url(#ar2)"/>
+    <path class="e2" d="M215,344 C215,360 500,360 551,376" marker-end="url(#ar2)"/>
+    <path class="e2" d="M710,344 V376" marker-end="url(#ar2)"/>
+    <path class="e2" d="M888,344 V376" marker-end="url(#ar2)"/>
+
+    <!-- canonical text path -->
+    <rect x="16" y="470" width="1008" height="122" rx="4" fill="var(--green-soft)" stroke="var(--green)" stroke-width="1"/>
+    <text x="30" y="492" fill="var(--green)" font-family="IBM Plex Mono,monospace" font-size="10.5" font-weight="600"
+      letter-spacing=".09em">THE ONLY ROUTE THAT MAY PRODUCE CANONICAL SOURCE TEXT</text>
+    <text x="30" y="514" fill="var(--ink-2)" font-family="IBM Plex Mono,monospace" font-size="11">
+      quran_canonical_text / tafsir_passages  &rarr;  hydrate_references() | fetch_passages()  &rarr;  EvidenceItem.exact_text  &rarr;  ExactRenderer  &rarr;  SOURCE block</text>
+    <path class="gl" d="M30,528 H980" marker-end="url(#ar3)"/>
+    <text x="30" y="552" fill="var(--ink-2)" font-family="IBM Plex Mono,monospace" font-size="11">
+      A node whose tool_id is not get_quran_passage.v1 or get_tafsir_passages.v1 and which carries evidence_items raises EvidenceAssemblyError.</text>
+    <text x="30" y="570" fill="var(--ink-2)" font-family="IBM Plex Mono,monospace" font-size="11">
+      Search candidates are opaque verse locations. No model output ever becomes a SOURCE block; claims that reproduce source wording are rejected.</text>
+  </svg>
+  </div>
+  <p class="fig-cap">Solid edges are construction wiring from <code>build_container()</code>; dashed boxes are the
+  five protocols the core depends on. The core imports no provider module and writes no SQL.</p>
+</section>
+
+<!-- =========================== 8. INVARIANTS =========================== -->
+<section id="invariants">
+  <div class="sec-head">
+    <span class="sec-num">08</span>
+    <h2>The hard invariants</h2>
+    <span class="sec-note">each one is enforced at a single chokepoint</span>
+  </div>
+
+  <div class="inv"><ul>
+    <li><span class="t">Only hydration creates evidence</span>
+      <p>Search results are non-citable locations; the assembler rejects any other node that carries evidence.</p>
+      <span class="w">evidence.py EvidenceAssembler.assemble()</span></li>
+
+    <li><span class="t">No model-authored canonical text</span>
+      <p>Claims must paraphrase. Reproducing Quran, translation or tafsir wording raises
+      <code>CanonicalTextGroundingError</code>.</p>
+      <span class="w">synthesis.py GroundingValidator</span></li>
+
+    <li><span class="t">Relevance may narrow, never empty</span>
+      <p>A non-empty retrieval can never become an empty evidence set, whatever the relevance implementation.</p>
+      <span class="w">relevance.enforce_ranked_relevance_boundary()</span></li>
+
+    <li><span class="t">No semantic expansion past the cited evidence</span>
+      <p>A claim naming a high-risk concept — audience, obligation, absolute quantifier — must have that
+      concept's own vocabulary in the evidence <em>that claim cites</em>.</p>
+      <span class="w">GroundingValidator._validate_semantic_entailment()</span></li>
+
+    <li><span class="t">Exactly one bounded repair</span>
+      <p>Planner, synthesizer and composer each get one retry with accumulated guidance, then fail into a
+      deterministic path. No unbounded loops.</p>
+      <span class="w">planner.py &middot; synthesis.py &middot; composition_layer.py</span></li>
+
+    <li><span class="t">The route is asserted, not configured</span>
+      <p>ZDR, no provider training, no subprocessors, no paid route, no fallback — hard-coded. Only the model id
+      is data.</p>
+      <span class="w">routing.ProviderRoutePolicy</span></li>
+
+    <li><span class="t">UNKNOWN rights are blocked</span>
+      <p>Every source right is currently UNKNOWN. Running requires the acknowledged development override;
+      DENIED always blocks; the override is refused in production.</p>
+      <span class="w">rights.SourcePolicy.authorize()</span></li>
+
+    <li><span class="t">The narrative is checked against real evidence</span>
+      <p>The composer is given claim text and reference labels only. The gate independently checks its output
+      against the turn's actual evidence: quoted Arabic spans, verse references, attributions, hadith-shaped
+      sentences.</p>
+      <span class="w">anti_fabrication.py — 4 rules</span></li>
+
+    <li><span class="t">Traces never carry source text</span>
+      <p>Detail keys matching secrets or canonical-text names are redacted, depth and breadth are capped, and
+      the trace is forced off in production.</p>
+      <span class="w">tracing.TraceRecorder &middot; settings validator</span></li>
+
+    <li><span class="t">Output kind is observed, not claimed</span>
+      <p><code>derive_rendered_output_kind()</code> classifies the rendered blocks, so a template answer cannot
+      be reported as synthesis by the branch that produced it.</p>
+      <span class="w">contracts.py</span></li>
+  </ul></div>
+</section>
+
+<!-- =========================== 9. READING =========================== -->
+<section id="gaps">
+  <div class="sec-head">
+    <span class="sec-num">09</span>
+    <h2>Unverified, and what looks missing</h2>
+    <span class="sec-note">stated rather than guessed</span>
+  </div>
+
+  <div class="cols2">
+    <div>
+      <h3 style="margin-bottom:8px">Could not verify</h3>
+      <ul style="padding-left:18px; color:var(--ink-2); font-size:13.5px; margin:0">
+        <li>All percentages come from <code>HANDOFF.md</code>, not from code or a run made here. No measurement
+          was executed while building this page.</li>
+        <li>Row counts were read from the running local Postgres at build time — current instance state, not a
+          guaranteed deployment shape.</li>
+        <li>The Next.js layer was surveyed at file-tree level only; block ordering in the browser is not
+          verified here.</li>
+        <li>Whether any <code>qf-*</code> rows survive outside <code>source_resources</code> was not audited
+          beyond confirming both have no active revision.</li>
+      </ul>
+    </div>
+    <div>
+      <h3 style="margin-bottom:8px">Gaps visible in the architecture</h3>
+      <ul style="padding-left:18px; color:var(--ink-2); font-size:13.5px; margin:0">
+        <li><b>No live ranking signal after fusion.</b> Every stage that could reorder candidates — cross-encoder,
+          topic rerank, topic arm — is off, so <code>fused_arm_score</code> is both the first and the final sort
+          key.</li>
+        <li><b>A dead good-branch.</b> The only producer of <code>SupportedFacetSummary</code> sits in the
+          disabled reviewer, so the branch of <code>deterministic_contextual_topic_draft()</code> that writes real
+          content is unreachable in the shipped configuration.</li>
+        <li><b>No retry at the embedding boundary.</b> One Cloudflare failure silently downgrades a turn to
+          lexical-only. It is traced, but a single transient 429 costs the dense arm entirely.</li>
+        <li><b>Tafsir is attached but never required.</b> Topic turns use
+          <code>allow_partial=True</code>, so an Arabic turn whose tafsir lookup returns nothing still passes
+          the requirements check — the tafsir-as-evidence property is best-effort, not enforced.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Built by reading <code>HANDOFF.md</code>, <code>src/islamic_research_ai/</code>, <code>migrations/</code>,
+  <code>config/</code> and the live database. Nothing under <code>src/</code>, <code>tests/</code> or
+  <code>qa/</code> was modified.
+</footer>
+
+</div>
+</body>
+</html>

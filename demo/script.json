@@ -1,0 +1,322 @@
+{
+  "captions": true,
+  "voice_style": "اتكلم باللهجة المصرية، بنبرة مذيع تقني هادي وواثق، بسرعة متوسطة: ",
+  "scenes": [
+    {
+      "id": "intro",
+      "title": "مقدمة",
+      "steps": [
+        {
+          "say": "أهلاً بيك. ده بَيان: نظام بحث في القرآن والتفسير بالذكاء الاصطناعي.",
+          "overlay": {
+            "kind": "card",
+            "title": "بَيان — Qur'an & Tafsir research, evidence-grounded",
+            "lines": [
+              "بحث في القرآن والتفسير",
+              "إجابات مرتبطة بمصادر ظاهرة"
+            ]
+          }
+        },
+        {
+          "say": "الفكرة الأساسية بسيطة: كل جملة في الإجابة لازم يبقى وراها نص حقيقي معروض قدامك. الموديل مش مسموح له يألف."
+        }
+      ]
+    },
+    {
+      "id": "first_question",
+      "title": "رحلة السؤال",
+      "steps": [
+        {
+          "act": "ask",
+          "text": "ماذا يقول القرآن عن الصبر؟",
+          "wait": "none",
+          "expect": "grounded"
+        },
+        {
+          "say": "أول ما السؤال يوصل، الـ planner بيفهمه ويطلع منه خطة بحث. ده شغال على gpt-oss-20b على Groq.",
+          "overlay": {
+            "kind": "pipeline",
+            "highlight": [
+              "planner"
+            ]
+          }
+        },
+        {
+          "say": "بعدين hybrid retrieval: بحث lexical بالكلمات العربية، وبحث vector بالمعنى، الاتنين على Postgres. الـ embeddings من bge-m3 على Cloudflare، والنتايج بتتدمج بـ RRF.",
+          "overlay": {
+            "kind": "pipeline",
+            "highlight": [
+              "retrieval"
+            ]
+          }
+        },
+        {
+          "say": "مرحلة الـ relevance بتفلتر الآيات اللي فعلاً بتجاوب على السؤال.",
+          "overlay": {
+            "kind": "pipeline",
+            "highlight": [
+              "relevance"
+            ]
+          }
+        },
+        {
+          "say": "الـ synthesis بيطلع claims صغيرة، كل claim مربوطة بآية، والـ GroundingValidator بيرفض أي claim ملهاش دليل.",
+          "overlay": {
+            "kind": "pipeline",
+            "highlight": [
+              "synthesis",
+              "grounding"
+            ]
+          }
+        },
+        {
+          "say": "وفي الآخر الـ composer، على gpt-oss-120b، بيكتب الإجابة اللي بتقراها بلغة طبيعية.",
+          "overlay": {
+            "kind": "pipeline",
+            "highlight": [
+              "composer"
+            ]
+          }
+        },
+        {
+          "act": "await_answer"
+        }
+      ]
+    },
+    {
+      "id": "answer_walkthrough",
+      "title": "الإجابة والمصادر",
+      "steps": [
+        {
+          "act": "scroll_to",
+          "selector": "[data-testid=verse-card]"
+        },
+        {
+          "act": "click",
+          "selector": "[data-testid=assistant-answer] a.citation-chip"
+        },
+        {
+          "say": "الإجابة دي كل مرجع فيها بيوديك للآية نفسها بالنص العربي الأصلي واسم السورة."
+        },
+        {
+          "say": "الـ citations دي بتترندر deterministic من الكود، مش الموديل اللي بيكتبها، فمفيش احتمال إنه يخترع آية.",
+          "overlay": {
+            "kind": "card",
+            "title": "Deterministic citation rendering",
+            "lines": [
+              "مراجع مبنية من بيانات المصدر",
+              "كل citation تشير إلى موضع دليل"
+            ]
+          }
+        },
+        {
+          "act": "scroll_to",
+          "selector": "[data-testid=tafsir-card]"
+        },
+        {
+          "say": "ومع الآيات بيظهر تفسير المختصر. وده مش ديكور: نص التفسير بيدخل في مرحلة الـ relevance والـ synthesis كدليل.",
+          "overlay": {
+            "kind": "card",
+            "title": "QUL · tafsir al-Mukhtasar (ar)",
+            "lines": [
+              "مصدر تفسير عربي موثق",
+              "يدخل نصه في بناء الدليل"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "trace",
+      "title": "سجل التنفيذ",
+      "steps": [
+        {
+          "act": "open_trace"
+        },
+        {
+          "act": "scroll_to",
+          "selector": "[data-testid=execution-trace]"
+        },
+        {
+          "say": "وده الـ execution trace: كل خطوة عملها السيستم في السؤال ده، ووقتها. الـ trace ده بيتسجل في Postgres لكل سؤال، وهو اللي خلانا نقيس ونعرف فين المشكلة بالظبط بدل ما نخمن.",
+          "overlay": {
+            "kind": "card",
+            "title": "turn_trace_events · Postgres",
+            "lines": [
+              "أحداث مرتبة زمنيًا",
+              "مراحل ومدة التنفيذ"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "follow_up",
+      "title": "سؤال متابعة",
+      "steps": [
+        {
+          "act": "ask",
+          "text": "وإيه جزاء الصابرين؟",
+          "wait": "none",
+          "expect": "grounded"
+        },
+        {
+          "say": "السيستم فاكر سياق المحادثة، فسؤال المتابعة بيتفهم في ضوء السؤال اللي قبله.",
+          "overlay": {
+            "kind": "card",
+            "title": "Conversation history",
+            "lines": [
+              "سياق الأسئلة السابقة",
+              "متابعة داخل المحادثة نفسها"
+            ]
+          }
+        },
+        {
+          "act": "await_answer"
+        }
+      ]
+    },
+    {
+      "id": "honesty",
+      "title": "الصدق عند غياب الدليل",
+      "steps": [
+        {
+          "act": "ask",
+          "candidates": [
+            "كم عدد سكان مكة اليوم؟",
+            "ما حكم التداول في العملات الرقمية؟",
+            "من هو أول من صنع الساعة؟"
+          ],
+          "wait": "none",
+          "expect": "honest_refusal"
+        },
+        {
+          "say": "ودي أهم نقطة: لما ميلاقيش دليل، بيقولك بوضوح إنه مش لاقي، بدل ما يدّيك إجابة شكلها مقنع ومفيهاش سند.",
+          "overlay": {
+            "kind": "card",
+            "title": "Honest fallback > confident hallucination",
+            "lines": [
+              "إظهار حدود corpus بوضوح",
+              "لا إجابة بلا دليل"
+            ]
+          }
+        },
+        {
+          "act": "await_answer"
+        }
+      ]
+    },
+    {
+      "id": "english",
+      "title": "الواجهة الإنجليزية",
+      "steps": [
+        {
+          "act": "set_locale",
+          "value": "en"
+        },
+        {
+          "act": "new_chat"
+        },
+        {
+          "act": "ask",
+          "text": "What does the Quran say about patience?",
+          "wait": "none",
+          "expect": "grounded"
+        },
+        {
+          "say": "والواجهة والإجابات شغالة بالإنجليزي كمان. في الإنجليزي بنستخدم نص القرآن والترجمة بس، لحد ما يبقى فيه مصدر تفسير إنجليزي معتمد."
+        },
+        {
+          "act": "await_answer"
+        },
+        {
+          "act": "set_locale",
+          "value": "ar"
+        }
+      ]
+    },
+    {
+      "id": "architecture",
+      "title": "المعمارية والتقنيات",
+      "steps": [
+        {
+          "say": "الـ stack: الواجهة Next.js، والـ API بـ FastAPI، وPostgres للبحث والتخزين. الـ contracts بين الاتنين بتتولد من OpenAPI، وبتتعمل لها validation بـ Zod على الناحيتين.",
+          "overlay": {
+            "kind": "pipeline",
+            "highlight": []
+          }
+        },
+        {
+          "say": "ولو Groq رجع rate limit، السيستم بيحوّل تلقائياً لموديل محلي: Gemma 4، 26B، شغال على الجهاز بـ MLX، ومقفول على localhost.",
+          "overlay": {
+            "kind": "card",
+            "title": "Fallback · Gemma 4 26B-A4B 4-bit · MLX · loopback only",
+            "lines": [
+              "مسار محلي عند تعذر Groq",
+              "الاستماع على loopback فقط"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "engineering",
+      "title": "المنهج الهندسي",
+      "steps": [
+        {
+          "say": "كل قرار هنا اتاخد بقياس. عندنا set من أسئلة صعبة، وكل تغيير في الـ pipeline بيتقاس عليه قبل ما يدخل.",
+          "overlay": {
+            "kind": "card",
+            "title": "Measured, not guessed",
+            "lines": [
+              "مجموعة أسئلة ثابتة",
+              "التغيير يمر بقياس قبل اعتماده"
+            ]
+          }
+        },
+        {
+          "say": "وفي حاجات كانت شكلها فكرة حلوة، زي الـ reranker، اتجربت واتقاست وطلعت بتخلي النتيجة أسوأ، فاترفضت.",
+          "overlay": {
+            "kind": "card",
+            "title": "bge-reranker-base · measured → rejected",
+            "lines": [
+              "اتقاس على الـ pipeline الحقيقي",
+              "نزّل الجودة، فاتقفل"
+            ]
+          }
+        },
+        {
+          "say": "ومعاه test suite أوتوماتيك كبيرة، بتتأكد إن ولا حاجة من دي بتتكسر.",
+          "overlay": {
+            "kind": "card",
+            "title": "362 automated tests",
+            "lines": [
+              "تجميع الاختبارات الحالي"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "outro",
+      "title": "الخاتمة",
+      "steps": [
+        {
+          "act": "scroll_to",
+          "selector": "[data-testid=conversation-turn] [data-testid=assistant-answer]"
+        },
+        {
+          "say": "ده كان بَيان: إجابات من القرآن والتفسير، كل جملة فيها بدليل، وكل قرار في تصميمه اتقاس. شكراً.",
+          "overlay": {
+            "kind": "card",
+            "title": "بَيان",
+            "lines": [
+              "بحث موثق في القرآن والتفسير",
+              "كل إجابة معروضة مع دليلها"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

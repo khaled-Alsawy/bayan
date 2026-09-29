@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<title>Tokens and type — light and dark</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=IBM+Plex+Mono:wght@400&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#f3efe7;font-family:"IBM Plex Sans",system-ui,sans-serif}
+  a{color:#0b493d}
+  a:hover{color:#12614f}
+</style>
+</helmet>
+
+<div dir="ltr" style="width: 1280px; height: 1040px; background: #f3efe7; color: #162923; font-family: 'IBM Plex Sans', system-ui, sans-serif; padding: 30px 40px; display: flex; flex-direction: column; gap: 22px;">
+
+  <div style="display: flex; align-items: baseline; gap: 14px;">
+    <h1 style="margin: 0; font-family: Amiri, Georgia, serif; font-size: 25px; font-weight: 700; color: #0b493d;">Tokens &amp; type</h1>
+    <span style="font-size: 13px; color: #6b7671;">paper / emerald / brass, kept — with a repaired ink ramp and a dark set</span>
+  </div>
+
+  <section style="display: flex; flex-direction: column; gap: 10px;">
+    <h2 style="margin: 0; font-size: 12px; font-weight: 600; letter-spacing: .07em; color: #6b7671;">LIGHT</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+      <div style="width: 118px;"><div style="height: 50px; border-radius: 8px; background: #f3efe7; border: 1px solid #c9c0b1;"></div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #4e5c56; margin-top: 5px;">canvas<br>#f3efe7</div></div>
+      <div style="width: 118px;"><div style="height: 50px; border-radius: 8px; background: #f8f5ef; border: 1px solid #c9c0b1;"></div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #4e5c56; margin-top: 5px;">surface<br>#f8f5ef</div></div>
+      <div style="width: 118px;"><div style="height: 50px; border-radius: 8px; background: #eee8dc; border: 1px solid #c9c0b1;"></div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #4e5c56; margin-top: 5px;">surface-strong<br>#eee8dc</div></div>
+      <div style="width: 118px;"><div style="height: 50px; border-radius: 8px; background: #fffdf9; border: 1px solid #c9c0b1;"></div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #4e5c56; margin-top: 5px;">paper<br>#fffdf9</div></div>
+      <div style="width: 118px;"><div style="height: 50px; border-radius: 8px; background: #faf7f1; border: 1px solid #c9c0b1;"></div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #4e5c56; margin-top: 5px;">paper-muted<br>#faf7f1</div></div>
+      <div style="width: 118px;"><div style="height: 50px; border-radius: 8px; background: #162923;"></div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #4e5c56; margin-top: 5px;">ink<br>#162923</div></div>
+      <div style="width: 118px;"><div style="height: 50px; border-radius: 8px; background: #4e5c56;"></div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #4e5c56; margin-top: 5px;">ink-soft ▲<br>#4e5c56</div></div>
+      <div style="width: 118px;"><div style="height: 50px; border-radius: 8px; background: #6b7671;"></div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #4e5c56; margin-top: 5px;">ink-faint ▲<br>#6b7671</div></div>
+      <div style="width: 118px;"><div style="height: 50px; border-radius: 8px; background: #12614f;"></div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #4e5c56; margin-top: 5px;">emerald<br>#12614f</div></div>
+      <div style="width: 118px;"><div style="height: 50px; border-radius: 8px; background: #0b493d;"></div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #4e5c56; margin-top: 5px;">emerald-deep<br>#0b493d</div></div>
+      <div style="width: 118px;"><div style="height: 50px; border-radius: 8px; background: #5c8a7c;"></div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #4e5c56; margin-top: 5px;">emerald-muted ▲<br>#5c8a7c</div></div>
+      <div style="width: 118px;"><div style="height: 50px; border-radius: 8px; background: #e8f1ed; border: 1px solid #c9c0b1;"></div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #4e5c56; margin-top: 5px;">emerald-soft<br>#e8f1ed</div></div>
+      <div style="width: 118px;"><div style="height: 50px; border-radius: 8px; background: #895b22;"></div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #4e5c56; margin-top: 5px;">brass<br>#895b22</div></div>
+      <div style="width: 118px;"><div style="height: 50px; border-radius: 8px; background: #f3e7d2; border: 1px solid #c9c0b1;"></div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #4e5c56; margin-top: 5px;">brass-soft<br>#f3e7d2</div></div>
+      <div style="width: 118px;"><div style="height: 50px; border-radius: 8px; background: #ded7ca;"></div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #4e5c56; margin-top: 5px;">border<br>#ded7ca</div></div>
+      <div style="width: 118px;"><div style="height: 50px; border-radius: 8px; background: #c9c0b1;"></div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #4e5c56; margin-top: 5px;">border-strong<br>#c9c0b1</div></div>
+      <div style="width: 118px;"><div style="height: 50px; border-radius: 8px; background: #1b6f5c;"></div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #4e5c56; margin-top: 5px;">focus ▲<br>#1b6f5c</div></div>
+    </div>
+  </section>
+
+  <section style="display: flex; flex-direction: column; gap: 10px;">
+    <h2 style="margin: 0; font-size: 12px; font-weight: 600; letter-spacing: .07em; color: #6b7671;">DARK — NEW</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 10px; padding: 14px; background: #14120f; border-radius: 12px;">
+      <div style="width: 118px;"><div style="height: 50px; border-radius: 8px; background: #14120f; border: 1px solid #4d473c;"></div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #b8afa0; margin-top: 5px;">canvas<br>#14120f</div></div>
+      <div style="width: 118px;"><div style="height: 50px; border-radius: 8px; background: #1a1815; border: 1px solid #4d473c;"></div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #b8afa0; margin-top: 5px;">surface<br>#1a1815</div></div>
+      <div style="width: 118px;"><div style="height: 50px; border-radius: 8px; background: #232019; border: 1px solid #4d473c;"></div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #b8afa0; margin-top: 5px;">surface-strong<br>#232019</div></div>
+      <div style="width: 118px;"><div style="height: 50px; border-radius: 8px; background: #1f1d19; border: 1px solid #4d473c;"></div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #b8afa0; margin-top: 5px;">paper<br>#1f1d19</div></div>
+      <div style="width: 118px;"><div style="height: 50px; border-radius: 8px; background: #1a1815; border: 1px solid #4d473c;"></div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #b8afa0; margin-top: 5px;">paper-muted<br>#1a1815</div></div>
+      <div style="width: 118px;"><div style="height: 50px; border-radius: 8px; background: #ece6da;"></div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #b8afa0; margin-top: 5px;">ink<br>#ece6da</div></div>
+      <div style="width: 118px;"><div style="height: 50px; border-radius: 8px; background: #b8afa0;"></div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #b8afa0; margin-top: 5px;">ink-soft<br>#b8afa0</div></div>
+      <div style="width: 118px;"><div style="height: 50px; border-radius: 8px; background: #968d7e;"></div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #b8afa0; margin-top: 5px;">ink-faint<br>#968d7e</div></div>
+      <div style="width: 118px;"><div style="height: 50px; border-radius: 8px; background: #6fc0a6;"></div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #b8afa0; margin-top: 5px;">emerald<br>#6fc0a6</div></div>
+      <div style="width: 118px;"><div style="height: 50px; border-radius: 8px; background: #a5dcc9;"></div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #b8afa0; margin-top: 5px;">emerald-deep<br>#a5dcc9</div></div>
+      <div style="width: 118px;"><div style="height: 50px; border-radius: 8px; background: #4a7a6b;"></div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #b8afa0; margin-top: 5px;">emerald-muted<br>#4a7a6b</div></div>
+      <div style="width: 118px;"><div style="height: 50px; border-radius: 8px; background: #16302a; border: 1px solid #4d473c;"></div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #b8afa0; margin-top: 5px;">emerald-soft<br>#16302a</div></div>
+      <div style="width: 118px;"><div style="height: 50px; border-radius: 8px; background: #d2a465;"></div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #b8afa0; margin-top: 5px;">brass<br>#d2a465</div></div>
+      <div style="width: 118px;"><div style="height: 50px; border-radius: 8px; background: #352a1b; border: 1px solid #4d473c;"></div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #b8afa0; margin-top: 5px;">brass-soft<br>#352a1b</div></div>
+      <div style="width: 118px;"><div style="height: 50px; border-radius: 8px; background: #37322a;"></div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #b8afa0; margin-top: 5px;">border<br>#37322a</div></div>
+      <div style="width: 118px;"><div style="height: 50px; border-radius: 8px; background: #4d473c;"></div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #b8afa0; margin-top: 5px;">border-strong<br>#4d473c</div></div>
+      <div style="width: 118px;"><div style="height: 50px; border-radius: 8px; background: #58c3a6;"></div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #b8afa0; margin-top: 5px;">focus<br>#58c3a6</div></div>
+    </div>
+  </section>
+
+  <section style="display: flex; gap: 24px; flex-grow: 1;">
+
+    <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 14px;">
+      <h2 style="margin: 0; font-size: 12px; font-weight: 600; letter-spacing: .07em; color: #6b7671;">TYPE — REGISTER CARRIES THE AUTHORITY SPLIT</h2>
+
+      <div style="display: flex; flex-direction: column; gap: 4px;">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #6b7671;">Amiri 31/2.05 — retrieved Qur'an</span>
+        <p dir="rtl" style="margin: 0; font-family: Amiri, Georgia, serif; font-size: 31px; line-height: 2.05; color: #162923;">وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ</p>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 4px;">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #6b7671;">Amiri 20/2.0, 32rem measure — retrieved tafsir</span>
+        <p dir="rtl" style="margin: 0; max-width: 30rem; font-family: Amiri, Georgia, serif; font-size: 20px; line-height: 2; color: #162923;">تَفْسِيرُ سُورَتَيِ الْمُعَوِّذَتَيْنِ — وَهُمَا مَدَنِيَّتَانِ. قَالَ الْإِمَامُ أَحْمَدُ: حَدَّثَنَا عَفَّانُ…</p>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 4px;">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #6b7671;">IBM Plex Sans Arabic 19/1.95, 36rem measure — generated narrative</span>
+        <p dir="rtl" style="margin: 0; max-width: 34rem; font-family: 'IBM Plex Sans Arabic', system-ui, sans-serif; font-size: 19px; line-height: 1.95; color: #162923;">يتناول القرآن هذا الموضوع من وجه واحد مباشر: الاستعاذة بالله من شرّ الحاسد.</p>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 4px;">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #6b7671;">IBM Plex Sans Arabic 13/1.6 — chrome, labels, provenance</span>
+        <p dir="rtl" style="margin: 0; font-family: 'IBM Plex Sans Arabic', system-ui, sans-serif; font-size: 13px; line-height: 1.6; color: #4e5c56;">مصحف المدينة، رواية حفص عن عاصم — مشروع تنزيل</p>
+      </div>
+    </div>
+
+    <div style="width: 430px; display: flex; flex-direction: column; gap: 10px;">
+      <h2 style="margin: 0; font-size: 12px; font-weight: 600; letter-spacing: .07em; color: #6b7671;">WHAT CHANGED</h2>
+      <ul style="margin: 0; padding: 0 0 0 18px; display: flex; flex-direction: column; gap: 7px; font-size: 13px; line-height: 1.65; color: #4e5c56;">
+        <li><strong style="color: #162923;">ink ramp repaired.</strong> <code style="font-family: 'IBM Plex Mono', monospace; font-size: 12px;">ink-soft</code> and <code style="font-family: 'IBM Plex Mono', monospace; font-size: 12px;">ink-faint</code> were within 3% of each other, so the three-step ramp was really two. Their measured contrast on paper is 6.91:1 and 4.64:1 respectively.</li>
+        <li><strong style="color: #162923;">shadow-card dropped.</strong> A 42px shadow on every evidence card is what made five verses read as five search hits. Containment is now a 1px border; the one shadow left is on the floating "back to the answer" pill.</li>
+        <li><strong style="color: #162923;">danger softened, focus darkened.</strong> <code style="font-family: 'IBM Plex Mono', monospace; font-size: 12px;">#9f3f36 → #8f382f</code> and <code style="font-family: 'IBM Plex Mono', monospace; font-size: 12px;">#2e8b74 → #1b6f5c</code>; focus measures 5.95:1 on paper. Nothing in the UI uses danger: a partial answer is not an error.</li>
+        <li><strong style="color: #162923;">two type tokens added.</strong> <code style="font-family: 'IBM Plex Mono', monospace; font-size: 12px;">--script</code> (Amiri) and <code style="font-family: 'IBM Plex Mono', monospace; font-size: 12px;">--sans</code> (IBM Plex Sans Arabic). Naskh means retrieved; sans means generated. That is the policy's "different type treatment", enforced by a token rather than by discipline.</li>
+        <li><strong style="color: #162923;">dark is a hue rotation, not an inversion.</strong> The dark grounds keep the paper's warm hue, so brass and emerald stay recognisable; emerald and emerald-deep swap roles, since #12614f is unreadable on a dark ground.</li>
+      </ul>
+    </div>
+
+  </section>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1040}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

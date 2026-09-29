@@ -1,0 +1,367 @@
+{
+  "schema_version": "1",
+  "environment": "development",
+  "purpose": "private_poc",
+  "override_type": "PROJECT_OWNER_ACCEPTED_RISK",
+  "override_reason": "Project-owner decision dated 2026-09-16 authorizes private POC engineering while formal permission requests remain pending.",
+  "override_operations": [
+    "INDEX_LEXICAL",
+    "INDEX_VECTOR",
+    "LOCAL_EMBEDDING",
+    "EXTERNAL_EMBEDDING",
+    "EXTERNAL_LLM_INFERENCE",
+    "LOCAL_LLM_INFERENCE",
+    "EXTERNAL_RERANKING",
+    "COMMERCIAL_USE"
+  ],
+  "resources": [
+    {
+      "resource_alias": "tanzil-uthmani-v1.1",
+      "source_id": "tanzil",
+      "rights": {
+        "FETCH_REMOTE": "ALLOWED",
+        "DISPLAY": "ALLOWED",
+        "STORE": "ALLOWED",
+        "CACHE": "ALLOWED",
+        "INDEX_LEXICAL": "UNKNOWN",
+        "INDEX_VECTOR": "UNKNOWN",
+        "LOCAL_EMBEDDING": "UNKNOWN",
+        "EXTERNAL_EMBEDDING": "UNKNOWN",
+        "EXTERNAL_LLM_INFERENCE": "UNKNOWN",
+        "LOCAL_LLM_INFERENCE": "UNKNOWN",
+        "EXTERNAL_RERANKING": "UNKNOWN",
+        "REDISTRIBUTE": "ALLOWED",
+        "COMMERCIAL_USE": "UNKNOWN"
+      },
+      "external_constraints": {
+        "EXTERNAL_EMBEDDING": {
+          "gateway_provider_ids": [
+            "cloudflare"
+          ],
+          "effective_provider_ids": [
+            "cloudflare"
+          ],
+          "model_ids": [
+            "@cf/baai/bge-m3"
+          ],
+          "zero_data_retention_required": false,
+          "provider_training_allowed": false,
+          "aggregator_routing_allowed": false
+        },
+        "EXTERNAL_LLM_INFERENCE": {
+          "gateway_provider_ids": [
+            "groq"
+          ],
+          "effective_provider_ids": [
+            "groq"
+          ],
+          "model_ids": [
+            "openai/gpt-oss-20b",
+            "openai/gpt-oss-120b",
+            "qwen/qwen3-32b",
+            "moonshotai/kimi-k2-instruct",
+            "llama-3.3-70b-versatile"
+          ],
+          "zero_data_retention_required": true,
+          "provider_training_allowed": false,
+          "aggregator_routing_allowed": false
+        },
+        "EXTERNAL_RERANKING": {
+          "gateway_provider_ids": ["cloudflare"],
+          "effective_provider_ids": ["cloudflare"],
+          "model_ids": ["@cf/baai/bge-reranker-base"],
+          "zero_data_retention_required": false,
+          "provider_training_allowed": false,
+          "aggregator_routing_allowed": false
+        }
+      }
+    },
+    {
+      "resource_alias": "quranenc-rowwad-en-v1.0.19",
+      "source_id": "quranenc",
+      "rights": {
+        "FETCH_REMOTE": "ALLOWED",
+        "DISPLAY": "ALLOWED",
+        "STORE": "ALLOWED",
+        "CACHE": "ALLOWED",
+        "INDEX_LEXICAL": "UNKNOWN",
+        "INDEX_VECTOR": "UNKNOWN",
+        "LOCAL_EMBEDDING": "UNKNOWN",
+        "EXTERNAL_EMBEDDING": "UNKNOWN",
+        "EXTERNAL_LLM_INFERENCE": "UNKNOWN",
+        "LOCAL_LLM_INFERENCE": "UNKNOWN",
+        "EXTERNAL_RERANKING": "UNKNOWN",
+        "REDISTRIBUTE": "ALLOWED",
+        "COMMERCIAL_USE": "UNKNOWN"
+      },
+      "external_constraints": {
+        "EXTERNAL_EMBEDDING": {
+          "gateway_provider_ids": [
+            "cloudflare"
+          ],
+          "effective_provider_ids": [
+            "cloudflare"
+          ],
+          "model_ids": [
+            "@cf/baai/bge-m3"
+          ],
+          "zero_data_retention_required": false,
+          "provider_training_allowed": false,
+          "aggregator_routing_allowed": false
+        },
+        "EXTERNAL_LLM_INFERENCE": {
+          "gateway_provider_ids": [
+            "groq"
+          ],
+          "effective_provider_ids": [
+            "groq"
+          ],
+          "model_ids": [
+            "openai/gpt-oss-20b",
+            "openai/gpt-oss-120b",
+            "qwen/qwen3-32b",
+            "moonshotai/kimi-k2-instruct",
+            "llama-3.3-70b-versatile"
+          ],
+          "zero_data_retention_required": true,
+          "provider_training_allowed": false,
+          "aggregator_routing_allowed": false
+        },
+        "EXTERNAL_RERANKING": {
+          "gateway_provider_ids": ["cloudflare"],
+          "effective_provider_ids": ["cloudflare"],
+          "model_ids": ["@cf/baai/bge-reranker-base"],
+          "zero_data_retention_required": false,
+          "provider_training_allowed": false,
+          "aggregator_routing_allowed": false
+        }
+      }
+    },
+    {
+      "resource_alias": "qul-tafsir-almukhtasar-ar-v1",
+      "source_id": "qul",
+      "rights": {
+        "FETCH_REMOTE": "ALLOWED",
+        "DISPLAY": "ALLOWED",
+        "STORE": "ALLOWED",
+        "CACHE": "ALLOWED",
+        "INDEX_LEXICAL": "UNKNOWN",
+        "INDEX_VECTOR": "UNKNOWN",
+        "LOCAL_EMBEDDING": "UNKNOWN",
+        "EXTERNAL_EMBEDDING": "UNKNOWN",
+        "EXTERNAL_LLM_INFERENCE": "UNKNOWN",
+        "LOCAL_LLM_INFERENCE": "UNKNOWN",
+        "EXTERNAL_RERANKING": "UNKNOWN",
+        "REDISTRIBUTE": "DENIED",
+        "COMMERCIAL_USE": "UNKNOWN"
+      },
+      "external_constraints": {
+        "EXTERNAL_EMBEDDING": {
+          "gateway_provider_ids": [
+            "cloudflare"
+          ],
+          "effective_provider_ids": [
+            "cloudflare"
+          ],
+          "model_ids": [
+            "@cf/baai/bge-m3"
+          ],
+          "zero_data_retention_required": false,
+          "provider_training_allowed": false,
+          "aggregator_routing_allowed": false
+        },
+        "EXTERNAL_LLM_INFERENCE": {
+          "gateway_provider_ids": [
+            "groq"
+          ],
+          "effective_provider_ids": [
+            "groq"
+          ],
+          "model_ids": [
+            "openai/gpt-oss-20b",
+            "openai/gpt-oss-120b",
+            "qwen/qwen3-32b",
+            "moonshotai/kimi-k2-instruct",
+            "llama-3.3-70b-versatile"
+          ],
+          "zero_data_retention_required": true,
+          "provider_training_allowed": false,
+          "aggregator_routing_allowed": false
+        },
+        "EXTERNAL_RERANKING": {
+          "gateway_provider_ids": [
+            "cloudflare"
+          ],
+          "effective_provider_ids": [
+            "cloudflare"
+          ],
+          "model_ids": [
+            "@cf/baai/bge-reranker-base"
+          ],
+          "zero_data_retention_required": false,
+          "provider_training_allowed": false,
+          "aggregator_routing_allowed": false
+        }
+      },
+      "rights_note": "WP-0: QUL export carries no licence metadata (no LICENSE file, no license/copyright/publisher key on the resource page). Sensitive operations recorded UNKNOWN and cleared only by the existing development override, exactly like Tanzil/QuranEnc. REDISTRIBUTE is DENIED (the application displays, it does not republish). Search tier: embedded for hybrid retrieval."
+    },
+    {
+      "resource_alias": "qul-tafsir-ibnkathir-ar-v1",
+      "source_id": "qul",
+      "rights": {
+        "FETCH_REMOTE": "ALLOWED",
+        "DISPLAY": "ALLOWED",
+        "STORE": "ALLOWED",
+        "CACHE": "ALLOWED",
+        "INDEX_LEXICAL": "UNKNOWN",
+        "INDEX_VECTOR": "UNKNOWN",
+        "LOCAL_EMBEDDING": "UNKNOWN",
+        "EXTERNAL_EMBEDDING": "UNKNOWN",
+        "EXTERNAL_LLM_INFERENCE": "UNKNOWN",
+        "LOCAL_LLM_INFERENCE": "UNKNOWN",
+        "EXTERNAL_RERANKING": "UNKNOWN",
+        "REDISTRIBUTE": "DENIED",
+        "COMMERCIAL_USE": "UNKNOWN"
+      },
+      "external_constraints": {
+        "EXTERNAL_LLM_INFERENCE": {
+          "gateway_provider_ids": [
+            "groq"
+          ],
+          "effective_provider_ids": [
+            "groq"
+          ],
+          "model_ids": [
+            "openai/gpt-oss-20b",
+            "openai/gpt-oss-120b",
+            "qwen/qwen3-32b",
+            "moonshotai/kimi-k2-instruct",
+            "llama-3.3-70b-versatile"
+          ],
+          "zero_data_retention_required": true,
+          "provider_training_allowed": false,
+          "aggregator_routing_allowed": false
+        }
+      },
+      "rights_note": "WP-0: evidence tier. No licence metadata found; see qul-tafsir-almukhtasar-ar-v1 note. Not embedded (evidence tier is displayed and cited, not indexed for dense search)."
+    },
+    {
+      "resource_alias": "qul-tafsir-alqurtubi-ar-v1",
+      "source_id": "qul",
+      "rights": {
+        "FETCH_REMOTE": "ALLOWED",
+        "DISPLAY": "ALLOWED",
+        "STORE": "ALLOWED",
+        "CACHE": "ALLOWED",
+        "INDEX_LEXICAL": "UNKNOWN",
+        "INDEX_VECTOR": "UNKNOWN",
+        "LOCAL_EMBEDDING": "UNKNOWN",
+        "EXTERNAL_EMBEDDING": "UNKNOWN",
+        "EXTERNAL_LLM_INFERENCE": "UNKNOWN",
+        "LOCAL_LLM_INFERENCE": "UNKNOWN",
+        "EXTERNAL_RERANKING": "UNKNOWN",
+        "REDISTRIBUTE": "DENIED",
+        "COMMERCIAL_USE": "UNKNOWN"
+      },
+      "external_constraints": {
+        "EXTERNAL_LLM_INFERENCE": {
+          "gateway_provider_ids": [
+            "groq"
+          ],
+          "effective_provider_ids": [
+            "groq"
+          ],
+          "model_ids": [
+            "openai/gpt-oss-20b",
+            "openai/gpt-oss-120b",
+            "qwen/qwen3-32b",
+            "moonshotai/kimi-k2-instruct",
+            "llama-3.3-70b-versatile"
+          ],
+          "zero_data_retention_required": true,
+          "provider_training_allowed": false,
+          "aggregator_routing_allowed": false
+        }
+      },
+      "rights_note": "WP-0: evidence tier. See qul-tafsir-almukhtasar-ar-v1 note."
+    },
+    {
+      "resource_alias": "qul-tafsir-albaghawi-ar-v1",
+      "source_id": "qul",
+      "rights": {
+        "FETCH_REMOTE": "ALLOWED",
+        "DISPLAY": "ALLOWED",
+        "STORE": "ALLOWED",
+        "CACHE": "ALLOWED",
+        "INDEX_LEXICAL": "UNKNOWN",
+        "INDEX_VECTOR": "UNKNOWN",
+        "LOCAL_EMBEDDING": "UNKNOWN",
+        "EXTERNAL_EMBEDDING": "UNKNOWN",
+        "EXTERNAL_LLM_INFERENCE": "UNKNOWN",
+        "LOCAL_LLM_INFERENCE": "UNKNOWN",
+        "EXTERNAL_RERANKING": "UNKNOWN",
+        "REDISTRIBUTE": "DENIED",
+        "COMMERCIAL_USE": "UNKNOWN"
+      },
+      "external_constraints": {
+        "EXTERNAL_LLM_INFERENCE": {
+          "gateway_provider_ids": [
+            "groq"
+          ],
+          "effective_provider_ids": [
+            "groq"
+          ],
+          "model_ids": [
+            "openai/gpt-oss-20b",
+            "openai/gpt-oss-120b",
+            "qwen/qwen3-32b",
+            "moonshotai/kimi-k2-instruct",
+            "llama-3.3-70b-versatile"
+          ],
+          "zero_data_retention_required": true,
+          "provider_training_allowed": false,
+          "aggregator_routing_allowed": false
+        }
+      },
+      "rights_note": "WP-0: evidence tier. See qul-tafsir-almukhtasar-ar-v1 note."
+    },
+    {
+      "resource_alias": "qul-ayah-topics-v1",
+      "source_id": "qul",
+      "rights": {
+        "FETCH_REMOTE": "ALLOWED",
+        "DISPLAY": "ALLOWED",
+        "STORE": "ALLOWED",
+        "CACHE": "ALLOWED",
+        "INDEX_LEXICAL": "UNKNOWN",
+        "INDEX_VECTOR": "UNKNOWN",
+        "LOCAL_EMBEDDING": "UNKNOWN",
+        "EXTERNAL_EMBEDDING": "UNKNOWN",
+        "EXTERNAL_LLM_INFERENCE": "UNKNOWN",
+        "LOCAL_LLM_INFERENCE": "UNKNOWN",
+        "EXTERNAL_RERANKING": "UNKNOWN",
+        "REDISTRIBUTE": "DENIED",
+        "COMMERCIAL_USE": "UNKNOWN"
+      },
+      "external_constraints": {
+        "EXTERNAL_EMBEDDING": {
+          "gateway_provider_ids": ["cloudflare"],
+          "effective_provider_ids": ["cloudflare"],
+          "model_ids": ["@cf/baai/bge-m3"],
+          "zero_data_retention_required": false,
+          "provider_training_allowed": false,
+          "aggregator_routing_allowed": false
+        },
+        "EXTERNAL_RERANKING": {
+          "gateway_provider_ids": ["cloudflare"],
+          "effective_provider_ids": ["cloudflare"],
+          "model_ids": ["@cf/baai/bge-reranker-base"],
+          "zero_data_retention_required": false,
+          "provider_training_allowed": false,
+          "aggregator_routing_allowed": false
+        }
+      },
+      "rights_note": "QUL Ayah Topics export carries no licence metadata. INDEX_VECTOR and EXTERNAL_EMBEDDING remain UNKNOWN and are permitted only by the bounded PROJECT_OWNER_ACCEPTED_RISK development override. Topic labels are retrieval metadata only, never a training corpus or rendered Quran source text; REDISTRIBUTE is DENIED."
+    }
+  ]
+}

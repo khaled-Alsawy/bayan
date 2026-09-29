@@ -1,0 +1,38 @@
+{
+  "v": 3,
+  "createdOnFiles": { "v": 1, "at": "2026-09-19T12:00:00Z" },
+  "title": "بَيان — Qur'an Research Assistant Redesign",
+  "launch": { "view": "canvas" },
+  "pages": [],
+  "designSystems": [],
+  "boards": {
+    "Main.dc.html": { "x": 0, "y": 0, "w": 1280, "h": 1800, "title": "الجواب الكامل — سطح المكتب، عربي" },
+    "Verse.dc.html": { "x": 1360, "y": 0, "w": 760, "h": 980, "title": "معالجة الآية — ثلاث حالات" },
+    "Tafsir.dc.html": { "x": 2200, "y": 0, "w": 860, "h": 1500, "title": "التفسير — القراءة الموسّعة" },
+    "Loading.dc.html": { "x": 0, "y": 2240, "w": 900, "h": 800, "title": "أثناء التنفيذ — المراحل" },
+    "Empty.dc.html": { "x": 980, "y": 2240, "w": 1280, "h": 900, "title": "حالة البداية" },
+    "Notices.dc.html": { "x": 2340, "y": 2240, "w": 860, "h": 1040, "title": "التنبيهات — ثلاث حالات" },
+    "Mobile.dc.html": { "x": 0, "y": 3740, "w": 375, "h": 1760, "title": "الهاتف ٣٧٥ بكسل — عربي" },
+    "Dark.dc.html": { "x": 535, "y": 3740, "w": 1280, "h": 1500, "title": "الوضع الليلي" },
+    "English.dc.html": { "x": 1895, "y": 3740, "w": 1280, "h": 1300, "title": "English — LTR" },
+    "Tokens.dc.html": { "x": 0, "y": 5900, "w": 1280, "h": 1040, "title": "الرموز والخطوط" }
+  },
+  "order": [
+    "Main.dc.html",
+    "Verse.dc.html",
+    "Tafsir.dc.html",
+    "Loading.dc.html",
+    "Empty.dc.html",
+    "Notices.dc.html",
+    "Mobile.dc.html",
+    "Dark.dc.html",
+    "English.dc.html",
+    "Tokens.dc.html"
+  ],
+  "notes": {
+    "r1": { "x": 0, "y": -300, "text": "الجواب يتصدّر، والدليل تحته — Answer leads, evidence follows", "kind": "title1", "maxW": 3060 },
+    "r2": { "x": 0, "y": 1940, "text": "الانتظار، البداية، التنبيهات — Progress, first use, notices", "kind": "title1", "maxW": 3200 },
+    "r3": { "x": 0, "y": 3440, "text": "الهاتف، الليل، الإنجليزية — Mobile, dark, LTR", "kind": "title1", "maxW": 3175 },
+    "r4": { "x": 0, "y": 5600, "text": "الرموز والخطوط — Tokens and type", "kind": "title1", "maxW": 1280 }
+  }
+}

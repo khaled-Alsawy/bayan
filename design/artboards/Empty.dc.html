@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>حالة البداية — قبل أول سؤال</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#f3efe7;font-family:"IBM Plex Sans Arabic",system-ui,sans-serif}
+  a{color:var(--emerald-deep)}
+  a:hover{color:var(--emerald)}
+  .tok{--canvas:#f3efe7;--surface:#f8f5ef;--surface-strong:#eee8dc;--paper:#fffdf9;--paper-muted:#faf7f1;--ink:#162923;--ink-soft:#4e5c56;--ink-faint:#6b7671;--emerald:#12614f;--emerald-deep:#0b493d;--emerald-muted:#5c8a7c;--emerald-soft:#e8f1ed;--brass:#895b22;--brass-soft:#f3e7d2;--border:#ded7ca;--border-strong:#c9c0b1;--focus:#1b6f5c;--script:"Amiri","Noto Naskh Arabic",Georgia,serif;--sans:"IBM Plex Sans Arabic","IBM Plex Sans",system-ui,sans-serif}
+  :focus-visible{outline:2px solid var(--focus);outline-offset:3px;border-radius:5px}
+</style>
+</helmet>
+
+<div class="tok" dir="rtl" style="width: 1280px; height: 900px; background: var(--canvas); color: var(--ink); font-family: var(--sans); display: flex; flex-direction: column;">
+
+  <header style="display: flex; align-items: center; gap: 14px; height: 66px; padding: 0 40px; background: var(--surface); border-bottom: 1px solid var(--border); flex-shrink: 0;">
+    <h1 style="margin: 0; font-family: var(--script); font-size: 27px; font-weight: 700; color: var(--emerald-deep);">بَيان</h1>
+    <div style="flex-grow: 1;"></div>
+    <button type="button" aria-label="تبديل الوضع الليلي" style="display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border: 1px solid var(--border-strong); border-radius: 8px; background: transparent; color: var(--ink-soft); cursor: pointer;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
+    </button>
+  </header>
+
+  <main style="flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 40px; padding: 0 40px;">
+
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 14px; max-width: 34rem; text-align: center;">
+      <h2 style="margin: 0; font-family: var(--script); font-size: 40px; font-weight: 700; line-height: 1.6; color: var(--ink);">اسأل، ثم اقرأ الدليل</h2>
+      <p style="margin: 0; font-size: 16.5px; line-height: 1.9; color: var(--ink-soft);">يبحث «بَيان» في المصحف وفي تفاسير مختارة، ثم يكتب جوابًا من النصوص التي يعرضها لك. كل جملة مردودة إلى موضعها، ولا جواب بلا مصدر معروض.</p>
+    </div>
+
+    <form style="width: 660px; display: flex; align-items: center; gap: 12px;">
+      <label for="ask-empty" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;">اسأل عن موضوع أو آية من القرآن</label>
+      <input id="ask-empty" type="text" placeholder="اسأل عن موضوع أو آية من القرآن…" style="flex-grow: 1; height: 54px; padding: 0 20px; border: 1px solid var(--border-strong); border-radius: 13px; background: var(--paper); font-family: var(--sans); font-size: 16px; color: var(--ink);">
+      <button type="submit" aria-label="إرسال السؤال" style="display: inline-flex; align-items: center; justify-content: center; width: 54px; height: 54px; border: 1px solid var(--emerald-deep); border-radius: 13px; background: var(--emerald-deep); color: #fffdf9; cursor: pointer;">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"></path><path d="M11 6l-6 6 6 6"></path></svg>
+      </button>
+    </form>
+
+    <section style="width: 760px; display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <h3 style="margin: 0; font-size: 13px; font-weight: 600; color: var(--ink-faint); letter-spacing: .03em;">ابدأ من هنا</h3>
+        <hr style="border: 0; border-top: 1px solid var(--border); flex-grow: 1;">
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px;">
+        <button type="button" style="min-height: 56px; padding: 14px 18px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); font-family: var(--sans); font-size: 15px; line-height: 1.7; color: var(--ink-soft); text-align: start; cursor: pointer;">ماذا يقول القرآن عن الصبر عند الشدّة؟</button>
+        <button type="button" style="min-height: 56px; padding: 14px 18px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); font-family: var(--sans); font-size: 15px; line-height: 1.7; color: var(--ink-soft); text-align: start; cursor: pointer;">ايه الآيات الي بتتكلم عن تحصين الإنسان من الحسد والعين؟</button>
+        <button type="button" style="min-height: 56px; padding: 14px 18px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); font-family: var(--sans); font-size: 15px; line-height: 1.7; color: var(--ink-soft); text-align: start; cursor: pointer;">ما معنى «الفلق» عند المفسّرين؟</button>
+        <button type="button" style="min-height: 56px; padding: 14px 18px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); font-family: var(--sans); font-size: 15px; line-height: 1.7; color: var(--ink-soft); text-align: start; cursor: pointer;">أين ذُكرت قصة يوسف مع إخوته في القرآن؟</button>
+      </div>
+    </section>
+
+    <div style="display: flex; align-items: center; gap: 10px; max-width: 40rem; padding: 12px 18px; background: var(--surface-strong); border: 1px solid var(--border); border-radius: 11px;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ink-faint)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 8.5v4.5"></path><path d="M12 16h.01"></path></svg>
+      <span style="font-size: 13.5px; line-height: 1.75; color: var(--ink-soft);">النطاق الحالي: القرآن الكريم وترجماته وتفاسير مختارة. لا يشمل الحديث ولا الفتوى ولا الأحكام.</span>
+    </div>
+
+  </main>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

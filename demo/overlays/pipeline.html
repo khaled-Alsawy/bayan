@@ -1,0 +1,14 @@
+<div class="demo-pipeline-inner" dir="rtl">
+  <h2>من السؤال إلى إجابة عليها دليل</h2>
+  <div class="demo-stages">
+    <div class="demo-stage" data-stage="question"><strong>السؤال</strong><small>استفسار المستخدم</small></div>
+    <div class="demo-stage" data-stage="planner"><strong>Planner</strong><small>openai/gpt-oss-20b · Groq</small></div>
+    <div class="demo-stage" data-stage="retrieval"><strong>Hybrid retrieval</strong><small>Lexical + bge-m3 vectors · RRF · PostgreSQL</small></div>
+    <div class="demo-stage" data-stage="relevance"><strong>Relevance</strong><small>deterministic · lexical + tafsir</small></div>
+    <div class="demo-stage" data-stage="synthesis"><strong>Synthesis</strong><small>gpt-oss-20b (Groq) · Gemma 4 محلي لما فيه تفسير</small></div>
+    <div class="demo-stage" data-stage="grounding"><strong>GroundingValidator</strong><small>رفض أي claim بلا مصدر</small></div>
+    <div class="demo-stage" data-stage="composer"><strong>Composer</strong><small>openai/gpt-oss-120b</small></div>
+    <div class="demo-stage" data-stage="answer"><strong>الإجابة</strong><small>نص طبيعي + citations deterministic</small></div>
+  </div>
+  <div class="demo-sidebox">Groq primary · local Gemma 4 26B-A4B (MLX, loopback) for rights-restricted tafsir or on 429</div>
+</div>

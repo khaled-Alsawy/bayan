@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Bayān — System Overview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&family=Amiri:wght@700&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 0; }
+  :root {
+    --ink: #17241f; --ink-2: #3c4b45; --muted: #6b7a73; --line: #d9d3c4;
+    --paper: #fbf8f1; --card: #ffffff; --emerald: #1f7a63; --emerald-soft: #e3f1ec;
+    --gold: #b98a2f; --gold-soft: #f6ecd6; --violet: #5b4bb7; --violet-soft: #ebe8f8;
+    --slate: #3d5a80; --slate-soft: #e4ebf4; --rose: #b4533f; --rose-soft: #f7e6e1;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--paper); color: var(--ink);
+    font-family: Inter, system-ui, sans-serif; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .page { width: 210mm; height: 297mm; padding: 13mm 14mm 9mm; position: relative; overflow: hidden;
+    page-break-after: always; display: flex; flex-direction: column; }
+  .page:last-child { page-break-after: auto; }
+  .mono { font-family: "JetBrains Mono", ui-monospace, monospace; }
+
+  /* Header */
+  .top { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 2px solid var(--ink); padding-bottom: 9px; }
+  .brand { display: flex; align-items: baseline; gap: 12px; }
+  .brand .ar { font-family: Amiri, serif; font-size: 34px; line-height: 1; color: var(--emerald); }
+  .brand h1 { margin: 0; font-size: 25px; letter-spacing: -.02em; font-weight: 800; }
+  .top .meta { text-align: right; font-size: 9.5px; color: var(--muted); line-height: 1.5; }
+  .lede { margin: 10px 0 0; font-size: 12px; line-height: 1.55; color: var(--ink-2); max-width: 175mm; }
+  .lede b { color: var(--ink); }
+
+  .principle { margin-top: 10px; display: flex; gap: 10px; }
+  .principle div { flex: 1; border-radius: 9px; padding: 8px 11px; font-size: 10.5px; line-height: 1.45; }
+  .principle .p1 { background: var(--emerald); color: #fff; }
+  .principle .p2 { background: var(--gold-soft); color: var(--ink); border: 1px solid #ead7ae; }
+  .principle .p3 { background: var(--slate-soft); color: var(--ink); border: 1px solid #cad7e8; }
+  .principle strong { display: block; font-size: 11.5px; margin-bottom: 2px; }
+
+  h2 { font-size: 14px; margin: 11px 0 7px; letter-spacing: -.01em; display: flex; align-items: center; gap: 8px; }
+  h2 .n { display: inline-grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: var(--ink); color: #fff; font-size: 10.5px; }
+  h2 small { font-weight: 500; color: var(--muted); font-size: 10px; margin-left: 4px; }
+
+  /* Legend */
+  .legend { display: flex; gap: 12px; font-size: 9.5px; color: var(--ink-2); margin: -2px 0 8px; flex-wrap: wrap; }
+  .legend span { display: inline-flex; align-items: center; gap: 5px; }
+  .sw { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+
+  /* Workflow stepper */
+  .flow { position: relative; display: grid; grid-template-columns: 1fr; gap: 5px; }
+  .flow::before { content: ""; position: absolute; left: 13px; top: 10px; bottom: 10px; width: 2px; background: repeating-linear-gradient(var(--line) 0 5px, transparent 5px 8px); }
+  .step { display: grid; grid-template-columns: 28px 118px 1fr 148px; align-items: center; gap: 9px;
+    background: var(--card); border: 1px solid var(--line); border-radius: 9px; padding: 6px 10px 6px 0; position: relative; }
+  .step .dot { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: 11px; color: #fff; margin-left: -1px; position: relative; z-index: 1; }
+  .step .name { font-weight: 700; font-size: 11.5px; }
+  .step .name em { display: block; font-style: normal; font-weight: 500; font-size: 9px; color: var(--muted); margin-top: 1px; }
+  .step .what { font-size: 10px; line-height: 1.42; color: var(--ink-2); }
+  .step .what b { color: var(--ink); font-weight: 600; }
+  .tag { justify-self: end; font-size: 8.8px; font-weight: 600; padding: 4px 7px; border-radius: 6px; line-height: 1.3; text-align: right; }
+  .t-code { background: var(--emerald-soft); color: #145746; }
+  .t-llm  { background: var(--violet-soft); color: #3f3291; }
+  .t-local{ background: var(--gold-soft); color: #7a5a17; }
+  .t-db   { background: var(--slate-soft); color: #264262; }
+  .t-ui   { background: #eee; color: #333; }
+  .d-code { background: var(--emerald); } .d-llm { background: var(--violet); } .d-db { background: var(--slate); } .d-ui { background: #555; } .d-mix { background: linear-gradient(135deg, var(--violet) 50%, var(--gold) 50%); }
+  .step.key { border-color: var(--emerald); box-shadow: 0 0 0 1px var(--emerald) inset; }
+  .branch { margin: 2px 0 0 38px; border: 1.5px dashed var(--rose); background: var(--rose-soft); border-radius: 9px; padding: 6px 10px; font-size: 9.8px; line-height: 1.45; color: #5b2a20; }
+  .branch b { color: var(--rose); }
+
+  .footnote { margin-top: auto; padding-top: 8px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; font-size: 8.5px; color: var(--muted); }
+
+  /* Page 2 */
+  .arch { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 6px; }
+  .arch svg { display: block; width: 100%; height: auto; }
+  .grid2 { display: grid; grid-template-columns: 1.5fr 1fr; gap: 12px; margin-top: 2px; }
+  table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 9.6px; background: var(--card); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  th { text-align: left; background: var(--ink); color: #fff; font-weight: 600; padding: 6px 8px; font-size: 9.2px; letter-spacing: .02em; }
+  td { padding: 5.5px 8px; border-top: 1px solid #ece6d8; vertical-align: top; line-height: 1.38; color: var(--ink-2); }
+  td:first-child { font-weight: 600; color: var(--ink); white-space: nowrap; }
+  td.mono { font-family: "JetBrains Mono", monospace; font-size: 8.7px; color: var(--ink); white-space: nowrap; }
+  td:nth-child(3) { white-space: nowrap; }
+  .box { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 9px 11px; }
+  .box h3 { margin: 0 0 6px; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--emerald); }
+  .box ul { margin: 0; padding-left: 14px; font-size: 9.8px; line-height: 1.5; color: var(--ink-2); }
+  .box li { margin-bottom: 3px; } .box li b { color: var(--ink); }
+  .stack { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .stack .cell { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; }
+  .stack .cell h4 { margin: 0 0 4px; font-size: 9.5px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+  .stack .cell p { margin: 0; font-size: 9.6px; line-height: 1.45; color: var(--ink); }
+  .stack .cell p span { color: var(--ink-2); }
+  .trust { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .trust .t { border-radius: 10px; padding: 7px 10px; background: var(--emerald-soft); border: 1px solid #c6e2d8; font-size: 9.6px; line-height: 1.45; color: #1d3d34; }
+  .trust .t strong { display: block; font-size: 10.4px; color: #0f4a3b; margin-bottom: 2px; }
+</style>
+</head>
+<body>
+
+<!-- ============================ PAGE 1 ============================ -->
+<section class="page">
+  <div class="top">
+    <div>
+      <div class="brand"><span class="ar">بَيان</span><h1>Bayān — System Overview</h1></div>
+    </div>
+    <div class="meta">Evidence-grounded Qur'an &amp; Tafsir research assistant<br>Technical summary · September 2026</div>
+  </div>
+
+  <p class="lede">
+    Bayān answers questions about the Qur'an in <b>Arabic or English</b> and shows the verses and tafsir it relied on.
+    Its core rule: <b>no sentence reaches the reader unless it points to a real source that is displayed next to it.</b>
+    Language models are used for understanding and wording; <b>code</b> decides what counts as evidence and renders every citation.
+  </p>
+
+  <div class="principle">
+    <div class="p1"><strong>The model picks evidence. Code writes the citation.</strong>Models return evidence IDs, never verse text or references — so a verse cannot be invented.</div>
+    <div class="p2"><strong>Every claim is checked.</strong>A validator rejects unknown IDs and drops any sentence that adds ideas absent from its sources.</div>
+    <div class="p3"><strong>Honest when evidence is thin.</strong>If nothing survives validation, the reader sees "insufficient evidence" and the sources — not a confident guess.</div>
+  </div>
+
+  <h2><span class="n">1</span>How a question becomes an answer <small>one turn, typically 20–45 s, every stage streamed live to the UI</small></h2>
+  <div class="legend">
+    <span><i class="sw" style="background:var(--emerald)"></i>Deterministic code</span>
+    <span><i class="sw" style="background:var(--violet)"></i>Cloud LLM (Groq)</span>
+    <span><i class="sw" style="background:var(--gold)"></i>Local LLM (on-device)</span>
+    <span><i class="sw" style="background:var(--slate)"></i>Database search</span>
+  </div>
+
+  <div class="flow">
+    <div class="step"><div class="dot d-ui">1</div><div class="name">Ask<em>Next.js UI</em></div>
+      <div class="what">Arabic (RTL) or English question in a conversation thread. Progress arrives as a live <b>execution trace</b> over server-sent events.</div>
+      <div class="tag t-ui">Browser → API</div></div>
+
+    <div class="step"><div class="dot d-code">2</div><div class="name">Scope check<em>precheck</em></div>
+      <div class="what">Is this Qur'an / tafsir research? Out-of-scope requests (e.g. rulings, hadith) stop here with an explanation.</div>
+      <div class="tag t-code">Rules</div></div>
+
+    <div class="step"><div class="dot d-llm">3</div><div class="name">Plan<em>understand the question</em></div>
+      <div class="what">Turns the question into a <b>typed research plan</b>: intent, operations and search queries, returned as strict JSON and schema-validated.</div>
+      <div class="tag t-llm">gpt-oss-20b · Groq</div></div>
+
+    <div class="step"><div class="dot d-db">4</div><div class="name">Retrieve<em>three search arms</em></div>
+      <div class="what"><b>Lexical</b> — Arabic-normalised full-text + trigram. <b>Dense</b> — meaning search with bge-m3 embeddings (1024-d, HNSW). <b>Tafsir arm</b> — finds verses through their commentary.</div>
+      <div class="tag t-db">PostgreSQL · pgvector<br>bge-m3 · Cloudflare</div></div>
+
+    <div class="step"><div class="dot d-code">5</div><div class="name">Fuse &amp; hydrate<em>rank merge</em></div>
+      <div class="what"><b>Reciprocal Rank Fusion</b> merges the arms by rank, not raw score. Top passages are loaded with their canonical Arabic text, translation and tafsir.</div>
+      <div class="tag t-code">RRF</div></div>
+
+    <div class="step"><div class="dot d-code">6</div><div class="name">Assemble evidence<em>+ source rights</em></div>
+      <div class="what">Each passage becomes an <b>evidence item</b> with an ID, a canonical pointer and a rights policy: may it be displayed, sent to a cloud model, or processed only locally?</div>
+      <div class="tag t-code">Source policy</div></div>
+
+    <div class="step"><div class="dot d-code">7</div><div class="name">Relevance<em>filter</em></div>
+      <div class="what">A deterministic lexical + tafsir check drops passages that don't actually address the question.</div>
+      <div class="tag t-code">Deterministic</div></div>
+
+    <div class="step key"><div class="dot d-mix">8</div><div class="name">Synthesise<em>evidence-bound claims</em></div>
+      <div class="what">The model writes short <b>claims, each citing evidence IDs</b>. If a rights-restricted tafsir is in the evidence (or Groq is rate-limited), this runs <b>on the local model</b> so the text never leaves the machine.</div>
+      <div class="tag t-llm">gpt-oss-20b · Groq<br><span style="color:#7a5a17">or Gemma 4 · local</span></div></div>
+
+    <div class="step key"><div class="dot d-code">9</div><div class="name">Validate<em>GroundingValidator</em></div>
+      <div class="what">Every cited ID must exist; Arabic/translation pairs are completed; an <b>entailment gate removes any claim</b> that introduces concepts absent from its evidence.</div>
+      <div class="tag t-code">Deterministic gate</div></div>
+
+    <div class="step"><div class="dot d-llm">10</div><div class="name">Compose<em>reader-facing prose</em></div>
+      <div class="what">Rewrites the <b>verified</b> claims into connected prose. It sees claims and reference labels only — not the source text — so it has nothing to paraphrase or invent.</div>
+      <div class="tag t-llm">gpt-oss-120b · Groq</div></div>
+
+    <div class="step key"><div class="dot d-code">11</div><div class="name">Render<em>deterministic citations</em></div>
+      <div class="what">For each cited ID, code fetches the verse text, surah name and verse number from the database and draws the <b>citation chips and evidence cards</b>.</div>
+      <div class="tag t-code">Code, not model</div></div>
+  </div>
+
+  <div class="branch"><b>Honest fallback —</b> if no claim survives step 9 (or the question has no support in the corpus), the turn ends as <b>"insufficient evidence"</b> and shows the retrieved sources, instead of producing a fluent but unsupported answer.</div>
+
+  <div class="footnote"><span>Bayān · System overview</span><span>Page 1 of 2</span></div>
+</section>
+
+<!-- ============================ PAGE 2 ============================ -->
+<section class="page">
+  <div class="top">
+    <div class="brand"><span class="ar">بَيان</span><h1>Architecture, models &amp; tools</h1></div>
+    <div class="meta">Where each part runs, and why</div>
+  </div>
+
+  <h2><span class="n">2</span>System architecture <small>local-first: the database, orchestrator and fallback model run on one machine</small></h2>
+  <div class="arch">
+    <svg viewBox="0 0 1000 380" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
+      <defs>
+        <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3c4b45"/></marker>
+      </defs>
+      <!-- machine boundary -->
+      <rect x="170" y="14" width="560" height="352" rx="16" fill="#f4f0e6" stroke="#b9b09b" stroke-dasharray="6 5"/>
+      <text x="186" y="36" font-size="13" font-weight="700" fill="#3c4b45">This machine</text>
+      <text x="186" y="52" font-size="10.5" fill="#6b7a73">launchd services · secrets in macOS Keychain · no public exposure</text>
+      <!-- cloud boundary -->
+      <rect x="752" y="14" width="236" height="352" rx="16" fill="#eef2f8" stroke="#9fb3cf" stroke-dasharray="6 5"/>
+      <text x="768" y="36" font-size="13" font-weight="700" fill="#264262">Cloud APIs</text>
+      <text x="768" y="52" font-size="10.5" fill="#4d6685">called only by the backend</text>
+
+      <!-- browser -->
+      <rect x="12" y="150" width="140" height="92" rx="12" fill="#fff" stroke="#555"/>
+      <text x="82" y="178" text-anchor="middle" font-size="14" font-weight="700" fill="#17241f">Browser</text>
+      <text x="82" y="198" text-anchor="middle" font-size="10.5" fill="#3c4b45">Arabic RTL / English</text>
+      <text x="82" y="214" text-anchor="middle" font-size="10.5" fill="#3c4b45">live trace + answer</text>
+      <text x="82" y="230" text-anchor="middle" font-size="10.5" fill="#3c4b45">evidence cards</text>
+
+      <!-- next.js -->
+      <rect x="196" y="140" width="150" height="112" rx="12" fill="#fff" stroke="#17241f" stroke-width="1.4"/>
+      <text x="271" y="166" text-anchor="middle" font-size="14" font-weight="700" fill="#17241f">Web app</text>
+      <text x="271" y="186" text-anchor="middle" font-size="10.5" fill="#3c4b45">Next.js 16 · React 19</text>
+      <text x="271" y="202" text-anchor="middle" font-size="10.5" fill="#3c4b45">same-origin API route</text>
+      <text x="271" y="218" text-anchor="middle" font-size="10.5" fill="#3c4b45">Zod validation</text>
+      <text x="271" y="234" text-anchor="middle" font-size="10.5" fill="#3c4b45">both directions</text>
+
+      <!-- fastapi -->
+      <rect x="376" y="104" width="170" height="184" rx="12" fill="#17241f"/>
+      <text x="461" y="132" text-anchor="middle" font-size="15" font-weight="800" fill="#fff">Research API</text>
+      <text x="461" y="151" text-anchor="middle" font-size="10.5" fill="#cfe3dc">FastAPI · Python 3.12</text>
+      <line x1="394" y1="162" x2="528" y2="162" stroke="#3f5a52"/>
+      <text x="461" y="182" text-anchor="middle" font-size="10.5" fill="#fff">orchestrates the 11 stages</text>
+      <text x="461" y="199" text-anchor="middle" font-size="10.5" fill="#fff">Pydantic contracts</text>
+      <text x="461" y="216" text-anchor="middle" font-size="10.5" fill="#fff">source-rights routing</text>
+      <text x="461" y="233" text-anchor="middle" font-size="10.5" fill="#fff">GroundingValidator</text>
+      <text x="461" y="250" text-anchor="middle" font-size="10.5" fill="#fff">trace events (SSE)</text>
+      <text x="461" y="274" text-anchor="middle" font-size="9.5" fill="#9fc4b8">loopback 127.0.0.1 only</text>
+
+      <!-- postgres -->
+      <rect x="576" y="72" width="138" height="140" rx="12" fill="#fff" stroke="#3d5a80" stroke-width="1.4"/>
+      <text x="645" y="98" text-anchor="middle" font-size="13.5" font-weight="700" fill="#264262">PostgreSQL</text>
+      <text x="645" y="116" text-anchor="middle" font-size="10" fill="#3d5a80">pgvector · HNSW</text>
+      <text x="645" y="131" text-anchor="middle" font-size="10" fill="#3d5a80">full-text · pg_trgm</text>
+      <line x1="590" y1="141" x2="700" y2="141" stroke="#d6dfeb"/>
+      <text x="645" y="158" text-anchor="middle" font-size="10" fill="#3c4b45">Qur'an · translation</text>
+      <text x="645" y="173" text-anchor="middle" font-size="10" fill="#3c4b45">tafsir · embeddings</text>
+      <text x="645" y="188" text-anchor="middle" font-size="10" fill="#3c4b45">conversations</text>
+      <text x="645" y="203" text-anchor="middle" font-size="10" fill="#3c4b45">turn trace events</text>
+
+      <!-- gemma -->
+      <rect x="576" y="236" width="138" height="104" rx="12" fill="#f6ecd6" stroke="#b98a2f" stroke-width="1.4"/>
+      <text x="645" y="262" text-anchor="middle" font-size="13.5" font-weight="700" fill="#7a5a17">Local LLM</text>
+      <text x="645" y="280" text-anchor="middle" font-size="10" fill="#5e4613">Gemma 4 26B-A4B</text>
+      <text x="645" y="295" text-anchor="middle" font-size="10" fill="#5e4613">4-bit · MLX-LM</text>
+      <text x="645" y="313" text-anchor="middle" font-size="10" fill="#5e4613">restricted tafsir +</text>
+      <text x="645" y="328" text-anchor="middle" font-size="10" fill="#5e4613">rate-limit fallback</text>
+
+      <!-- groq -->
+      <rect x="772" y="72" width="196" height="140" rx="12" fill="#fff" stroke="#5b4bb7" stroke-width="1.4"/>
+      <text x="870" y="98" text-anchor="middle" font-size="13.5" font-weight="700" fill="#3f3291">Groq</text>
+      <text x="870" y="118" text-anchor="middle" font-size="10.5" fill="#3c4b45">gpt-oss-20b</text>
+      <text x="870" y="133" text-anchor="middle" font-size="9.5" fill="#6b7a73">planner · synthesis</text>
+      <text x="870" y="153" text-anchor="middle" font-size="10.5" fill="#3c4b45">gpt-oss-120b</text>
+      <text x="870" y="168" text-anchor="middle" font-size="9.5" fill="#6b7a73">composer</text>
+      <text x="870" y="194" text-anchor="middle" font-size="9.5" font-weight="600" fill="#3f3291">zero data retention · no training</text>
+
+      <!-- cloudflare -->
+      <rect x="772" y="236" width="196" height="112" rx="12" fill="#fff" stroke="#3d5a80" stroke-width="1.4"/>
+      <text x="870" y="262" text-anchor="middle" font-size="13.5" font-weight="700" fill="#264262">Cloudflare Workers AI</text>
+      <text x="870" y="284" text-anchor="middle" font-size="10.5" fill="#3c4b45">@cf/baai/bge-m3</text>
+      <text x="870" y="300" text-anchor="middle" font-size="9.5" fill="#6b7a73">multilingual embeddings</text>
+      <text x="870" y="316" text-anchor="middle" font-size="9.5" fill="#6b7a73">query → 1024-d vector</text>
+
+      <!-- arrows -->
+      <line x1="152" y1="196" x2="194" y2="196" stroke="#3c4b45" stroke-width="1.6" marker-end="url(#ar)" marker-start="url(#ar)"/>
+      <line x1="346" y1="196" x2="374" y2="196" stroke="#3c4b45" stroke-width="1.6" marker-end="url(#ar)" marker-start="url(#ar)"/>
+      <path d="M546 150 L574 142" stroke="#3d5a80" stroke-width="1.6" fill="none" marker-end="url(#ar)" marker-start="url(#ar)"/>
+      <path d="M546 250 L574 280" stroke="#b98a2f" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+      <path d="M520 104 L520 64 L870 64 L870 70" stroke="#5b4bb7" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+      <path d="M520 288 L520 356 L870 356 L870 350" stroke="#3d5a80" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+      <text x="173" y="186" font-size="9" fill="#6b7a73" text-anchor="middle">HTTPS</text>
+      <text x="360" y="186" font-size="9" fill="#6b7a73" text-anchor="middle">SSE</text>
+      <text x="690" y="58" font-size="9.5" fill="#3f3291" text-anchor="middle">planning · claims · prose</text>
+      <text x="700" y="351" font-size="9.5" fill="#264262" text-anchor="middle">query embedding</text>
+    </svg>
+  </div>
+
+  <div class="grid2" style="margin-top:12px">
+    <div>
+      <h2 style="margin-top:0"><span class="n">3</span>Models and why</h2>
+      <table>
+        <tr><th>Role</th><th>Model</th><th>Runs on</th><th>Why this choice</th></tr>
+        <tr><td>Planner</td><td class="mono">gpt-oss-20b</td><td>Groq</td><td>Fast, reliable strict-JSON plans</td></tr>
+        <tr><td>Synthesis</td><td class="mono">gpt-oss-20b</td><td>Groq</td><td>Evidence-bound claims; schema over style</td></tr>
+        <tr><td>Synthesis (local)</td><td class="mono">Gemma 4 26B-A4B</td><td>Local · MLX</td><td>Restricted tafsir stays on-device; Groq rate-limit fallback</td></tr>
+        <tr><td>Composer</td><td class="mono">gpt-oss-120b</td><td>Groq</td><td>The only reader-facing prose</td></tr>
+        <tr><td>Embeddings</td><td class="mono">bge-m3</td><td>Cloudflare</td><td>Arabic + English in one vector space</td></tr>
+        <tr><td>Relevance, validation</td><td class="mono">no model</td><td>Code</td><td>Auditable: same input, same decision</td></tr>
+      </table>
+    </div>
+    <div>
+      <h2 style="margin-top:0"><span class="n">4</span>Sources</h2>
+      <div class="box">
+        <ul>
+          <li><b>Qur'an (Arabic)</b> — Uthmani script, Tanzil Project</li>
+          <li><b>English translation</b> — Rowwad Translation Center (QuranEnc)</li>
+          <li><b>Tafsir</b> — al-Mukhtasar fi al-Tafsir (Tafsir Center for Quranic Studies), via the Quranic Universal Library</li>
+          <li>Each source carries a <b>rights policy</b> that decides display, cloud use and local-only processing.</li>
+          <li>English answers use Qur'an + translation only, until an approved English tafsir is available.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <h2><span class="n">5</span>Trust by design</h2>
+  <div class="trust">
+    <div class="t"><strong>No invented citations</strong>Models reference evidence IDs; verse text, surah names and numbers come from the database.</div>
+    <div class="t"><strong>Claim-level validation</strong>Unsupported sentences are removed individually; the rest of a good answer survives.</div>
+    <div class="t"><strong>Honest fallback</strong>"Insufficient evidence" plus sources, rather than a fluent guess.</div>
+    <div class="t"><strong>Rights-aware routing</strong>Source policy decides whether text may reach a cloud model or stays on-device.</div>
+    <div class="t"><strong>Private providers</strong>Groq route with zero data retention and no training; local model bound to loopback.</div>
+    <div class="t"><strong>Observable</strong>Every stage emits a trace event — streamed to the UI and stored per turn in Postgres.</div>
+  </div>
+
+  <h2><span class="n">6</span>Tooling &amp; quality</h2>
+  <div class="stack">
+    <div class="cell"><h4>Frontend</h4><p>Next.js 16, React 19, Tailwind 4<br><span>Arabic-first RTL UI, Zod-validated contracts</span></p></div>
+    <div class="cell"><h4>Backend</h4><p>FastAPI, Pydantic, httpx, psycopg<br><span>custom stage orchestrator, no agent framework</span></p></div>
+    <div class="cell"><h4>Contracts</h4><p>OpenAPI → TypeScript<br><span>type-check fails on any request/response drift</span></p></div>
+    <div class="cell"><h4>Testing</h4><p>376 backend tests (pytest)<br><span>+ Vitest unit and Playwright browser tests</span></p></div>
+  </div>
+  <p style="font-size:9.6px;color:var(--ink-2);line-height:1.5;margin:8px 0 0">
+    <b style="color:var(--ink)">Measured, not guessed.</b> Retrieval and selection changes are evaluated on a set of hard, paraphrased questions before they are adopted — for example, a cross-encoder reranker was measured, made results worse, and was rejected.
+  </p>
+
+  <div class="footnote"><span>Bayān · System overview</span><span>Page 2 of 2</span></div>
+</section>
+</body>
+</html>

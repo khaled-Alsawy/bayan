@@ -1,0 +1,66 @@
+# ---------------------------------------------------------------------------
+# Secrets and account-specific configuration (credentials live in macOS Keychain)
+# ---------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+!.env.feasibility.example
+credentials/
+*.pem
+
+# ---------------------------------------------------------------------------
+# Local runtimes, models and databases (multi-GB, machine-specific)
+# ---------------------------------------------------------------------------
+.runtime/
+.tools/
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+
+# ---------------------------------------------------------------------------
+# Source corpora and anything that contains source text.
+# Rights for some sources (e.g. QUL tafsir) are not cleared for redistribution,
+# so raw downloads and live answers/traces that quote them stay local.
+# ---------------------------------------------------------------------------
+data/raw/
+artifacts/
+
+# ---------------------------------------------------------------------------
+# Generated demo media and review output
+# ---------------------------------------------------------------------------
+demo/audio/*.wav
+demo/out/
+web/test-results-demo/
+
+# ---------------------------------------------------------------------------
+# Internal working notes: task briefs, agent prompts, handoffs, QA/implementation
+# reports and planning drafts. Useful locally, noise (and local paths) in public.
+# ---------------------------------------------------------------------------
+NEXT_TASK_*.md
+*_PROMPT.md
+NEW_SESSION_PROMPT.md
+HANDOFF.md
+CV_DRAFT_*.md
+*_REPORT.md
+*_DEFECTS.md
+*_TECHNICAL_PLAN*.md
+*_ADDENDUM.md
+*_AMENDMENT.md
+TEST_PLAN_*.md
+TEST_RESULTS_*.md
+ARCHITECTURE_CONFORMANCE_AUDIT.md
+LOCAL_RUNBOOK.md
+research_notes/
+reports/
+Codex Image *.png
+
+# ---------------------------------------------------------------------------
+# Editor / OS / agent tooling
+# ---------------------------------------------------------------------------
+.DS_Store
+.claude/
+.idea/
+.vscode/

@@ -1,0 +1,36 @@
+{
+  "schema_version": "1",
+  "note": "WP-1 (Conversational Quality Technical Plan V3): per-role Groq chat deployment map. require_configured_route() (routing.py) still asserts ZDR, no provider training, no subprocessors, no paid route, no fallback for every role -- only model identity and token budget are data here. See CONVERSATIONAL_QUALITY_IMPLEMENTATION_REPORT.md WP-1 for the model-comparison rationale (candidates from the plan -- qwen/qwen3-32b, moonshotai/kimi-k2-instruct, llama-3.3-70b-versatile -- are not on this Groq account; qwen/qwen3.8-27b, openai/gpt-oss-120b, and SDAIA's allam-2-7b were compared instead).",
+  "roles": {
+    "planner": {
+      "model_id": "openai/gpt-oss-20b",
+      "max_output_tokens": 900,
+      "rationale": "Short strict JSON (plan proposals, ambiguity checks); already adequate and fastest."
+    },
+    "relevance": {
+      "model_id": "openai/gpt-oss-20b",
+      "max_output_tokens": 900,
+      "rationale": "Shares the planner client in this pass -- GroqPlanner has no per-call-type routing seam yet; see the WP-1 section of the implementation report for the deferred finer split."
+    },
+    "synthesis": {
+      "model_id": "openai/gpt-oss-20b",
+      "max_output_tokens_quran": 1400,
+      "max_output_tokens_tafsir": 2000,
+      "rationale": "Atomic, evidence-bound claim extraction under GroundingValidator -- accuracy and strict-schema compliance matter more than prose quality here, so it stays on the fast/cheap model; only the token budget changes (F-01)."
+    },
+    "composer": {
+      "model_id": "openai/gpt-oss-120b",
+      "max_output_tokens": 2000,
+      "rationale": "The only role that produces the reader-facing prose the user reads and has no strict output schema (WP-2 AnswerComposer) -- the one role worth spending capability on. Manually compared against qwen/qwen3.8-27b and allam-2-7b on an Arabic+English patience (sabr) prompt; gpt-oss-120b was chosen as the safer default (larger, most consistent structure and register across both test prompts). allam-2-7b (SDAIA's Arabic-first model, newly available on this Groq account) produced fluent, natural Arabic religious register and is flagged as the strongest candidate for a future swap once WP-5's eval harness can score it on more than two prompts."
+    }
+  },
+  "alternates_evaluated": {
+    "qwen/qwen3.8-27b": "Solid, concise Arabic; the plan's originally-named qwen/qwen3-32b is not on this account.",
+    "allam-2-7b": "SDAIA Arabic-first model. Available on this Groq account today, contradicting the plan's WP-1 item 8 assumption that no Arabic-first model is hosted on the approved route. Promising for `composer`; not promoted to default without a larger comparison."
+  },
+  "unavailable_on_this_account": [
+    "qwen/qwen3-32b",
+    "moonshotai/kimi-k2-instruct",
+    "llama-3.3-70b-versatile"
+  ]
+}

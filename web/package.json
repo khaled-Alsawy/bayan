@@ -1,0 +1,55 @@
+{
+  "name": "web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "NEXT_TELEMETRY_DISABLED=1 next dev --hostname localhost --port 3000",
+    "build": "NEXT_TELEMETRY_DISABLED=1 next build",
+    "start": "NEXT_TELEMETRY_DISABLED=1 next start",
+    "lint": "eslint --max-warnings=0",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "pnpm build && playwright test --grep-invert @real",
+    "test:e2e:real": "REAL_BACKEND=1 playwright test --grep @real",
+    "contracts:export": "PYTHONPATH=../src ../.venv/bin/python scripts/export_openapi.py",
+    "contracts:generate": "pnpm contracts:export && openapi-typescript openapi.json -o src/contracts/openapi.generated.ts"
+  },
+  "engines": {
+    "node": "24.19.0"
+  },
+  "dependencies": {
+    "@fontsource-variable/dm-sans": "5.3.0",
+    "@fontsource-variable/noto-sans-arabic": "5.3.0",
+    "@radix-ui/react-dialog": "1.1.23",
+    "class-variance-authority": "0.7.1",
+    "clsx": "2.1.1",
+    "lucide-react": "1.46.0",
+    "next": "16.3.5",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "tailwind-merge": "3.7.0",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
+    "@playwright/test": "1.63.0",
+    "@tailwindcss/postcss": "4.3.3",
+    "@testing-library/dom": "10.4.2",
+    "@testing-library/jest-dom": "7.0.1",
+    "@testing-library/react": "16.3.3",
+    "@testing-library/user-event": "14.6.7",
+    "@types/node": "24.13.4",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.1.1",
+    "eslint": "9.39.5",
+    "eslint-config-next": "16.3.5",
+    "jsdom": "30.0.1",
+    "openapi-typescript": "7.13.0",
+    "tailwindcss": "4.3.3",
+    "typescript": "5.9.3",
+    "vitest": "5.0.1"
+  },
+  "packageManager": "pnpm@11.19.0"
+}

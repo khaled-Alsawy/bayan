@@ -1,0 +1,99 @@
+{
+  "schema_version": "1",
+  "artifact_repo": "mlx-community/gemma-4-26b-a4b-it-4bit",
+  "artifact_url": "https://huggingface.co/mlx-community/gemma-4-26b-a4b-it-4bit/tree/0d77464eeb233a2da68ebf9d7dc4edaac7db956d",
+  "artifact_revision": "0d77464eeb233a2da68ebf9d7dc4edaac7db956d",
+  "upstream_repo": "google/gemma-4-26b-a4b-it",
+  "upstream_revision": "20da991ab4afab98e8f910c4a2e8f4fbefc404ad",
+  "quantization": "mlx-4bit-affine-g64-router-projections-8bit",
+  "runtime": "mlx-lm",
+  "runtime_version": "0.31.3",
+  "runtime_source_url": "https://github.com/ml-explore/mlx-lm",
+  "runtime_revision": "v0.31.3",
+  "runtime_packages": {
+    "huggingface-hub": "1.31.0",
+    "mlx": "0.32.2",
+    "mlx-lm": "0.31.3",
+    "mlx-metal": "0.32.2",
+    "transformers": "5.17.0"
+  },
+  "qualification": {
+    "python_version": "3.12.14",
+    "architecture": "arm64",
+    "soc": "Apple M3 Max",
+    "unified_memory_bytes": 38654705664,
+    "bind_host": "127.0.0.1",
+    "max_concurrency": 1,
+    "max_output_tokens": 2000,
+    "max_prompt_characters": 100000,
+    "runtime_network_access_disabled": true,
+    "runtime_telemetry_disabled": true
+  },
+  "license": "Apache-2.0",
+  "license_terms_version": "Apache-2.0-January-2004",
+  "license_evidence_url": "https://ai.google.dev/gemma/apache_2",
+  "total_size_bytes": 15373588575,
+  "artifact_tree_sha256": "fbdf06ab3cdb561a39e2f033d4745f7b0ed5edcc0341c91f9f4f3c22d6c505d5",
+  "files": [
+    {
+      "path": ".gitattributes",
+      "size_bytes": 1570,
+      "sha256": "34448b82c17d60fec9b65b1f093c115ddbaadc04beb1b0140b6bfed2e012a930"
+    },
+    {
+      "path": "README.md",
+      "size_bytes": 753,
+      "sha256": "f4750b035683ba5d6707f6d1302ac6894aef3096fff21845b9b593bc1465c888"
+    },
+    {
+      "path": "chat_template.jinja",
+      "size_bytes": 17466,
+      "sha256": "36e3a42e5cf14cd0020e72d92e1fdd9970f59b82170e421f0cbe1bb42bead3f0"
+    },
+    {
+      "path": "config.json",
+      "size_bytes": 12180,
+      "sha256": "419e13a27ec359654c1ce7dd06d1a87149fd07d0c8af9f770494185e62e1b2ba"
+    },
+    {
+      "path": "generation_config.json",
+      "size_bytes": 208,
+      "sha256": "d4226bbe3117d2d253ba4609720ba82c6c4ce4627a9a6ae05387c78983ac03de"
+    },
+    {
+      "path": "model-00001-of-00003.safetensors",
+      "size_bytes": 5320218487,
+      "sha256": "683f420ee09550b8027bf0335c4202e196b37eb520b60a4bcbe8690b9e388c07"
+    },
+    {
+      "path": "model-00002-of-00003.safetensors",
+      "size_bytes": 5363328422,
+      "sha256": "feab2873c2976fb7ed666f8462549564a29409364388e0c8f6b015729d165e15"
+    },
+    {
+      "path": "model-00003-of-00003.safetensors",
+      "size_bytes": 4657658867,
+      "sha256": "bc607486deb1de5bc7e459932fda5c776a4f816b368feaa661bab8cfbb47e567"
+    },
+    {
+      "path": "model.safetensors.index.json",
+      "size_bytes": 176940,
+      "sha256": "bf198c9f5ea6462addca1966e5dd669c407537a876e82cf06db9084c5c850b13"
+    },
+    {
+      "path": "processor_config.json",
+      "size_bytes": 1316,
+      "sha256": "de3e580aebdc98272d4c4547daffe6525fcbae18a83a0e0bcf0d7444d4ee6f37"
+    },
+    {
+      "path": "tokenizer.json",
+      "size_bytes": 32169626,
+      "sha256": "cc8d3a0ce36466ccc1278bf987df5f71db1719b9ca6b4118264f45cb627bfe0f"
+    },
+    {
+      "path": "tokenizer_config.json",
+      "size_bytes": 2740,
+      "sha256": "080d9e1aff284e2f6043889cd05367966f7c7b80e025fbc0b06745e218158656"
+    }
+  ]
+}

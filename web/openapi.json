@@ -1,0 +1,1796 @@
+{
+  "components": {
+    "schemas": {
+      "AnswerStatus": {
+        "enum": [
+          "ANSWERABLE",
+          "PARTIAL",
+          "CLARIFICATION_REQUIRED",
+          "UNSUPPORTED_SCOPE",
+          "INSUFFICIENT_EVIDENCE",
+          "TEMPORARILY_UNAVAILABLE",
+          "FAILED_SAFE"
+        ],
+        "title": "AnswerStatus",
+        "type": "string"
+      },
+      "AttributionRole": {
+        "enum": [
+          "SOURCE",
+          "AUTHOR",
+          "TRANSLATOR",
+          "GRADER",
+          "PUBLISHER"
+        ],
+        "title": "AttributionRole",
+        "type": "string"
+      },
+      "AttributionV1": {
+        "additionalProperties": false,
+        "properties": {
+          "display_name": {
+            "title": "Display Name",
+            "type": "string"
+          },
+          "required_notice": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Required Notice"
+          },
+          "role": {
+            "$ref": "#/components/schemas/AttributionRole"
+          }
+        },
+        "required": [
+          "role",
+          "display_name",
+          "required_notice"
+        ],
+        "title": "AttributionV1",
+        "type": "object"
+      },
+      "CandidateReferenceV1": {
+        "additionalProperties": false,
+        "properties": {
+          "candidate_id": {
+            "title": "Candidate Id",
+            "type": "string"
+          },
+          "canonical_pointer": {
+            "anyOf": [
+              {
+                "discriminator": {
+                  "mapping": {
+                    "HADITH": "#/components/schemas/HadithPointer",
+                    "HADITH_COMMENTARY": "#/components/schemas/HadithCommentaryPointer",
+                    "QURAN": "#/components/schemas/QuranPointer",
+                    "TAFSIR": "#/components/schemas/TafsirPointer"
+                  },
+                  "propertyName": "kind"
+                },
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/QuranPointer"
+                  },
+                  {
+                    "$ref": "#/components/schemas/HadithPointer"
+                  },
+                  {
+                    "$ref": "#/components/schemas/TafsirPointer"
+                  },
+                  {
+                    "$ref": "#/components/schemas/HadithCommentaryPointer"
+                  }
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Canonical Pointer"
+          },
+          "kind": {
+            "enum": [
+              "QURAN",
+              "HADITH"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "provenance": {
+            "$ref": "#/components/schemas/ResolutionProvenance"
+          },
+          "safe_label": {
+            "title": "Safe Label",
+            "type": "string"
+          },
+          "source_revision": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SourceRevisionIdentity"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "candidate_id",
+          "kind",
+          "safe_label",
+          "canonical_pointer",
+          "source_revision",
+          "provenance"
+        ],
+        "title": "CandidateReferenceV1",
+        "type": "object"
+      },
+      "CitationV1": {
+        "additionalProperties": false,
+        "properties": {
+          "attribution": {
+            "items": {
+              "$ref": "#/components/schemas/AttributionV1"
+            },
+            "title": "Attribution",
+            "type": "array"
+          },
+          "canonical_link": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Canonical Link"
+          },
+          "citation_id": {
+            "title": "Citation Id",
+            "type": "string"
+          },
+          "display_label": {
+            "title": "Display Label",
+            "type": "string"
+          },
+          "evidence_id": {
+            "title": "Evidence Id",
+            "type": "string"
+          },
+          "reference": {
+            "$ref": "#/components/schemas/TypedSourceReference"
+          },
+          "source_kind": {
+            "$ref": "#/components/schemas/EvidenceSourceKind"
+          },
+          "source_revision": {
+            "$ref": "#/components/schemas/SourceRevisionIdentity"
+          }
+        },
+        "required": [
+          "citation_id",
+          "evidence_id",
+          "display_label",
+          "source_kind",
+          "reference",
+          "attribution",
+          "canonical_link",
+          "source_revision"
+        ],
+        "title": "CitationV1",
+        "type": "object"
+      },
+      "ClarificationCandidateV1": {
+        "additionalProperties": false,
+        "properties": {
+          "candidate_id": {
+            "title": "Candidate Id",
+            "type": "string"
+          },
+          "label": {
+            "title": "Label",
+            "type": "string"
+          },
+          "reference": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CandidateReferenceV1"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "candidate_id",
+          "label",
+          "reference"
+        ],
+        "title": "ClarificationCandidateV1",
+        "type": "object"
+      },
+      "ClarificationDetail": {
+        "enum": [
+          "MISSING_SURAH_OR_CHAPTER",
+          "MISSING_VERSE_NUMBER",
+          "MULTIPLE_REFERENCE_MATCHES",
+          "MULTIPLE_HADITH_MATCHES",
+          "RESOURCE_NOT_APPROVED",
+          "CONTEXT_HAS_MULTIPLE_TARGETS",
+          "OTHER"
+        ],
+        "title": "ClarificationDetail",
+        "type": "string"
+      },
+      "ClarificationField": {
+        "enum": [
+          "TOPIC",
+          "QURAN_REFERENCE",
+          "HADITH_TARGET",
+          "SOURCE_KIND",
+          "RESOURCE"
+        ],
+        "title": "ClarificationField",
+        "type": "string"
+      },
+      "ClarificationReason": {
+        "enum": [
+          "MISSING_REFERENCE",
+          "AMBIGUOUS_REFERENCE",
+          "AMBIGUOUS_HADITH",
+          "UNKNOWN_RESOURCE",
+          "AMBIGUOUS_CONTEXT",
+          "OTHER"
+        ],
+        "title": "ClarificationReason",
+        "type": "string"
+      },
+      "ClarificationStateV1": {
+        "additionalProperties": false,
+        "properties": {
+          "candidates": {
+            "items": {
+              "$ref": "#/components/schemas/ClarificationCandidateV1"
+            },
+            "title": "Candidates",
+            "type": "array"
+          },
+          "detail": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ClarificationDetail"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "missing_fields": {
+            "items": {
+              "$ref": "#/components/schemas/ClarificationField"
+            },
+            "title": "Missing Fields",
+            "type": "array"
+          },
+          "question": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Question"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ClarificationReason"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "required": {
+            "title": "Required",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "required",
+          "reason",
+          "detail",
+          "missing_fields",
+          "candidates",
+          "question"
+        ],
+        "title": "ClarificationStateV1",
+        "type": "object"
+      },
+      "ConversationCreateRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "locale": {
+            "default": "ar",
+            "enum": [
+              "ar",
+              "en"
+            ],
+            "title": "Locale",
+            "type": "string"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "maxLength": 120,
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          }
+        },
+        "title": "ConversationCreateRequest",
+        "type": "object"
+      },
+      "ConversationDetailV1": {
+        "additionalProperties": false,
+        "properties": {
+          "archived": {
+            "title": "Archived",
+            "type": "boolean"
+          },
+          "conversation_id": {
+            "format": "uuid",
+            "title": "Conversation Id",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "locale": {
+            "enum": [
+              "ar",
+              "en"
+            ],
+            "title": "Locale",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "turn_count": {
+            "minimum": 0.0,
+            "title": "Turn Count",
+            "type": "integer"
+          },
+          "turns": {
+            "items": {
+              "$ref": "#/components/schemas/ConversationTurnV1"
+            },
+            "title": "Turns",
+            "type": "array"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "conversation_id",
+          "title",
+          "locale",
+          "archived",
+          "created_at",
+          "updated_at",
+          "turn_count",
+          "turns"
+        ],
+        "title": "ConversationDetailV1",
+        "type": "object"
+      },
+      "ConversationPageV1": {
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ConversationSummaryV1"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Cursor"
+          }
+        },
+        "required": [
+          "items",
+          "next_cursor"
+        ],
+        "title": "ConversationPageV1",
+        "type": "object"
+      },
+      "ConversationSummaryV1": {
+        "additionalProperties": false,
+        "properties": {
+          "archived": {
+            "title": "Archived",
+            "type": "boolean"
+          },
+          "conversation_id": {
+            "format": "uuid",
+            "title": "Conversation Id",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "locale": {
+            "enum": [
+              "ar",
+              "en"
+            ],
+            "title": "Locale",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "turn_count": {
+            "minimum": 0.0,
+            "title": "Turn Count",
+            "type": "integer"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "conversation_id",
+          "title",
+          "locale",
+          "archived",
+          "created_at",
+          "updated_at",
+          "turn_count"
+        ],
+        "title": "ConversationSummaryV1",
+        "type": "object"
+      },
+      "ConversationTurnCreateRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "idempotency_key": {
+            "maxLength": 128,
+            "minLength": 8,
+            "title": "Idempotency Key",
+            "type": "string"
+          },
+          "locale": {
+            "default": "ar",
+            "enum": [
+              "ar",
+              "en"
+            ],
+            "title": "Locale",
+            "type": "string"
+          },
+          "message": {
+            "maxLength": 2000,
+            "minLength": 2,
+            "title": "Message",
+            "type": "string"
+          }
+        },
+        "required": [
+          "message",
+          "idempotency_key"
+        ],
+        "title": "ConversationTurnCreateRequest",
+        "type": "object"
+      },
+      "ConversationTurnV1": {
+        "additionalProperties": false,
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "locale": {
+            "enum": [
+              "ar",
+              "en"
+            ],
+            "title": "Locale",
+            "type": "string"
+          },
+          "response": {
+            "$ref": "#/components/schemas/ResearchResponseV1"
+          },
+          "trace_events": {
+            "items": {
+              "$ref": "#/components/schemas/TraceEventV1"
+            },
+            "maxItems": 200,
+            "title": "Trace Events",
+            "type": "array"
+          },
+          "turn_id": {
+            "format": "uuid",
+            "title": "Turn Id",
+            "type": "string"
+          },
+          "user_message": {
+            "title": "User Message",
+            "type": "string"
+          }
+        },
+        "required": [
+          "turn_id",
+          "user_message",
+          "locale",
+          "response",
+          "created_at"
+        ],
+        "title": "ConversationTurnV1",
+        "type": "object"
+      },
+      "ConversationUpdateRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "archived": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Archived"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "maxLength": 120,
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          }
+        },
+        "title": "ConversationUpdateRequest",
+        "type": "object"
+      },
+      "EvidenceSourceKind": {
+        "enum": [
+          "QURAN",
+          "QURAN_TRANSLATION",
+          "HADITH",
+          "HADITH_GRADE",
+          "TAFSIR",
+          "HADITH_COMMENTARY"
+        ],
+        "title": "EvidenceSourceKind",
+        "type": "string"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "title": "Detail",
+            "type": "array"
+          }
+        },
+        "title": "HTTPValidationError",
+        "type": "object"
+      },
+      "HadithCommentaryPointer": {
+        "additionalProperties": false,
+        "properties": {
+          "hadith_source_record_id": {
+            "title": "Hadith Source Record Id",
+            "type": "string"
+          },
+          "kind": {
+            "const": "HADITH_COMMENTARY",
+            "title": "Kind",
+            "type": "string"
+          },
+          "passage_id": {
+            "title": "Passage Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "passage_id",
+          "hadith_source_record_id"
+        ],
+        "title": "HadithCommentaryPointer",
+        "type": "object"
+      },
+      "HadithPointer": {
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "const": "HADITH",
+            "title": "Kind",
+            "type": "string"
+          },
+          "source_record_id": {
+            "title": "Source Record Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "source_record_id"
+        ],
+        "title": "HadithPointer",
+        "type": "object"
+      },
+      "NarrativeSegmentKind": {
+        "enum": [
+          "FRAMING",
+          "POINT",
+          "TRANSITION",
+          "SUMMARY",
+          "LIMITATION"
+        ],
+        "title": "NarrativeSegmentKind",
+        "type": "string"
+      },
+      "NarrativeSegmentV1": {
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "$ref": "#/components/schemas/NarrativeSegmentKind"
+          },
+          "segment_id": {
+            "title": "Segment Id",
+            "type": "string"
+          },
+          "supporting_claim_ids": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Supporting Claim Ids",
+            "type": "array"
+          },
+          "supporting_evidence_ids": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Supporting Evidence Ids",
+            "type": "array"
+          },
+          "text": {
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "segment_id",
+          "text",
+          "kind",
+          "supporting_claim_ids",
+          "supporting_evidence_ids"
+        ],
+        "title": "NarrativeSegmentV1",
+        "type": "object"
+      },
+      "NoticeCode": {
+        "enum": [
+          "INSUFFICIENT_EVIDENCE",
+          "PARTIAL_COVERAGE",
+          "SOURCE_UNAVAILABLE",
+          "QUESTION_NOT_UNDERSTOOD",
+          "ANSWER_NOT_VERIFIED",
+          "CLARIFICATION",
+          "UNSUPPORTED_SCOPE"
+        ],
+        "title": "NoticeCode",
+        "type": "string"
+      },
+      "QuranPointer": {
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "const": "QURAN",
+            "title": "Kind",
+            "type": "string"
+          },
+          "verse_keys": {
+            "items": {
+              "$ref": "#/components/schemas/VerseKey"
+            },
+            "minItems": 1,
+            "title": "Verse Keys",
+            "type": "array"
+          }
+        },
+        "required": [
+          "kind",
+          "verse_keys"
+        ],
+        "title": "QuranPointer",
+        "type": "object"
+      },
+      "RenderedClaimBlockV1": {
+        "additionalProperties": false,
+        "properties": {
+          "block_type": {
+            "const": "CLAIM",
+            "title": "Block Type",
+            "type": "string"
+          },
+          "citations": {
+            "items": {
+              "$ref": "#/components/schemas/CitationV1"
+            },
+            "minItems": 1,
+            "title": "Citations",
+            "type": "array"
+          },
+          "claim_id": {
+            "title": "Claim Id",
+            "type": "string"
+          },
+          "text": {
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "block_type",
+          "claim_id",
+          "text",
+          "citations"
+        ],
+        "title": "RenderedClaimBlockV1",
+        "type": "object"
+      },
+      "RenderedNarrativeBlockV1": {
+        "additionalProperties": false,
+        "properties": {
+          "block_type": {
+            "const": "NARRATIVE",
+            "title": "Block Type",
+            "type": "string"
+          },
+          "segments": {
+            "items": {
+              "$ref": "#/components/schemas/NarrativeSegmentV1"
+            },
+            "minItems": 1,
+            "title": "Segments",
+            "type": "array"
+          }
+        },
+        "required": [
+          "block_type",
+          "segments"
+        ],
+        "title": "RenderedNarrativeBlockV1",
+        "type": "object"
+      },
+      "RenderedNoticeBlockV1": {
+        "additionalProperties": false,
+        "properties": {
+          "block_type": {
+            "const": "NOTICE",
+            "title": "Block Type",
+            "type": "string"
+          },
+          "notice_code": {
+            "$ref": "#/components/schemas/NoticeCode"
+          },
+          "text": {
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "block_type",
+          "notice_code",
+          "text"
+        ],
+        "title": "RenderedNoticeBlockV1",
+        "type": "object"
+      },
+      "RenderedOutputKind": {
+        "description": "What the reader actually received, independent of response status.",
+        "enum": [
+          "SUBSTANTIVE_SYNTHESIS",
+          "SOURCE_ONLY",
+          "TEMPLATE",
+          "NO_CONTENT"
+        ],
+        "title": "RenderedOutputKind",
+        "type": "string"
+      },
+      "RenderedSourceBlockV1": {
+        "additionalProperties": false,
+        "properties": {
+          "block_id": {
+            "title": "Block Id",
+            "type": "string"
+          },
+          "block_type": {
+            "const": "SOURCE",
+            "title": "Block Type",
+            "type": "string"
+          },
+          "citation": {
+            "$ref": "#/components/schemas/CitationV1"
+          },
+          "exact_text": {
+            "title": "Exact Text",
+            "type": "string"
+          },
+          "passage_group_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Passage Group Id"
+          },
+          "visibility": {
+            "$ref": "#/components/schemas/SourceVisibility",
+            "default": "VISIBLE"
+          }
+        },
+        "required": [
+          "block_type",
+          "block_id",
+          "exact_text",
+          "citation"
+        ],
+        "title": "RenderedSourceBlockV1",
+        "type": "object"
+      },
+      "RenderedSourceViewHeadingBlockV1": {
+        "additionalProperties": false,
+        "description": "A standard stacked heading preceding deterministic source material.",
+        "properties": {
+          "block_type": {
+            "const": "SOURCE_VIEW_HEADING",
+            "title": "Block Type",
+            "type": "string"
+          },
+          "text": {
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "block_type",
+          "text"
+        ],
+        "title": "RenderedSourceViewHeadingBlockV1",
+        "type": "object"
+      },
+      "ResearchRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "conversation_id": {
+            "format": "uuid",
+            "title": "Conversation Id",
+            "type": "string"
+          },
+          "locale": {
+            "default": "en",
+            "title": "Locale",
+            "type": "string"
+          },
+          "message": {
+            "maxLength": 2000,
+            "minLength": 2,
+            "title": "Message",
+            "type": "string"
+          }
+        },
+        "required": [
+          "message"
+        ],
+        "title": "ResearchRequest",
+        "type": "object"
+      },
+      "ResearchResponseV1": {
+        "additionalProperties": false,
+        "properties": {
+          "blocks": {
+            "items": {
+              "discriminator": {
+                "mapping": {
+                  "CLAIM": "#/components/schemas/RenderedClaimBlockV1",
+                  "NARRATIVE": "#/components/schemas/RenderedNarrativeBlockV1",
+                  "NOTICE": "#/components/schemas/RenderedNoticeBlockV1",
+                  "SOURCE": "#/components/schemas/RenderedSourceBlockV1",
+                  "SOURCE_VIEW_HEADING": "#/components/schemas/RenderedSourceViewHeadingBlockV1"
+                },
+                "propertyName": "block_type"
+              },
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/RenderedClaimBlockV1"
+                },
+                {
+                  "$ref": "#/components/schemas/RenderedSourceBlockV1"
+                },
+                {
+                  "$ref": "#/components/schemas/RenderedSourceViewHeadingBlockV1"
+                },
+                {
+                  "$ref": "#/components/schemas/RenderedNoticeBlockV1"
+                },
+                {
+                  "$ref": "#/components/schemas/RenderedNarrativeBlockV1"
+                }
+              ]
+            },
+            "title": "Blocks",
+            "type": "array"
+          },
+          "citations": {
+            "items": {
+              "$ref": "#/components/schemas/CitationV1"
+            },
+            "title": "Citations",
+            "type": "array"
+          },
+          "clarification": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ClarificationStateV1"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "conversation_id": {
+            "format": "uuid",
+            "title": "Conversation Id",
+            "type": "string"
+          },
+          "correlation_id": {
+            "format": "uuid",
+            "title": "Correlation Id",
+            "type": "string"
+          },
+          "output_kind": {
+            "$ref": "#/components/schemas/RenderedOutputKind"
+          },
+          "schema_version": {
+            "const": "1",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/AnswerStatus"
+          },
+          "turn_id": {
+            "format": "uuid",
+            "title": "Turn Id",
+            "type": "string"
+          },
+          "warnings": {
+            "items": {
+              "$ref": "#/components/schemas/ToolWarning"
+            },
+            "title": "Warnings",
+            "type": "array"
+          }
+        },
+        "required": [
+          "schema_version",
+          "conversation_id",
+          "turn_id",
+          "correlation_id",
+          "status",
+          "output_kind",
+          "blocks",
+          "citations",
+          "clarification",
+          "warnings"
+        ],
+        "title": "ResearchResponseV1",
+        "type": "object"
+      },
+      "ResolutionProvenance": {
+        "enum": [
+          "CURRENT_MESSAGE_EXACT_PARSE",
+          "WORKING_CONTEXT_EXACT_REFERENCE",
+          "APPROVED_ALIAS_TABLE",
+          "HIGH_PRECISION_SCOPE_PRECHECK"
+        ],
+        "title": "ResolutionProvenance",
+        "type": "string"
+      },
+      "SourceRevisionIdentity": {
+        "additionalProperties": false,
+        "properties": {
+          "checksum": {
+            "title": "Checksum",
+            "type": "string"
+          },
+          "resource_alias": {
+            "title": "Resource Alias",
+            "type": "string"
+          },
+          "revision_id": {
+            "title": "Revision Id",
+            "type": "string"
+          },
+          "source_id": {
+            "title": "Source Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "source_id",
+          "resource_alias",
+          "revision_id",
+          "checksum"
+        ],
+        "title": "SourceRevisionIdentity",
+        "type": "object"
+      },
+      "SourceVisibility": {
+        "description": "Whether a source is initially shown or available as collapsed context.",
+        "enum": [
+          "VISIBLE",
+          "COLLAPSED_CONTEXT"
+        ],
+        "title": "SourceVisibility",
+        "type": "string"
+      },
+      "TafsirPointer": {
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "const": "TAFSIR",
+            "title": "Kind",
+            "type": "string"
+          },
+          "passage_id": {
+            "title": "Passage Id",
+            "type": "string"
+          },
+          "verse_keys": {
+            "items": {
+              "$ref": "#/components/schemas/VerseKey"
+            },
+            "minItems": 1,
+            "title": "Verse Keys",
+            "type": "array"
+          }
+        },
+        "required": [
+          "kind",
+          "passage_id",
+          "verse_keys"
+        ],
+        "title": "TafsirPointer",
+        "type": "object"
+      },
+      "ToolWarning": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "$ref": "#/components/schemas/ToolWarningCode"
+          },
+          "metadata": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "title": "Metadata",
+            "type": "object"
+          },
+          "safe_message_key": {
+            "title": "Safe Message Key",
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "safe_message_key",
+          "metadata"
+        ],
+        "title": "ToolWarning",
+        "type": "object"
+      },
+      "ToolWarningCode": {
+        "enum": [
+          "PARTIAL_RESULTS",
+          "TRUNCATED_BY_POLICY",
+          "OPTIONAL_RESOURCE_UNAVAILABLE",
+          "STALE_OPTIONAL_INDEX",
+          "RATE_LIMIT_APPROACHING",
+          "ATTRIBUTION_NOTICE"
+        ],
+        "title": "ToolWarningCode",
+        "type": "string"
+      },
+      "TraceEventV1": {
+        "additionalProperties": false,
+        "description": "A bounded, redacted execution event for the owner-only development trace.",
+        "properties": {
+          "detail": {
+            "additionalProperties": true,
+            "maxProperties": 24,
+            "title": "Detail",
+            "type": "object"
+          },
+          "elapsed_ms": {
+            "minimum": 0.0,
+            "title": "Elapsed Ms",
+            "type": "integer"
+          },
+          "node": {
+            "enum": [
+              "scope",
+              "planner",
+              "retrieval",
+              "fusion",
+              "tafsir",
+              "rerank",
+              "evidence",
+              "verification",
+              "synthesis",
+              "composition",
+              "gate"
+            ],
+            "title": "Node",
+            "type": "string"
+          },
+          "phase": {
+            "enum": [
+              "started",
+              "completed",
+              "degraded",
+              "skipped",
+              "failed",
+              "rejected"
+            ],
+            "title": "Phase",
+            "type": "string"
+          },
+          "provider": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Provider"
+          },
+          "seq": {
+            "minimum": 1.0,
+            "title": "Seq",
+            "type": "integer"
+          },
+          "summary": {
+            "maxLength": 240,
+            "minLength": 1,
+            "title": "Summary",
+            "type": "string"
+          }
+        },
+        "required": [
+          "seq",
+          "elapsed_ms",
+          "node",
+          "phase",
+          "summary"
+        ],
+        "title": "TraceEventV1",
+        "type": "object"
+      },
+      "TypedSourceReference": {
+        "additionalProperties": false,
+        "properties": {
+          "canonical_link": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Canonical Link"
+          },
+          "scheme": {
+            "title": "Scheme",
+            "type": "string"
+          },
+          "value": {
+            "title": "Value",
+            "type": "string"
+          }
+        },
+        "required": [
+          "scheme",
+          "value",
+          "canonical_link"
+        ],
+        "title": "TypedSourceReference",
+        "type": "object"
+      },
+      "ValidationError": {
+        "properties": {
+          "ctx": {
+            "title": "Context",
+            "type": "object"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "title": "Location",
+            "type": "array"
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError",
+        "type": "object"
+      },
+      "VerseKey": {
+        "additionalProperties": false,
+        "properties": {
+          "chapter": {
+            "maximum": 114.0,
+            "minimum": 1.0,
+            "title": "Chapter",
+            "type": "integer"
+          },
+          "verse": {
+            "exclusiveMinimum": 0.0,
+            "title": "Verse",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "chapter",
+          "verse"
+        ],
+        "title": "VerseKey",
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "title": "Islamic Research AI POC",
+    "version": "0.1.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/health": {
+      "get": {
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Health Health Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Health"
+      }
+    },
+    "/v1/conversations": {
+      "get": {
+        "operationId": "list_conversations_v1_conversations_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 30,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Cursor"
+            }
+          },
+          {
+            "in": "query",
+            "name": "include_archived",
+            "required": false,
+            "schema": {
+              "default": false,
+              "title": "Include Archived",
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConversationPageV1"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "List Conversations"
+      },
+      "post": {
+        "operationId": "create_conversation_v1_conversations_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConversationCreateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConversationSummaryV1"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Create Conversation"
+      }
+    },
+    "/v1/conversations/{conversation_id}": {
+      "delete": {
+        "operationId": "delete_conversation_v1_conversations__conversation_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "conversation_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Conversation Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Delete Conversation"
+      },
+      "get": {
+        "operationId": "get_conversation_v1_conversations__conversation_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "conversation_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Conversation Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Cursor"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConversationDetailV1"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Conversation"
+      },
+      "patch": {
+        "operationId": "update_conversation_v1_conversations__conversation_id__patch",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "conversation_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Conversation Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConversationUpdateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConversationSummaryV1"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Update Conversation"
+      }
+    },
+    "/v1/conversations/{conversation_id}/turns": {
+      "post": {
+        "operationId": "create_conversation_turn_v1_conversations__conversation_id__turns_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "conversation_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Conversation Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConversationTurnCreateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConversationTurnV1"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Create Conversation Turn"
+      }
+    },
+    "/v1/conversations/{conversation_id}/turns/stream": {
+      "post": {
+        "description": "Persist the same turn that is streamed; a reconnect can reopen its saved trace.",
+        "operationId": "stream_conversation_turn_v1_conversations__conversation_id__turns_stream_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "conversation_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Conversation Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConversationTurnCreateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Stream Conversation Turn"
+      }
+    },
+    "/v1/research": {
+      "post": {
+        "operationId": "research_v1_research_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResearchRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchResponseV1"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Research"
+      }
+    },
+    "/v1/research/stream": {
+      "post": {
+        "description": "Owner-only development stream: emitted events and final response share one service run.",
+        "operationId": "research_stream_v1_research_stream_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResearchRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Research Stream"
+      }
+    }
+  }
+}

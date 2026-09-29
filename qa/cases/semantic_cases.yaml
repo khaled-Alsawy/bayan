@@ -1,0 +1,604 @@
+# Part A semantic-retrieval evaluation cases. Layer 1 is scored by
+# qa/semantic_quality_runner.py; Layer 2 fields are intentionally absent until human review.
+- id: sem_ar_unappreciated_effort
+  ui_language: ar
+  prompt: "أنا حاسس إن محدش بيقدّر تعبي ولا بيشوف اللي بعمله"
+  indirection: high
+  expected_themes: ["أجر العمل لا يضيع", "الصبر", "علم الله بما تخفي الصدور"]
+  acceptable_anchors: ["3:195", "9:120", "18:30", "11:115", "21:94"]
+  unacceptable_anchors: ["4:11", "2:282"]
+  forbidden_terms: ["صبر", "أجر"]
+  intent: answer
+  notes: "Seed case. No lexical overlap with the target theme."
+- id: sem_ar_setback_before_goal
+  ui_language: ar
+  prompt: "ليه كل ما أقرب من هدف تحصل حاجة تبعّدني عنه؟"
+  indirection: high
+  expected_themes: ["الابتلاء", "قد تكرهوا شيئًا وهو خير لكم"]
+  acceptable_anchors: ["2:216", "2:155", "94:5", "94:6"]
+  unacceptable_anchors: ["4:11", "2:282"]
+  forbidden_terms: ["ابتلاء", "خير", "تكرهوا"]
+  intent: answer
+  notes: "Seed case."
+- id: sem_ar_can_retaliate
+  ui_language: ar
+  prompt: "حد ظلمني وأنا أقدر أرد عليه دلوقتي"
+  indirection: high
+  expected_themes: ["العفو عند المقدرة", "ادفع بالتي هي أحسن"]
+  acceptable_anchors: ["42:40", "41:34", "3:134"]
+  unacceptable_anchors: ["4:11", "2:282"]
+  forbidden_terms: ["عفو", "ادفع", "أحسن"]
+  intent: answer
+  notes: "Seed case."
+- id: sem_ar_money_worry
+  ui_language: ar
+  prompt: "مش قادر أنام من كتر التفكير في الفلوس"
+  indirection: high
+  expected_themes: ["الرزق", "التوكل", "المخرج"]
+  acceptable_anchors: ["65:2", "65:3", "11:6", "2:286"]
+  unacceptable_anchors: ["4:11", "2:282"]
+  forbidden_terms: ["رزق", "توكل", "مخرج"]
+  intent: answer
+  notes: "Seed case."
+- id: sem_ar_public_hypocrisy
+  ui_language: ar
+  prompt: "صاحبي بيتكلم قدام الناس كلام وبيعمل عكسه"
+  indirection: high
+  expected_themes: ["مخالفة القول للعمل", "النفاق"]
+  acceptable_anchors: ["61:2", "61:3", "2:8", "4:142"]
+  unacceptable_anchors: ["4:11", "2:282"]
+  forbidden_terms: ["نفاق", "يقولون", "تفعلون"]
+  intent: answer
+  notes: "Seed case."
+- id: sem_ar_aging_parents
+  ui_language: ar
+  prompt: "بابا وماما كبروا وبقيت مش مستحمل"
+  indirection: high
+  expected_themes: ["الإحسان بالوالدين", "الرفق عند الكبر"]
+  acceptable_anchors: ["17:23", "17:24", "31:14"]
+  unacceptable_anchors: ["10:66", "10:67", "10:68", "10:69", "10:70", "4:10", "4:11", "4:12", "4:13", "4:14"]
+  forbidden_terms: ["والدين", "أف", "إحسان"]
+  intent: answer
+  notes: "Seed case; prior family-retrieval distractors are explicitly rejected."
+- id: sem_ar_no_way_back
+  ui_language: ar
+  prompt: "أنا عملت حاجة وحشة قوي ومش شايف إن ليا رجعة"
+  indirection: high
+  expected_themes: ["سعة المغفرة", "عدم القنوط"]
+  acceptable_anchors: ["39:53", "4:110", "25:70"]
+  unacceptable_anchors: ["4:11", "2:282"]
+  forbidden_terms: ["مغفرة", "قنوط", "رحمة"]
+  intent: answer
+  notes: "Seed case."
+- id: sem_ar_wrongdoers_prosper
+  ui_language: ar
+  prompt: "الناس اللي بتعمل غلط عايشة أحسن مني"
+  indirection: high
+  expected_themes: ["الإمهال", "متاع قليل", "الاستدراج"]
+  acceptable_anchors: ["3:196", "3:197", "6:44", "9:55"]
+  unacceptable_anchors: ["4:11", "2:282"]
+  forbidden_terms: ["استدراج", "متاع", "إمهال"]
+  intent: answer
+  notes: "Seed case."
+- id: sem_en_neighbour_help
+  ui_language: en
+  prompt: "my neighbour isnt muslim and my family says i shouldnt help him"
+  indirection: high
+  expected_themes: ["kindness and justice to non-hostile others"]
+  acceptable_anchors: ["60:8", "5:8"]
+  unacceptable_anchors: ["4:11", "2:282"]
+  forbidden_terms: ["kindness", "justice", "non-hostile"]
+  intent: answer
+  notes: "Seed case."
+- id: sem_en_putting_life_off
+  ui_language: en
+  prompt: "i keep telling myself ill fix my life next year and i never do"
+  indirection: high
+  expected_themes: ["procrastination", "death arriving unannounced"]
+  acceptable_anchors: ["63:10", "23:99", "57:16"]
+  unacceptable_anchors: ["4:11", "2:282"]
+  forbidden_terms: ["procrastination", "death"]
+  intent: answer
+  notes: "Seed case."
+- id: sem_en_grief
+  ui_language: en
+  prompt: "someone in my family died and i cant accept it"
+  indirection: high
+  expected_themes: ["returning to God", "steadfastness in loss"]
+  acceptable_anchors: ["2:155", "2:156", "2:157"]
+  unacceptable_anchors: ["4:11", "2:282"]
+  forbidden_terms: ["steadfast", "returning"]
+  intent: answer
+  notes: "Seed case."
+- id: sem_en_crisis_only_prayer
+  ui_language: en
+  prompt: "is there anything about people who only pray when things go wrong"
+  indirection: high
+  expected_themes: ["turning to God only in distress"]
+  acceptable_anchors: ["10:12", "29:65", "39:8"]
+  unacceptable_anchors: ["4:11", "2:282"]
+  forbidden_terms: ["distress", "only in"]
+  intent: answer
+  notes: "Seed case."
+- id: sem_en_broken_promise
+  ui_language: en
+  prompt: "i said id do something and then i didnt"
+  indirection: high
+  expected_themes: ["keeping commitments", "covenant"]
+  acceptable_anchors: ["16:91", "17:34", "5:1"]
+  unacceptable_anchors: ["4:11", "2:282"]
+  forbidden_terms: ["covenant", "promise", "commitment"]
+  intent: answer
+  notes: "Seed case."
+- id: sem_ar_betrayed_confidence
+  ui_language: ar
+  prompt: "واحد ائتمنته على حاجة وطلع بيحكيها للكل"
+  indirection: high
+  expected_themes: ["الأمانة", "حفظ العهد"]
+  acceptable_anchors: ["4:58", "8:27", "23:8"]
+  unacceptable_anchors: ["4:11", "2:282"]
+  forbidden_terms: ["أمانة", "عهد", "خيانة"]
+  intent: answer
+  notes: "Egyptian colloquial."
+- id: sem_ar_online_mockery
+  ui_language: ar
+  prompt: "كل يوم بلاقي ناس بتسخر مني في الكومنتات"
+  indirection: high
+  expected_themes: ["عدم السخرية", "الصبر على الأذى"]
+  acceptable_anchors: ["49:11", "3:186", "4:140"]
+  unacceptable_anchors: ["4:11", "2:282"]
+  forbidden_terms: ["سخرية", "صبر", "أذى"]
+  intent: answer
+  notes: "Digital-life phrasing."
+- id: sem_ar_siblings_fighting
+  ui_language: ar
+  prompt: "إخواتي بقالهم شهور مش بيكلموا بعض وكل بيت مستني التاني يبدأ"
+  indirection: high
+  expected_themes: ["الإصلاح", "الأخوة", "المبادرة بالسلام"]
+  acceptable_anchors: ["49:10", "8:1", "41:34"]
+  unacceptable_anchors: ["10:66", "10:67", "10:68", "10:69", "10:70", "4:10", "4:11", "4:12", "4:13", "4:14"]
+  forbidden_terms: ["إصلاح", "أخوة", "سلام"]
+  intent: answer
+  notes: "Family control with prior distractors."
+- id: sem_ar_jealous_friend
+  ui_language: ar
+  prompt: "كل ما أحكي خبر حلو بحس إن صاحبي بيبصلي بطريقة تخوف"
+  indirection: high
+  expected_themes: ["الحسد", "طلب الحفظ من الشر"]
+  acceptable_anchors: ["113:5", "12:67"]
+  unacceptable_anchors: ["4:11", "2:282"]
+  forbidden_terms: ["حسد", "حافظ", "شر"]
+  intent: answer
+  notes: "Indirect envy scenario."
+- id: sem_ar_lonely_after_move
+  ui_language: ar
+  prompt: "نقلت مدينة جديدة ومش عارف أتعامل مع الإحساس إني لوحدي"
+  indirection: high
+  expected_themes: ["قرب الله", "الصحبة الصالحة"]
+  acceptable_anchors: ["2:186", "9:119", "58:7"]
+  unacceptable_anchors: ["4:11", "2:282"]
+  forbidden_terms: ["قرب", "صحبة", "وحدة"]
+  intent: answer
+  notes: "High indirection; answers should not make a personal ruling."
+- id: sem_ar_boss_credit
+  ui_language: ar
+  prompt: "مديري بياخد مجهود الفريق وينسبه لنفسه"
+  indirection: high
+  expected_themes: ["العدل", "عدم بخس الناس"]
+  acceptable_anchors: ["4:58", "26:183", "83:1"]
+  unacceptable_anchors: ["4:11", "2:282"]
+  forbidden_terms: ["عدل", "بخس", "ظلم"]
+  intent: answer
+  notes: "Workplace scenario."
+- id: sem_ar_resentful_charity
+  ui_language: ar
+  prompt: "ساعدت ناس كتير وبعدين حسيت إني بندم كل ما يطلبوا تاني"
+  indirection: high
+  expected_themes: ["الإنفاق بلا من", "حسن القول"]
+  acceptable_anchors: ["2:262", "2:263", "2:264"]
+  unacceptable_anchors: ["4:11", "2:282"]
+  forbidden_terms: ["إنفاق", "من", "صدقة"]
+  intent: answer
+  notes: "Egyptian colloquial."
+- id: sem_en_work_without_credit
+  ui_language: en
+  prompt: "my manager keeps presenting our teams work as his own"
+  indirection: high
+  expected_themes: ["justice", "not diminishing others"]
+  acceptable_anchors: ["4:58", "26:183", "83:1"]
+  unacceptable_anchors: ["4:11", "2:282"]
+  forbidden_terms: ["justice", "diminishing", "oppression"]
+  intent: answer
+  notes: "English counterpart is deliberately not an equivalent-pair test."
+- id: sem_en_compulsive_comparison
+  ui_language: en
+  prompt: "scrolling all day makes everyone elses life look better than mine"
+  indirection: high
+  expected_themes: ["not coveting", "temporary worldly display"]
+  acceptable_anchors: ["4:32", "20:131", "57:20"]
+  unacceptable_anchors: ["4:11", "2:282"]
+  forbidden_terms: ["coveting", "worldly", "envy"]
+  intent: answer
+  notes: "Modern indirect phrasing."
+- id: sem_en_parent_care_burnout
+  ui_language: en
+  prompt: "looking after my dad is exhausting and i feel guilty for even saying that"
+  indirection: high
+  expected_themes: ["care for parents", "gentle speech"]
+  acceptable_anchors: ["17:23", "17:24", "31:14"]
+  unacceptable_anchors: ["10:66", "10:67", "10:68", "10:69", "10:70", "4:10", "4:11", "4:12", "4:13", "4:14"]
+  forbidden_terms: ["parents", "gentle", "care"]
+  intent: answer
+  notes: "Family control with known distractors."
+- id: sem_en_anger_text
+  ui_language: en
+  prompt: "im about to send a message that will probably end a friendship"
+  indirection: high
+  expected_themes: ["restraining anger", "responding with what is better"]
+  acceptable_anchors: ["3:134", "41:34", "42:37"]
+  unacceptable_anchors: ["4:11", "2:282"]
+  forbidden_terms: ["anger", "forgive", "better"]
+  intent: answer
+  notes: "Sloppy English."
+- id: sem_en_secret_shame
+  ui_language: en
+  prompt: "ive done things nobody knows about and i dont think i can be different"
+  indirection: high
+  expected_themes: ["repentance", "mercy", "change"]
+  acceptable_anchors: ["39:53", "25:70", "4:110"]
+  unacceptable_anchors: ["4:11", "2:282"]
+  forbidden_terms: ["repentance", "mercy", "forgiveness"]
+  intent: answer
+  notes: "Sloppy English."
+
+- id: sem_ar_job_permissibility
+  ui_language: ar
+  prompt: "قدامي شغل فيه حاجات مقلقاني، أقبله ولا لأ؟"
+  indirection: low
+  expected_themes: []
+  acceptable_anchors: []
+  unacceptable_anchors: []
+  forbidden_terms: ["صحبة", "توبة"]
+  intent: refuse
+  notes: "Indirect personal permissibility ruling."
+- id: sem_ar_bad_news
+  ui_language: ar
+  prompt: "كل ما ييجي خبر وحش بحس الدنيا قفلت"
+  indirection: low
+  expected_themes: ["الصبر", "الرجاء"]
+  acceptable_anchors: ["2:155", "2:156", "94:5", "94:6"]
+  unacceptable_anchors: ["4:11", "2:282"]
+  forbidden_terms: ["صبر", "رجاء"]
+  intent: answer
+  notes: "Egyptian colloquial."
+- id: sem_ar_paid_back_harm
+  ui_language: ar
+  prompt: "هو أذاني وأنا نفسي أعمل فيه نفس اللي عمله"
+  indirection: low
+  expected_themes: ["العفو", "مقابلة الإساءة بالحسنى"]
+  acceptable_anchors: ["42:40", "41:34", "3:134"]
+  unacceptable_anchors: ["4:11", "2:282"]
+  forbidden_terms: ["عفو", "إساءة", "حسنى"]
+  intent: answer
+  notes: "Low-indirection retaliation."
+- id: sem_ar_personal_zakat_amount
+  ui_language: ar
+  prompt: "معايا مبلغ ومش عارف أطلع منه قد إيه زكاة"
+  indirection: low
+  expected_themes: []
+  acceptable_anchors: []
+  unacceptable_anchors: []
+  forbidden_terms: []
+  intent: refuse
+  notes: "Personal legal calculation is outside research scope."
+- id: sem_ar_gossip_group
+  ui_language: ar
+  prompt: "في جروب الشغل كل الناس بتتكلم عن بعض من وراهم"
+  indirection: low
+  expected_themes: ["النهي عن الغيبة", "حفظ اللسان"]
+  acceptable_anchors: ["49:12", "33:70"]
+  unacceptable_anchors: ["4:11", "2:282"]
+  forbidden_terms: ["غيبة", "لسان"]
+  intent: answer
+  notes: "Workplace register."
+- id: sem_ar_after_argument
+  ui_language: ar
+  prompt: "اتخانقت مع أختي وكل واحدة فينا مستنية التانية تعتذر"
+  indirection: low
+  expected_themes: ["الإصلاح", "العفو"]
+  acceptable_anchors: ["49:10", "42:40", "41:34"]
+  unacceptable_anchors: ["10:66", "10:67", "10:68", "10:69", "10:70", "4:10", "4:11", "4:12", "4:13", "4:14"]
+  forbidden_terms: ["إصلاح", "عفو"]
+  intent: answer
+  notes: "Family control."
+- id: sem_ar_leave_university
+  ui_language: ar
+  prompt: "أسيب الجامعة ولا أكمل رغم إني تعبت؟"
+  indirection: low
+  expected_themes: []
+  acceptable_anchors: []
+  unacceptable_anchors: []
+  forbidden_terms: []
+  intent: refuse
+  notes: "Personal life-direction request."
+- id: sem_ar_earned_but_ashamed
+  ui_language: ar
+  prompt: "كل ما أفتكر اللي عملته بحس إني خلاص ضيعت نفسي"
+  indirection: low
+  expected_themes: ["التوبة", "عدم اليأس"]
+  acceptable_anchors: ["39:53", "25:70", "4:110"]
+  unacceptable_anchors: ["4:11", "2:282"]
+  forbidden_terms: ["توبة", "يأس"]
+  intent: answer
+  notes: "Low-indirection repentance."
+- id: sem_en_team_conflict
+  ui_language: en
+  prompt: "two people at work wont speak and the whole team is paying for it"
+  indirection: low
+  expected_themes: ["reconciliation", "speaking well"]
+  acceptable_anchors: ["49:10", "4:114", "41:34"]
+  unacceptable_anchors: ["4:11", "2:282"]
+  forbidden_terms: ["reconciliation", "peace"]
+  intent: answer
+  notes: "Colloquial English."
+- id: sem_en_unfair_comparison
+  ui_language: en
+  prompt: "i cant stop looking at what everyone else has"
+  indirection: low
+  expected_themes: ["not coveting", "contentment"]
+  acceptable_anchors: ["4:32", "20:131"]
+  unacceptable_anchors: ["4:11", "2:282"]
+  forbidden_terms: ["coveting", "contentment"]
+  intent: answer
+  notes: "Low-indirection envy."
+- id: sem_en_personal_marriage_choice
+  ui_language: en
+  prompt: "my wife did something terrible, should I take her back?"
+  indirection: low
+  expected_themes: []
+  acceptable_anchors: []
+  unacceptable_anchors: []
+  forbidden_terms: []
+  intent: refuse
+  notes: "Personal marriage ruling."
+- id: sem_en_burning_out
+  ui_language: en
+  prompt: "nothing i do seems to matter and im running out of energy"
+  indirection: low
+  expected_themes: ["deeds not lost", "steadfastness"]
+  acceptable_anchors: ["3:195", "18:30", "11:115"]
+  unacceptable_anchors: ["4:11", "2:282"]
+  forbidden_terms: ["steadfastness", "deeds"]
+  intent: answer
+  notes: "Low-indirection effort."
+- id: sem_en_money_anxiety
+  ui_language: en
+  prompt: "i lie awake worrying about rent every night"
+  indirection: low
+  expected_themes: ["provision", "trust"]
+  acceptable_anchors: ["65:2", "65:3", "11:6"]
+  unacceptable_anchors: ["4:11", "2:282"]
+  forbidden_terms: ["provision", "trust"]
+  intent: answer
+  notes: "Low-indirection finances."
+- id: sem_en_caregiving_obligation
+  ui_language: en
+  prompt: "can I stop looking after my mum now that it is too much?"
+  indirection: low
+  expected_themes: []
+  acceptable_anchors: []
+  unacceptable_anchors: []
+  forbidden_terms: []
+  intent: refuse
+  notes: "Personal obligation ruling."
+- id: sem_en_reputation_lies
+  ui_language: en
+  prompt: "people are passing around things about me that arent true"
+  indirection: low
+  expected_themes: ["verification", "avoiding suspicion"]
+  acceptable_anchors: ["49:6", "49:12", "24:15"]
+  unacceptable_anchors: ["4:11", "2:282"]
+  forbidden_terms: ["verification", "suspicion", "backbiting"]
+  intent: answer
+  notes: "Low-indirection social harm."
+- id: sem_ar_one_word_mercy
+  ui_language: ar
+  prompt: "الرحمة"
+  indirection: low
+  expected_themes: []
+  acceptable_anchors: []
+  unacceptable_anchors: []
+  forbidden_terms: []
+  intent: clarify
+  notes: "Genuinely ambiguous one-word control."
+- id: sem_en_one_word_light
+  ui_language: en
+  prompt: "light"
+  indirection: low
+  expected_themes: []
+  acceptable_anchors: []
+  unacceptable_anchors: []
+  forbidden_terms: []
+  intent: clarify
+  notes: "Genuinely ambiguous one-word control."
+- id: sem_ar_personal_divorce
+  ui_language: ar
+  prompt: "مراتي زعلانة مني، أطلقها؟"
+  indirection: low
+  expected_themes: []
+  acceptable_anchors: []
+  unacceptable_anchors: []
+  forbidden_terms: []
+  intent: refuse
+  notes: "Indirect personal fatwa."
+- id: sem_en_personal_marriage_ruling
+  ui_language: en
+  prompt: "my marriage is a mess, should i divorce her?"
+  indirection: low
+  expected_themes: []
+  acceptable_anchors: []
+  unacceptable_anchors: []
+  forbidden_terms: []
+  intent: refuse
+  notes: "Indirect personal fatwa."
+- id: sem_ar_prayer_time_lookup
+  ui_language: ar
+  prompt: "إمتى أصلي الفجر النهارده؟"
+  indirection: low
+  expected_themes: []
+  acceptable_anchors: []
+  unacceptable_anchors: []
+  forbidden_terms: []
+  intent: refuse
+  notes: "Prayer-time lookup is outside Qur'anic research."
+
+- id: sem_ar_patience_keyword
+  ui_language: ar
+  prompt: "ماذا يقول القرآن عن الصبر وقت الشدة؟"
+  indirection: none
+  expected_themes: ["الصبر"]
+  acceptable_anchors: ["2:153", "2:155", "94:5", "94:6"]
+  unacceptable_anchors: ["4:11", "2:282"]
+  forbidden_terms: []
+  intent: answer
+  notes: "Keyword-present control."
+- id: sem_ar_forgiveness_keyword
+  ui_language: ar
+  prompt: "ما الآيات عن المغفرة؟"
+  indirection: none
+  expected_themes: ["المغفرة"]
+  acceptable_anchors: ["39:53", "4:110", "25:70"]
+  unacceptable_anchors: ["4:11", "2:282"]
+  forbidden_terms: []
+  intent: answer
+  notes: "Keyword-present control."
+- id: sem_ar_parents_keyword
+  ui_language: ar
+  prompt: "أين يتحدث القرآن عن بر الوالدين؟"
+  indirection: none
+  expected_themes: ["بر الوالدين"]
+  acceptable_anchors: ["17:23", "17:24", "31:14"]
+  unacceptable_anchors: ["10:66", "10:67", "10:68", "10:69", "10:70", "4:10", "4:11", "4:12", "4:13", "4:14"]
+  forbidden_terms: []
+  intent: answer
+  notes: "Keyword-present family control."
+- id: sem_ar_justice_keyword
+  ui_language: ar
+  prompt: "ما الذي يقوله القرآن عن العدل؟"
+  indirection: none
+  expected_themes: ["العدل"]
+  acceptable_anchors: ["4:58", "5:8", "16:90"]
+  unacceptable_anchors: ["4:11", "2:282"]
+  forbidden_terms: []
+  intent: answer
+  notes: "Keyword-present control."
+- id: sem_ar_envy_keyword
+  ui_language: ar
+  prompt: "ما الآيات التي تتحدث عن الحسد؟"
+  indirection: none
+  expected_themes: ["الحسد"]
+  acceptable_anchors: ["113:5", "4:54", "12:67"]
+  unacceptable_anchors: ["4:11", "2:282"]
+  forbidden_terms: []
+  intent: answer
+  notes: "Keyword-present control."
+- id: sem_ar_prayer_keyword
+  ui_language: ar
+  prompt: "ماذا يقول القرآن عن الصلاة؟"
+  indirection: none
+  expected_themes: ["الصلاة"]
+  acceptable_anchors: ["2:43", "2:153", "20:14"]
+  unacceptable_anchors: ["4:11", "2:282"]
+  forbidden_terms: []
+  intent: answer
+  notes: "Keyword-present control."
+- id: sem_ar_gratitude_keyword
+  ui_language: ar
+  prompt: "أين يتحدث القرآن عن الشكر؟"
+  indirection: none
+  expected_themes: ["الشكر"]
+  acceptable_anchors: ["14:7", "2:152", "31:12"]
+  unacceptable_anchors: ["4:11", "2:282"]
+  forbidden_terms: []
+  intent: answer
+  notes: "Keyword-present control."
+- id: sem_ar_trust_keyword
+  ui_language: ar
+  prompt: "ما معنى التوكل في القرآن؟"
+  indirection: none
+  expected_themes: ["التوكل"]
+  acceptable_anchors: ["3:159", "65:3", "9:51"]
+  unacceptable_anchors: ["4:11", "2:282"]
+  forbidden_terms: []
+  intent: answer
+  notes: "Keyword-present control."
+- id: sem_en_patience_keyword
+  ui_language: en
+  prompt: "What does the Quran say about patience during hardship?"
+  indirection: none
+  expected_themes: ["patience"]
+  acceptable_anchors: ["2:153", "2:155", "94:5", "94:6"]
+  unacceptable_anchors: ["4:11", "2:282"]
+  forbidden_terms: []
+  intent: answer
+  notes: "Keyword-present control."
+- id: sem_en_mercy_keyword
+  ui_language: en
+  prompt: "Which Quran passages speak about mercy?"
+  indirection: none
+  expected_themes: ["mercy"]
+  acceptable_anchors: ["1:1", "6:12", "39:53"]
+  unacceptable_anchors: ["4:11", "2:282"]
+  forbidden_terms: []
+  intent: answer
+  notes: "Keyword-present control."
+- id: sem_en_forgiveness_keyword
+  ui_language: en
+  prompt: "What does the Quran teach about forgiveness?"
+  indirection: none
+  expected_themes: ["forgiveness"]
+  acceptable_anchors: ["39:53", "4:110", "42:40"]
+  unacceptable_anchors: ["4:11", "2:282"]
+  forbidden_terms: []
+  intent: answer
+  notes: "Keyword-present control."
+- id: sem_en_justice_keyword
+  ui_language: en
+  prompt: "What does the Quran say about justice?"
+  indirection: none
+  expected_themes: ["justice"]
+  acceptable_anchors: ["4:58", "5:8", "16:90"]
+  unacceptable_anchors: ["4:11", "2:282"]
+  forbidden_terms: []
+  intent: answer
+  notes: "Keyword-present control."
+- id: sem_en_parents_keyword
+  ui_language: en
+  prompt: "What does the Quran say about caring for parents?"
+  indirection: none
+  expected_themes: ["parents"]
+  acceptable_anchors: ["17:23", "17:24", "31:14"]
+  unacceptable_anchors: ["10:66", "10:67", "10:68", "10:69", "10:70", "4:10", "4:11", "4:12", "4:13", "4:14"]
+  forbidden_terms: []
+  intent: answer
+  notes: "Keyword-present family control."
+- id: sem_en_prayer_keyword
+  ui_language: en
+  prompt: "What does the Quran say about prayer?"
+  indirection: none
+  expected_themes: ["prayer"]
+  acceptable_anchors: ["2:43", "2:153", "20:14"]
+  unacceptable_anchors: ["4:11", "2:282"]
+  forbidden_terms: []
+  intent: answer
+  notes: "Keyword-present control."
+- id: sem_en_gratitude_keyword
+  ui_language: en
+  prompt: "What does the Quran teach about gratitude?"
+  indirection: none
+  expected_themes: ["gratitude"]
+  acceptable_anchors: ["14:7", "2:152", "31:12"]
+  unacceptable_anchors: ["4:11", "2:282"]
+  forbidden_terms: []
+  intent: answer
+  notes: "Keyword-present control."

@@ -1,0 +1,102 @@
+{
+  "intro/0": {
+    "file": "audio/08ae25931f96a8d36f99a132544f358db927b77e1e3377e599fab13b7e9fd0d7.wav",
+    "duration_s": 6.64,
+    "cache_key": "08ae25931f96a8d36f99a132544f358db927b77e1e3377e599fab13b7e9fd0d7"
+  },
+  "intro/1": {
+    "file": "audio/f6ae9f9bcc841805352f7ebf50a567bc86e013a0a208e6dd765d3128cdcd51b1.wav",
+    "duration_s": 9.0,
+    "cache_key": "f6ae9f9bcc841805352f7ebf50a567bc86e013a0a208e6dd765d3128cdcd51b1"
+  },
+  "first_question/1": {
+    "file": "audio/386e58ec17d53567c565e7501de129d8a32365218b2213fa9ae830012a1d9e04.wav",
+    "duration_s": 8.08,
+    "cache_key": "386e58ec17d53567c565e7501de129d8a32365218b2213fa9ae830012a1d9e04"
+  },
+  "first_question/2": {
+    "file": "audio/3fc8a5f8686201546f7d89b7dcb273e82233f28376dbd4a5eaf807dbaebaa381.wav",
+    "duration_s": 13.68,
+    "cache_key": "3fc8a5f8686201546f7d89b7dcb273e82233f28376dbd4a5eaf807dbaebaa381"
+  },
+  "first_question/3": {
+    "file": "audio/4f4c723a3883861919b268fe5bad6fb3456493fe402ab210eb0a52f3bd126eba.wav",
+    "duration_s": 4.48,
+    "cache_key": "4f4c723a3883861919b268fe5bad6fb3456493fe402ab210eb0a52f3bd126eba"
+  },
+  "first_question/4": {
+    "file": "audio/80295b4a9b339b7a06c881ac6fcbce1b90d0fec99b96ad36f0405696c0e8a091.wav",
+    "duration_s": 7.84,
+    "cache_key": "80295b4a9b339b7a06c881ac6fcbce1b90d0fec99b96ad36f0405696c0e8a091"
+  },
+  "first_question/5": {
+    "file": "audio/652e77170e97035309c1caab4a8fa7af965758920d91c2fdc8886266f2276911.wav",
+    "duration_s": 9.0,
+    "cache_key": "652e77170e97035309c1caab4a8fa7af965758920d91c2fdc8886266f2276911"
+  },
+  "answer_walkthrough/2": {
+    "file": "audio/b72615d84ed0a4a0fb677a5bc9bdd5f7058ced5f340c1cb4987e19bce0b6a6e7.wav",
+    "duration_s": 6.32,
+    "cache_key": "b72615d84ed0a4a0fb677a5bc9bdd5f7058ced5f340c1cb4987e19bce0b6a6e7"
+  },
+  "answer_walkthrough/3": {
+    "file": "audio/26357ba6bad39116440efe42176294f1521ebaa81d9702eeacb12c54206fd044.wav",
+    "duration_s": 7.92,
+    "cache_key": "26357ba6bad39116440efe42176294f1521ebaa81d9702eeacb12c54206fd044"
+  },
+  "answer_walkthrough/5": {
+    "file": "audio/75e8ca70107cae72be5d31b9921b5c29803bbece8dc965afe880f38dfc6e9871.wav",
+    "duration_s": 8.2,
+    "cache_key": "75e8ca70107cae72be5d31b9921b5c29803bbece8dc965afe880f38dfc6e9871"
+  },
+  "trace/2": {
+    "file": "audio/870baf540160427e477639717ccb86f22fafb0ac31215715daf53c5fe64568c0.wav",
+    "duration_s": 13.24,
+    "cache_key": "870baf540160427e477639717ccb86f22fafb0ac31215715daf53c5fe64568c0"
+  },
+  "follow_up/1": {
+    "file": "audio/98d988820910976ab80d71e9df076a6b35d60f0ccbc8b11a6257ac28ee254363.wav",
+    "duration_s": 6.16,
+    "cache_key": "98d988820910976ab80d71e9df076a6b35d60f0ccbc8b11a6257ac28ee254363"
+  },
+  "honesty/1": {
+    "file": "audio/29a40383480b504229bb0656df902c8d1b4950cede8ae37a77f87bd4fc436ddb.wav",
+    "duration_s": 8.44,
+    "cache_key": "29a40383480b504229bb0656df902c8d1b4950cede8ae37a77f87bd4fc436ddb"
+  },
+  "english/3": {
+    "file": "audio/a4c5aee10109b99c122eacdb088dcfd633d2fde664557aeac691ffd1c3f09c74.wav",
+    "duration_s": 8.76,
+    "cache_key": "a4c5aee10109b99c122eacdb088dcfd633d2fde664557aeac691ffd1c3f09c74"
+  },
+  "architecture/0": {
+    "file": "audio/767e5ccb474ab5e31f9944e15507fd2ac9d1aa5e105672211cd00cc65008f3c2.wav",
+    "duration_s": 13.4,
+    "cache_key": "767e5ccb474ab5e31f9944e15507fd2ac9d1aa5e105672211cd00cc65008f3c2"
+  },
+  "architecture/1": {
+    "file": "audio/400e73388f78acb2583a5ca92a1b8233985811919eef6e3a765874ed06dca47e.wav",
+    "duration_s": 10.36,
+    "cache_key": "400e73388f78acb2583a5ca92a1b8233985811919eef6e3a765874ed06dca47e"
+  },
+  "engineering/0": {
+    "file": "audio/217075f66f192b52d235f6c3809dc29061b5be8145827a2ab0b4383076bc565f.wav",
+    "duration_s": 8.36,
+    "cache_key": "217075f66f192b52d235f6c3809dc29061b5be8145827a2ab0b4383076bc565f"
+  },
+  "engineering/1": {
+    "file": "audio/1b2c67849153e2e35115a15a19b8e558eedceab5366058f7005fcade8efd58ff.wav",
+    "duration_s": 9.52,
+    "cache_key": "1b2c67849153e2e35115a15a19b8e558eedceab5366058f7005fcade8efd58ff"
+  },
+  "engineering/2": {
+    "file": "audio/e8c47ce1db929fa0bd1ac5d95c89a7f82b9e77c0e9bc5a1845e312eb85b0f0ce.wav",
+    "duration_s": 5.28,
+    "cache_key": "e8c47ce1db929fa0bd1ac5d95c89a7f82b9e77c0e9bc5a1845e312eb85b0f0ce"
+  },
+  "outro/1": {
+    "file": "audio/bc50d5e2fbcd4f0f0fab56d888955c28fc97fa6911ce808e38260c25cff26261.wav",
+    "duration_s": 9.04,
+    "cache_key": "bc50d5e2fbcd4f0f0fab56d888955c28fc97fa6911ce808e38260c25cff26261"
+  }
+}
